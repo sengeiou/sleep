@@ -1,0 +1,314 @@
+<resources>
+    <string name="app_name">sleepee</string>
+    <string name="company">Shenzhen Intelligent Age Technology Co., LTD\nwww.znsdkj.com</string>
+
+    <!--登录界面-->
+    <string name="phone">Phone Number</string>
+    <string name="email">Email Adress</string>
+    <string name="password">Password</string>
+    <string name="forget">Forget?</string>
+    <string name="china">China</string>
+    <string name="remember">remember password</string>
+    <string name="sign">Sign Up</string>
+    <string name="signLine"><u>Sign Up</u></string>
+    <string name="login">Login</string>
+    <string name="passwordError">Incorrect password,Please confirm again.</string>
+    <string name="unregister">Unregistered account,Please register first.</string>
+    <string name="inputNum">Please input your phone number.</string>
+    <string name="inputMail">Please input your e-mail.</string>
+    <string name="emailError">Please enter the correct email address.</string>
+    <string name="inputPassword">Please input your password.</string>
+    <string name="error">Error</string>
+    <string name="logging">Logging...</string>
+
+    <!--注册界面-->
+    <string name="checkPrivacy">confirm that you have read the terms yet</string>
+    <string name="userIsRegister">User already exist.</string>
+    <string name="privacy">I have read and agreed to \n<a href="https://cloud.znsdkj.com:8443/sleep/comm/statement?lang=en-US">the use agreements and privacy policies</a></string>
+    <string name="confirmPasswordError">Inconsistent password</string>
+
+
+    <!--忘记密码界面-->
+    <string name="retrieve">Retrieve Password</string>
+    <string name="send">Send</string>
+    <string name="verification">Pin Code</string>
+    <string name="verificationError">Incorrect Pin code , please reconfirm.</string>
+    <string name="verificationTimeOut">Invalid pin code, get a new one.</string>
+    <string name="inputUser">Please inout your phone number/e-mail.</string>
+    <string name="inputVerification">Please input verification code.</string>
+    <string name="inoutConfirmPassword">Please confirm your password.</string>
+    <string name="setPassword">Setting password</string>
+    <string name="confirmPassword">Confirm password</string>
+    <string name="resetSuccess">Reset password successfully.</string>
+    <string name="save">Save</string>
+
+    <!--搜索界面-->
+    <string name="find">Search Device</string>
+    <string name="finding">Finding</string>
+    <string name="select">Select Device ID</string>
+    <string name="search">No Device?Click to refrech</string>
+    <string name="binding">Binding on bracelet</string>
+    <string name="bindError">Bind failed,enter visitor mode</string>
+
+    <!--主界面-->
+    <string name="sleep">Sleep</string>
+    <string name="report">Report</string>
+    <string name="alarm">Alarm</string>
+    <string name="me">Me</string>
+    <string name="lining">Connecting...</string>
+    <string name="touchAgain">Press the back button again to exit</string>
+    <string name="tokenTimeout">Login has expired. Please login again</string>
+    <string name="loginError">Logon failed, please check network Settings</string>
+
+    <!--睡眠界面-->
+    <string name="startSleep">Start Monitor</string>
+    <string name="stopSleep">Stop Monitor</string>
+    <string name="bluetoochError">Bluetooth is disconnected, unable to operate.</string>
+    <string name="sleepLow">Less than 30 minutes, unable to get the sleeping report.</string>
+    <string name="exitAlso">Bluetooth disconnected, continue or end of sleep?</string>
+    <string name="monitor">Real-time Monitor</string>
+    <string name="heartUnit">B/min</string>
+    <string name="heart">Heart Rate</string>
+    <string name="breath">Breath Rate</string>
+    <string name="turnOver">times/hour</string>
+
+    <!--报告界面-->
+    <string name="day">Day</string>
+    <string name="week">Week</string>
+    <string name="month">Month</string>
+    <string name="awake">Awake</string>
+    <string name="deep">Deep</string>
+    <string name="mid">Middle</string>
+    <string name="light">Light</string>
+    <string name="realSleepTime">Total time</string>
+    <string name="deepSleepTime">Deep sleep</string>
+    <string name="midSleepTime">Middle sleep</string>
+    <string name="lightSleepTime">Light sleep</string>
+    <string name="dreamTime">Awake</string>
+    <string name="wakeTimes">Turn over</string>
+    <string name="sleepMonitoring">Sleeping monitor</string>
+    <string name="averageSleep">Sleep Time Per Day</string>
+    <string name="averageDeep">Deep sleep</string>
+    <string name="averageMid">Middle sleep</string>
+    <string name="averageLight">Light sleep</string>
+    <string name="averageAwake">Awake</string>
+    <string name="syncing">Data syncing</string>
+    <string name="synError">Sync failed, please confirm the Bluetooth is connected</string>
+    <string name="sleepReport">Your Sleep Report</string>
+    <string name="more"><u>get more report</u></string>
+    <string name="today">today</string>
+    <string name="yesterday">yesterday</string>
+    <string name="future">No sleep data for the selected date</string>
+
+
+    <!--闹钟界面-->
+    <string name="wakeItem">wake up</string>
+    <string name="goodNightItem">bedtime</string>
+    <string name="nurseItem">monitor</string>
+    <string name="smart">Intelligent wake-up</string>
+    <string name="wake">wake alarm</string>
+    <string name="goodNight">bedtime alarm</string>
+    <string name="nurse">monitor alarm</string>
+    <string name="add">add</string>
+    <string name="repeat">Repeat</string>
+    <string name="type">Type</string>
+    <string name="remark">Remark</string>
+    <string name="remind">Remind Device</string>
+    <string name="intelligent">Intelligent awaken</string>
+    <string name="addAlarm">Add Alarm</string>
+    <string name="changeAlarm">Change Alarm</string>
+    <string name="phoneNoty">Phone</string>
+    <string name="deviceNoty">Sleeping Belt</string>
+    <string name="inputRemark">Comment the type of alarm</string>
+    <string name="addClockError">Sorry, alarm list is full , add failed</string>
+    <string name="remarkError">Comment the type of monitor</string>
+    <string name="mon">Mon.</string>
+    <string name="tues">Tue.</string>
+    <string name="wed">Wed.</string>
+    <string name="thur">Thu.</string>
+    <string name="fri">Fri.</string>
+    <string name="sat">Sat.</string>
+    <string name="sun">Sun.</string>
+    <string name="cencelClock">Please swipe up to stop ringing</string>
+    <string name="awakeTime">Wake up</string>
+    <string name="sleepTime"> Time for bed</string>
+    <string name="nurseTime">Time out</string>
+    <string name="noRepeat">Please select the date to repeat</string>
+
+    <!--我的界面-->
+    <string name="data">Server Data Synced</string>
+    <string name="myDevice">My Devices</string>
+    <string name="userInfo">Account manage</string>
+    <string name="personInfo">Personal Info</string>
+    <string name="help">Help</string>
+    <string name="advise">Sleep Advise</string>
+    <string name="feedback">Feedback</string>
+    <string name="about">About</string>
+    <string name="updown">syncing</string>
+
+    <!--关于我们界面-->
+    <string name="protocol">User Services Agreement</string>
+    <string name="your_feedback">Your feedback/question</string>
+    <string name="tooLong">The input is too long</string>
+    <string name="empty">Feedback cannot be empty</string>
+    <string name="send_success">Submitted successfully</string>
+    <string name="submit">Submit</string>
+
+    <!--我的设备界面-->
+    <string name="power">Battery</string>
+    <string name="checking">Checking...</string>
+    <string name="softV">Firmware Version</string>
+    <string name="deviceID">Device ID</string>
+    <string name="blueMac">Bluetooth IP</string>
+    <string name="unBindDevice">Unbound device</string>
+    <string name="newVersion">Software update</string>
+    <string name="versionMsg">New app is detected, download now?</string>
+    <string name="connectting">Connecting...</string>
+    <string name="realStart">Ready to burn</string>
+    <string name="enableDfu">DFU initialization</string>
+    <string name="reallyFirm">Verify firmware</string>
+    <string name="firming">Upgrading</string>
+    <string name="current">Current version:</string>
+    <string name="touchToUpdata">Latest version:</string>
+    <string name="channel_connected_devices_title">Background connections</string>
+    <string name="channel_connected_devices_description">Shows a notification when a device is connected in background.</string>
+    <string name="channel_files_title">Files</string>
+    <string name="channel_files_description">Shows notifications when new files has been saved.</string>
+    <string name="channel_proximity_warnings_title">Proximity warnings</string>
+    <string name="channel_proximity_warnings_description">Shows notifications when a proximity device got out of range.</string>
+    <string name="bettery">The battery is under 15%, please note</string>
+
+    <!--账号管理界面-->
+    <string name="mailAcount">Email</string>
+    <string name="phoneAcount">Mobile</string>
+    <string name="resetPassword">Change password</string>
+    <string name="newPassword">Please enter your new password</string>
+    <string name="confirmNewPassword">Please confirm your new password</string>
+    <string name="unbind">Unbound</string>
+    <string name="reMail">Email replacement</string>
+    <string name="bindMail">Email binding</string>
+    <string name="bindPhone">Phone binding</string>
+    <string name="rePhone">Phone change</string>
+    <string name="noMail">No email binding</string>
+    <string name="noPhone">No phone binding</string>
+    <string name="unBindSeccuss">Unbound the mailbox successfully.</string>
+    <string name="bindSeccuss">Congratulations, the binding is completed.</string>
+    <string name="changeSeccuss">Congratulations, password changed successfully</string>
+    <string name="oldPassword">Current Password</string>
+    <string name="newPassword1">New Password</string>
+    <string name="logout">Log out</string>
+
+    <!--个人中心界面-->
+    <string name="name">Name</string>
+    <string name="inputName">Please enter your name</string>
+    <string name="inputStature">Please enter your height</string>
+    <string name="inputWeight">Please enter your weight</string>
+    <string name="gender">Gender</string>
+    <string name="age">Age</string>
+    <string name="stature">Height</string>
+    <string name="weight">Weight</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="birthday">Birth date</string>
+    <string name="unit">Unit</string>
+    <string name="metric">metric</string>
+    <string name="british">inch</string>
+    <string name="writeInfoError">Saved successfully, but the device is not connected, content cannot be synchronized to the device.</string>
+    <string name="saveOK">Save Success</string>
+    <string name="writeToDev">Sync to device.</string>
+
+
+    <!--帮助中心界面-->
+    <string name="question">FAQ</string>
+    <string name="problem1">Operation Guide</string>
+    <string name="problem2">What is the principle of sleepee?</string>
+    <string name="problem3">Can I turn off the phone when the device is working?</string>
+    <string name="problem4">Can I remote the device?</string>
+    <string name="problem5">How long sleep data can be saved?</string>
+    <string name="problem6">The device pair failed with phone?</string>
+    <string name="problem7">Can we use the device on a double bed?</string>
+    <string name="problem8">I used the device yesterday, but did not get the sleep report.</string>
+    <string name="problem9">Why does the alarm clock not ring although the alarm is settled up successfully?</string>
+    <string name="problem10">How to configure the device at the first time?</string>
+    <string name="problem11">How to reconnect the phone with device after disconnected?</string>
+
+    <string name="answer2">\t\tThe hardware design is used to collect the small signal changes caused by the breathing in the human sleep state. Such as respiratory rate and heart rate are extracted through these signal processing for statistical analysis, and the sleep report is analyzed according to the sleep algorithm.</string>
+    <string name="answer3">\t\tSince you binding the device first, user can use the device independently except the device power down. and the user could synchronize the data and generate the sleep report by the app within 7 days.</string>
+    <string name="answer4">\t\tThe device connect with the phone via BLE, and it could be remote within the Bluetooth coverage distance.</string>
+    <string name="answer5">\t\tThe device keep 7 days sleep data maximally .</string>
+    <string name="answer6">1. Confirm that the device connect with mobile app normally.\n2. Check that the device is pairing correctly\n3. Check the operation is correctly which connect it in the sleepee application not in the system Bluetooth search status.</string>
+    <string name="answer7">\t\tYes. Although the signal could be disturbed by the side person, the impact on the accuracy of the monitoring is very small.device monitor the person who lying on default.</string>
+    <string name="answer8">\t\tMake sure your phone connected with the device successfully, and click the Sync icon at the upper-right corner of the report page to synchronize.</string>
+    <string name="answer9">The following conditions may cause the smart alarm clock does not work:\n1.Check that smart alarm mode is configured correctly\n2. APP(sleepee) does not working in the background\n3.APP(sleepee) blacklisted by Mobile Phone System\n4.APP(sleepee ) is cleaned mistakenly by security software\n5.sleepee APP installed on the phone SD card, t the software cannot be self-startup once the phone reboot\n6.Cannot ring the bell when is using by headphones\n7.the volume of Alarm clock ringtone is tuned to a minimum </string>
+    <string name="answer10">1.Long press the button on the top until the orange light is on\n2.Turn on the Bluetooth on your phone.\n3.Open the app to implement sing up/login\n4.Search the device ID and Connect to the device, it identifies the paired successfully when the light change from red to blue</string>
+    <string name="answer11">1.Open the app and login\n2.Click the connect icon at the right corner on the “sleep” menu</string>
+
+    <string name="lineDevice">device connection</string>
+    <string name="step1">step1</string>
+    <string name="step1Info">long press the button till the orange light on</string>
+    <string name="step2">step2</string>
+    <string name="step2Info">turn on the phone Bluetooth</string>
+    <string name="step3">step3</string>
+    <string name="step3Info">open the App to register/log in</string>
+    <string name="step4">step4</string>
+    <string name="step4Info">from orange to blue when connected successfully</string>
+    <string name="dataStatistics">sleep statistic</string>
+    <string name="NO1">NO.1 start &amp; end monitor</string>
+    <string name="NO1Info">click ‘start’ to monitor heart and breath rete\nclick ‘end’ to stop monitor</string>
+    <string name="NO2">NO.2 sleep report</string>
+    <string name="NO2Info">After the user has finished a period of sleep with the sleep belt, the sleep status of the current sleep can be checked in the report</string>
+
+    <!--建议界面-->
+    <string name="advise1">Sleep Quality</string>
+    <string name="advise2">What Are the Stages of Sleep?</string>
+    <string name="advise3">REM SLEEP</string>
+    <string name="advise4">Advices for fall asleep quickly</string>
+    <string name="advise5">Breathing rhythm</string>
+    <string name="advise6">Heart Rate</string>
+
+    <string name="advise1Info">\t\tA sleep cycle refers to the period of time it takes for an individual to progress through the stages of sleep outlined above. One does not go straight from deep sleep to REM sleep, however. Rather, a sleep cycle progress through the stages of non-REM sleep from light to deep sleep, then reverse back from deep sleep to light sleep, ending with time in REM sleep before starting over in light sleep again. After REM sleep, the individual returns to stage 1 of light sleep and begins a new cycle. As the night progresses, individuals spend increasingly more time in REM sleep and correspondingly less time in deep sleep. The first sleep cycle takes about 90 minutes. After that, they average between 100 to 120 minutes. Typically, an individual will go through four to five sleep cycles a night.\n\t\tUsually sleepers pass through five stages: 1, 2, 3, 4 and REM (rapid eye movement) sleep. These stages progress cyclically from 1 through REM then begin again with stage 1. A complete sleep cycle takes an average of 90 to 110 minutes, with each stage lasting between 5 to 15 minutes. The first sleep cycles each night have relatively short REM sleeps and long periods of deep sleep but later in the night, REM periods lengthen and deep sleep time decreases.</string>
+    <string name="advise3Info">\t\tDuring REM (rapid eye movement) sleep, brain waves mimic activity during the waking state. The eyes remain closed but move rapidly from side-to-side, perhaps related to the intense dream and brain activity that occurs during this stage.\n\n\t\tNational Sleep Foundation’s Sleep Duration Recommendations:</string>
+    <string name="advise6Info">\t\tA normal resting heart rate for adults ranges from 60 to 100 beats per minute.\n\t\tGenerally, a lower heart rate at rest implies more efficient heart function and better cardiovascular fitness. For example, a well-trained athlete might have a normal resting heart rate closer to 40 beats per minute.\n\t\tTo measure your heart rate, simply check your pulse. Place your index and third fingers on your neck to the side of your windpipe. To check your pulse at your wrist, place two fingers between the bone and the tendon over your radial artery — which is located on the thumb side of your wrist.\n\t\tWhen you feel your pulse, count the number of beats in 15 seconds. Multiply this number by four to calculate your beats per minute.\n\n\t\tKeep in mind that many factors can influence heart rate, including:\n\t\t•	Age\n\t\t•	Fitness and activity levels\n\t\t•	Being a smoker\n\t\t•	Having cardiovascular disease, high cholesterol or diabetes\n\t\t•	Air temperature\n\t\t•	Body position (standing up or lying down, for example)\n\t\t•	Emotions\n\t\t•	Body size\n\t\t•	Medications\n\n\t\tAlthough there is a wide range of normal, an unusually high or low heart rate may indicate an underlying problem. Consult your doctor if your resting heart rate is consistently above 100 beats a minute (tachycardia) or if you are not a trained athlete and your resting heart rate is below 60 beats a minute (bradycardia) — especially if you have other signs or symptoms, such as fainting, dizziness or shortness of breath.</string>
+
+    <string name="sleepState">\t\tThere are five stages of sleep. Stages 1-4 are non-REM sleep, followed by REM sleep.</string>
+    <string name="state1">STAGE 1</string>
+    <string name="state2">STAGE 2</string>
+    <string name="state3">STAGE 3</string>
+    <string name="state4">STAGE 4</string>
+
+    <string name="state1Info">\t\tStage 1 is light sleep where you drift in and out of sleep and can be awakened easily. In this stage, the eyes move slowly and muscle activity slows. During this stage, many people experience sudden muscle contractions preceded by a sensation of falling.</string>
+    <string name="state2Info">\t\tIn stage 2, eye movement stops and brain waves become slower with only an occasional burst of rapid brain waves. The body begins to prepare for deep sleep, as the body temperature begins to drop and the heart rates slows.</string>
+    <string name="state3Info">\t\tWhen a person enters stage 3, extremely slow brain waves called delta waves are interspersed with smaller, faster waves. This is deep sleep. It is during this stage that a person may experience sleepwalking, night terrors, talking during one’s sleep, and bedwetting. These behaviors are known as parasomnias, and tend to occur during the transitions between non-REM and REM sleep.</string>
+    <string name="state4Info">\t\tIn stage 4, deep sleep continues as the brain produces delta waves almost exclusively. People roused from this state feel disoriented for a few minutes.</string>
+
+    <string name="toSleep1">1.Practice progressive relaxation</string>
+    <string name="toSleep2">2.Listen to music</string>
+    <string name="toSleep3">3.Limit Caffeine and Drink a Soothing Beverage</string>
+    <string name="toSleep4">4.Take a warm shower before bed</string>
+    <string name="toSleep5">5.Turn Off All Electronics</string>
+
+    <string name="toSleep1Info">\t\tRecommended by the National Sleep Foundation as a way to fall asleep fast, progressive muscle relaxation involves slowly tensing and then relaxing each muscle in your body to help your body relax. The Mayo Clinic describes the technique as follows:\n\t\tStart by tensing and relaxing the muscles in your toes and progressively working your way up to your neck and head. You can also start with your head and neck and work down to your toes. Tense your muscles for at least five seconds and then relax for 30 seconds, and repeat.\n\t\t“I encourage patients to try progressive relaxation,” says Meltzer. “It’s not enough by itself, but in combination with other things, it definitely makes a huge difference.”</string>
+    <string name="toSleep2Info">\t\tStudies have shown that classical music, or any music that has a slow rhythm of 60 to 80 beats per minute, can help lull you to sleep. In a 2008 study, students aged 19 to 28 who listened to relaxing classical music for 45 minutes before bed showed significant improvement in sleep quality. Bonus: They also reported decreased symptoms of depression.</string>
+    <string name="toSleep3Info">\t\tCaffeine is widely used among people to fight fatigue and stimulate alertness. It can be found in foods and beverages like chocolate, coffee, sodas and energy drinks.\n\t\tUnfortunately, caffeine can have disastrous effects on your sleep.\n\t\tAlthough the effects of caffeine vary from person to person, it is recommended that you refrain from consuming caffeine at least six hours before bedtime.\n\t\tInstead, you could drink a soothing tea like chamomile tea, which has been shown to promote sleep and relaxation.</string>
+    <string name="toSleep4Info">\t\tWarming your body up with a hot shower an hour before bed and then stepping into cooler air will cause your body temperature to drop more precipitously. Studies show that this rapid temperature decrease slows your metabolism faster and prepares your body for sleep. “Showers can also be very relaxing, so that helps, too,” says Meltzer. If you shower every night around the same time, making it part of a consistent bedtime routine, you’ll see the most sleep value from it, she adds. “Then your body has an expectation of what’s coming next.”</string>
+    <string name="toSleep5Info">\t\tUsing electronic devices late at night is terrible for sleep.\n\t\tWatching TV, playing video games, using a mobile phone and social networking can make it significantly harder for you to fall and stay asleep.\n\t\tIt is recommended that you disconnect all electronics and put away computers and mobile phones so you can ensure a quiet place, free of distractions. You will be able to fall asleep much faster.</string>
+
+    <string name="breathMsg">\t\tThere is a general perception amongst clinicians that ‘normal’ breathing is steady and regular, while ‘abnormal’ breathing is irregular and more variable. There are specific well-known rhythms such as Cheyne-Stokes breathing that support this view. Cheyne-Stokes breathing is a distinctive pattern often seen in patients with end stage heart failure, characterised by periods of rapid breathing, followed by intermittent periods of not breathing (known as apnoea).</string>
+    <string name="breathPro1">1.Tachypnea</string>
+    <string name="breathPro2">2.Bradypnea</string>
+
+    <string name="breathPro1Info">\t\tTachypnea or tachypnoea is abnormally rapid breathing.\n\t\tIn adult humans at rest, any respiratory rate between 12 and 20 breaths per minute is normal and tachypnea is indicated by a rate greater than 20 breaths per minute.</string>
+    <string name="breathPro2Info">\t\tBradypnea or bradypnoea is abnormally slow breathing. The respiratory rate at which bradypnea is diagnosed depends on the age of the patient.\n\n\t\tAge ranges\n\n\t\tAge 0–1 year &lt; 30 breaths per minute\n\t\tAge 1–3 years &lt; 25 breaths per minute\n\t\tAge 3–12 years &lt; 20 breaths per minute\n\t\tAge 12–50 years &lt; 12 breaths per minute\n\t\tAge 50 and up &lt; 13 breaths per minute\n\n\t\tSymptoms\n\n\t\t•	Dizziness\n\t\t•	Near-fainting or fainting\n\t\t•	Fatigue\n\t\t•	Weakness\n\t\t•	Chest pains\n\t\t•	Shortness of breath\n\t\t•	Memory impairment or confusion\n\t\t•	Tiring easily during any physical activity</string>
+
+
+    <!--loading相关-->
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="lineError">Connection issue</string>
+    <string name="tip">Tip</string>
+    <string name="confirmDis">Device connected, do you need disconnect it?</string>
+    <string name="waitting">waitting...</string>
+    <string name="confirm">confirm</string>
+    <string name="httpError">Time out of request, please check the network</string>
+    <string name="blueUnline">Unable to set the alarm for Bluetooth disconnected</string>
+</resources>

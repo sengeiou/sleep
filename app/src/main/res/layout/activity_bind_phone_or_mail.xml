@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Controller.BindPhoneOrMailActivity"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <include layout="@layout/title1"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:src="@mipmap/signup_bgz"/>
+
+    <ImageView
+        android:id="@+id/sleepeeLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="115dp"
+        android:layout_marginLeft="40dp"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/signup_icon_logo"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@+id/sleepeeLogo"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="100dp">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/black1"
+            android:layout_marginLeft="@dimen/ListMargin"
+            android:layout_marginRight="@dimen/ListMargin"/>
+
+        <LinearLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/ListMargin"
+            android:layout_marginRight="@dimen/ListMargin"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/signup_icon_country"
+                />
+
+            <TextView
+                android:id="@+id/countryTv"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/inputTextHeight"
+                android:layout_marginLeft="@dimen/imageAndText"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical"
+                android:text="@string/china"
+                android:textSize="@dimen/simple_text_size"
+                android:textColor="@color/black"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginRight="5dp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/black1"
+            android:layout_marginLeft="@dimen/ListMargin"
+            android:layout_marginRight="@dimen/ListMargin"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/ListMargin"
+            android:layout_marginRight="@dimen/ListMargin">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/signup_icon_phone"/>
+
+
+
+            <EditText
+                android:id="@+id/userEt"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/inputTextHeight"
+                android:hint="@string/phone"
+                android:textSize="@dimen/edit_text_size"
+                android:textColorHint="@color/black1"
+                android:textColor="@color/black"
+                android:layout_marginLeft="@dimen/imageAndText"
+                android:lines="1"
+                android:textCursorDrawable="@null"
+                android:background="@null"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:id="@+id/userClearIv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginRight="5dp"
+                android:src="@mipmap/me_box_btn_del"
+                android:visibility="gone" />
+
+
+            <TextView
+                android:id="@+id/codeTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="0086"
+                android:textColor="@color/gray3"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="5dp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/black1"
+            android:layout_marginLeft="@dimen/ListMargin"
+            android:layout_marginRight="@dimen/ListMargin"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/ListMargin"
+            android:layout_marginRight="@dimen/ListMargin">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/signup_icon_sms"/>
+
+            <EditText
+                android:id="@+id/verificationCodeEt"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/inputTextHeight"
+                android:layout_marginLeft="@dimen/imageAndText"
+                android:inputType="number"
+                android:hint="@string/verification"
+                android:textSize="@dimen/edit_text_size"
+                android:textColorHint="@color/black1"
+                android:textColor="@color/black"
+                android:lines="1"
+                android:textCursorDrawable="@null"
+                android:background="@null"
+                android:layout_weight="1"
+                />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="@color/black1"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
+
+            <TextView
+                android:id="@+id/sendCodeTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/send"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/gray3"
+                />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/black1"
+            android:layout_marginLeft="@dimen/ListMargin"
+            android:layout_marginRight="@dimen/ListMargin"/>
+
+        <LinearLayout
+            android:id="@+id/saveLl"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="12dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center|bottom"
+            android:enabled="false">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/me_btn_save"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@drawable/text_bg_button"
+                android:text="@string/save"
+                android:textSize="15sp"
+                android:layout_marginBottom="15dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:src="@mipmap/search_bg_bottom"
+        android:layout_centerHorizontal="true"/>
+</RelativeLayout>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Controller.UserInfoActivity"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <include layout="@layout/title1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="85dp"
+        android:layout_marginBottom="100dp">
+
+    <LinearLayout
+        android:id="@+id/mailLl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/clock_layout_height"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ListMargin"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:textColor="@color/black1"
+            android:text="@string/mailAcount"/>
+
+        <TextView
+            android:id="@+id/mailTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:textColor="@color/black1"
+            android:text="@string/noMail"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/ListMargin"
+
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/me_arrow_right"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/black1"
+        android:layout_marginRight="@dimen/ListMargin"
+        android:layout_marginLeft="@dimen/ListMargin"/>
+
+    <LinearLayout
+        android:id="@+id/phoneLl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/clock_layout_height"
+
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/ListMargin"
+            android:layout_weight="1"
+            android:text="@string/phone"
+            android:textColor="@color/black1" />
+
+        <TextView
+            android:id="@+id/phoneTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:textColor="@color/black1"
+            android:text="@string/noPhone"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/ListMargin"
+
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/me_arrow_right"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/black1"
+        android:layout_marginRight="@dimen/ListMargin"
+        android:layout_marginLeft="@dimen/ListMargin"/>
+
+    <LinearLayout
+        android:id="@+id/resetPasswordLl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/clock_layout_height"
+
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ListMargin"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:textColor="@color/black1"
+            android:text="@string/resetPassword"/>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/ListMargin"
+            android:layout_marginLeft="@dimen/ListMargin"
+            android:layout_gravity="center_vertical|end"
+            android:src="@mipmap/me_arrow_right"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/black1"
+        android:layout_marginRight="@dimen/ListMargin"
+        android:layout_marginLeft="@dimen/ListMargin"/>
+
+        <LinearLayout
+            android:id="@+id/logoutLl"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="12dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center|bottom"
+            android:enabled="false">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/me_btn_logout"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black1"
+                android:text="@string/logout"
+                android:textSize="15sp"/>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:src="@mipmap/search_bg_bottom"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

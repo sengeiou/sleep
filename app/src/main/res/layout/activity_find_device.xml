@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Controller.FindDeviceActivity"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <include layout="@layout/title1"/>
+
+    <RelativeLayout
+        android:id="@+id/upView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dp">
+
+        <ImageView
+            android:id="@+id/animIv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/sleep_metion"
+            android:layout_margin="60dp"/>
+
+        <ImageView
+            android:id="@+id/animIv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/sleep_metion"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/signup_icon_logo"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:orientation="vertical"
+        android:layout_below="@id/upView"
+        android:layout_marginBottom="100dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/MainColor"
+            android:text="@string/select"/>
+
+       <ListView
+           android:id="@+id/deviceList"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:divider="@color/nullColor"
+           android:dividerHeight="0dp"
+           android:layout_marginTop="@dimen/report_icon_top"></ListView>
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal">-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/updataIv"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center_vertical|end"-->
+                <!--android:layout_marginRight="10dp"-->
+                <!--android:src="@mipmap/searchdevice_refresh"/>-->
+
+            <!--<TextView-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:textSize="13sp"-->
+                <!--android:textColor="@color/black1"-->
+                <!--android:text="@string/search"/>-->
+
+
+        <!--</LinearLayout>-->
+
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:src="@mipmap/search_bg_bottom"
+        android:layout_centerHorizontal="true"/>
+</RelativeLayout>

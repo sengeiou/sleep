@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="edit_text_hint_size">15sp</dimen>
+
+    <dimen name="edit_text_size">15sp</dimen>
+
+    <dimen name="simple_text_size">15sp</dimen>
+
+    <dimen name="clock_layout_height">40dp</dimen>
+
+    <dimen name="report_icon_left">5dp</dimen>
+    <dimen name="report_icon_right">5dp</dimen>
+    <dimen name="report_icon_top">5dp</dimen>
+    <dimen name="report_icon_bottom">4dp</dimen>
+
+    <dimen name="report_menu_text_size">13sp</dimen>
+    <dimen name="helpInfo">12sp</dimen>
+
+    <dimen name="inputTextHeight">40dp</dimen>
+
+    <dimen name="ListMargin">30dp</dimen>
+
+    <dimen name="imageAndText">15dp</dimen>
+
+</resources>

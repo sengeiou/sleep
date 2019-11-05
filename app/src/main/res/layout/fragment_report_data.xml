@@ -1,0 +1,680 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+
+        <TextView
+            android:id="@+id/reportTimeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="xxx"
+            android:textSize="16sp"
+            android:textColor="@color/gray3"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"/>
+
+
+        <TextView
+            android:id="@+id/moreTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/more"
+            android:textSize="12sp"
+            android:textColor="@color/main"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"/>
+
+
+        <TextView
+            android:id="@+id/realSleepTimeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/MainColor"
+            android:textSize="18sp"
+            android:text="--h--min"/>
+
+
+        <LinearLayout
+            android:id="@+id/hintLl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:visibility="gone"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:background="@color/deepColor"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:layout_marginLeft="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/deep"
+                android:textColor="@color/gray3"
+                android:layout_gravity="center_vertical"/>
+
+            <View
+                android:layout_marginLeft="3dp"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:background="@color/middleColor"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:layout_marginLeft="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mid"
+                android:textColor="@color/gray3"
+                android:layout_gravity="center_vertical"/>
+
+            <View
+                android:layout_marginLeft="3dp"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:background="@color/lightColor"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:layout_marginLeft="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/light"
+                android:textColor="@color/gray3"
+                android:layout_gravity="center_vertical"/>
+
+            <View
+                android:layout_marginLeft="3dp"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:background="@color/wakeColor"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:layout_marginLeft="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/awake"
+                android:textColor="@color/gray3"
+                android:layout_gravity="center_vertical"/>
+
+        </LinearLayout>
+
+        <com.jonas.jgraph.graph.JcoolGraph
+            android:id="@+id/sug_recode_line"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:clickable="true"
+            android:paddingRight="5dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginLeft="25dp"
+            app:normolcolor="#575756"
+            app:graphstyle="line"
+            app:showymsg="true"
+            />
+
+        <!--六项数据-->
+
+        <LinearLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/report_icon_left"
+                android:layout_marginBottom="@dimen/report_icon_left">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/report_icon_deep"
+                    android:layout_gravity="center_horizontal" />
+
+                <TextView
+                    android:id="@+id/menuOneTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/report_statistics_text_color"
+                    android:textSize="@dimen/report_menu_text_size"
+                    android:text="@string/deepSleepTime"
+                    android:layout_marginBottom="@dimen/report_icon_bottom"
+                    android:layout_gravity="center_horizontal"/>
+
+                <ProgressBar
+                    android:id="@+id/deepPb"
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_marginBottom="6dp"
+                    android:max="100"
+                    android:progressDrawable="@drawable/my_progress_bar"
+                    android:background="@drawable/my_progress_background"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/deepSleepTimeTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/report_statistics_text_color"
+                    android:text="--h--min"
+                    android:layout_gravity="center_horizontal"/>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="@dimen/report_icon_left"
+                android:layout_marginBottom="@dimen/report_icon_left">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/report_icon_middle"
+                    android:layout_gravity="center_horizontal" />
+
+                <TextView
+                    android:id="@+id/menuTwoTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/report_statistics_text_color"
+                    android:textSize="@dimen/report_menu_text_size"
+                    android:text="@string/midSleepTime"
+                    android:layout_marginBottom="@dimen/report_icon_bottom"/>
+
+                <ProgressBar
+                    android:id="@+id/middlePb"
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_marginBottom="6dp"
+                    android:max="100"
+                    android:progressDrawable="@drawable/my_progress_bar"
+                    android:background="@drawable/my_progress_background"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/midSleepTimeTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/report_statistics_text_color"
+                    android:text="--h--min"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="@dimen/report_icon_left"
+                android:layout_marginBottom="@dimen/report_icon_left">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/report_icon_light"
+                    android:layout_gravity="center_horizontal" />
+
+                <TextView
+                    android:id="@+id/menuThreeTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/report_statistics_text_color"
+                    android:textSize="@dimen/report_menu_text_size"
+                    android:text="@string/lightSleepTime"
+                    android:layout_marginBottom="@dimen/report_icon_bottom"/>
+
+                <ProgressBar
+                    android:id="@+id/lightPb"
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_marginBottom="6dp"
+                    android:max="100"
+                    android:progressDrawable="@drawable/my_progress_bar"
+                    android:background="@drawable/my_progress_background"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/lightSleepTimeTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/report_statistics_text_color"
+                    android:text="--h--min"/>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+        <!---->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/report_icon_left"
+                android:layout_marginBottom="@dimen/report_icon_left"
+                >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/report_icon_wakeup"
+                        android:layout_gravity="center_horizontal" />
+
+                    <TextView
+                        android:id="@+id/menuFourTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/report_statistics_text_color"
+                        android:textSize="@dimen/report_menu_text_size"
+                        android:text="@string/dreamTime"
+                        android:layout_marginBottom="@dimen/report_icon_bottom"/>
+
+                <ProgressBar
+                    android:id="@+id/wakePb"
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_marginBottom="6dp"
+                    android:max="100"
+                    android:progressDrawable="@drawable/my_progress_bar"
+                    android:background="@drawable/my_progress_background"
+                    android:layout_gravity="center_vertical" />
+
+                    <TextView
+                        android:id="@+id/dreamTimeTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/report_statistics_text_color"
+                        android:text="--h--min"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="@dimen/report_icon_left"
+                android:layout_marginBottom="@dimen/report_icon_left">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/report_icon_heartrate"
+                    android:layout_gravity="center_horizontal" />
+
+                <TextView
+                    android:id="@+id/menuFiveTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/report_statistics_text_color"
+                    android:textSize="@dimen/report_menu_text_size"
+                    android:text="@string/heart"
+                    android:layout_marginBottom="@dimen/report_icon_bottom"/>
+
+                <ProgressBar
+                    android:id="@+id/heartPb"
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_marginBottom="6dp"
+                    android:max="100"
+                    android:progressDrawable="@drawable/my_progress_bar"
+                    android:background="@drawable/my_progress_background"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/heartTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/report_statistics_text_color"
+                    android:text="@string/heartUnit"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="@dimen/report_icon_left"
+                android:layout_marginBottom="@dimen/report_icon_left">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/report_icon_breath"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/report_icon_left"/>
+
+                <TextView
+                    android:id="@+id/menuSixTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/report_statistics_text_color"
+                    android:textSize="@dimen/report_menu_text_size"
+                    android:text="@string/breath"
+                    android:layout_marginBottom="@dimen/report_icon_bottom"/>
+
+                <ProgressBar
+                    android:id="@+id/breathPb"
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_marginBottom="6dp"
+                    android:max="100"
+                    android:progressDrawable="@drawable/my_progress_bar"
+                    android:background="@drawable/my_progress_background"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/breathTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/report_statistics_text_color"
+                    android:text="@string/heartUnit"/>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/gray3"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/sleepMonitoring"/>
+
+        <!--心率图-->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/realtime_icon_heartrate"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/report_icon_left"
+                android:layout_marginRight="@dimen/report_icon_right"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/MainColor"
+                android:text="@string/heart"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"/>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/realtime_bg_heartrate"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:id="@+id/heartForTableTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/MainColor"
+                android:text="--B/min"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="20dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_centerVertical="true">
+
+
+                <com.jonas.jgraph.graph.JcoolGraph
+                    android:id="@+id/tableForHeart"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:clickable="true"
+                    android:paddingRight="5dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginLeft="40dp"
+                    app:normolcolor="#d1b793"
+                    app:graphstyle="line"
+                    app:showymsg="true"
+                    />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <!--呼吸图-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/realtime_icon_breath"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/report_icon_left"
+                android:layout_marginRight="@dimen/report_icon_right"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/MainColor"
+                android:text="@string/breath"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/realtime_bg_breath"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:id="@+id/breathForTableTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/MainColor"
+                android:text="--B/min"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="20dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_centerVertical="true">
+
+                <com.jonas.jgraph.graph.JcoolGraph
+                    android:id="@+id/tableForBreath"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginLeft="40dp"
+                    android:clickable="true"
+                    android:paddingRight="5dp"
+                    app:normolcolor="#21a0bf"
+                    app:graphstyle="line"
+                    app:showymsg="true"
+                    />
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+        <!--翻身/平均睡眠图-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/report_icon_turn"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/report_icon_left"
+                android:layout_marginRight="@dimen/report_icon_right"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/MainColor"
+                android:text="@string/turnOver"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/realtime_bg_heartrate"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:id="@+id/thirdForTableTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/MainColor"
+                android:text="--T"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="20dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_centerVertical="true">
+
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="180dp"/>-->
+
+                <com.jonas.jgraph.graph.JcoolGraph
+                    android:id="@+id/anotherView"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:clickable="true"
+                    android:paddingRight="5dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginLeft="40dp"
+                    app:graphstyle="line"
+                    app:showymsg="true"
+                    android:layout_alignParentBottom="true"
+                    app:normolcolor="#d1b793"
+                />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/search_bg_bottom"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"/>
+
+    </LinearLayout>
+
+</ScrollView>

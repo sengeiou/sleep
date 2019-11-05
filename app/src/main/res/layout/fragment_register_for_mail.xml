@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/black1"
+        android:layout_marginLeft="@dimen/ListMargin"
+        android:layout_marginRight="@dimen/ListMargin"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/ListMargin"
+        android:layout_marginRight="@dimen/ListMargin"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/signup_icon_email"/>
+
+        <EditText
+            android:id="@+id/mailEt"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/inputTextHeight"
+            android:inputType="textWebEmailAddress"
+            android:hint="@string/email"
+            android:textSize="@dimen/edit_text_size"
+            android:textColorHint="@color/black1"
+            android:textColor="@color/black"
+            android:layout_marginLeft="@dimen/imageAndText"
+            android:lines="1"
+            android:textCursorDrawable="@null"
+            android:background="@null"
+            android:layout_weight="1"/>
+
+
+        <ImageView
+            android:id="@+id/mailClearIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginRight="5dp"
+            android:src="@mipmap/me_box_btn_del"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/black1"
+        android:layout_marginLeft="@dimen/ListMargin"
+        android:layout_marginRight="@dimen/ListMargin"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/ListMargin"
+        android:layout_marginRight="@dimen/ListMargin"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/signup_icon_password"/>
+
+        <EditText
+            android:id="@+id/passwordEt"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/inputTextHeight"
+            android:inputType="textPassword"
+            android:hint="@string/setPassword"
+            android:textSize="@dimen/edit_text_size"
+            android:textColorHint="@color/black1"
+            android:textColor="@color/black"
+            android:layout_marginLeft="@dimen/imageAndText"
+            android:lines="1"
+            android:textCursorDrawable="@null"
+            android:background="@null"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/passwordClearIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginRight="5dp"
+            android:src="@mipmap/me_box_btn_del"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/black1"
+        android:layout_marginLeft="@dimen/ListMargin"
+        android:layout_marginRight="@dimen/ListMargin"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/ListMargin"
+        android:layout_marginRight="@dimen/ListMargin"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/signup_icon_email"/>
+
+        <EditText
+            android:id="@+id/confirmPasswordEt"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/inputTextHeight"
+            android:inputType="textPassword"
+            android:hint="@string/confirmPassword"
+            android:textSize="@dimen/edit_text_size"
+            android:textColorHint="@color/black1"
+            android:textColor="@color/black"
+            android:layout_marginLeft="@dimen/imageAndText"
+            android:lines="1"
+            android:textCursorDrawable="@null"
+            android:background="@null"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/confirmPasswordClearIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginRight="5dp"
+            android:src="@mipmap/me_box_btn_del"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/black1"
+        android:layout_marginLeft="@dimen/ListMargin"
+        android:layout_marginRight="@dimen/ListMargin"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/ListMargin"
+        android:layout_marginRight="@dimen/ListMargin">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/signup_icon_sms"/>
+
+        <EditText
+            android:id="@+id/verificationCodeEt"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/inputTextHeight"
+            android:layout_marginLeft="@dimen/imageAndText"
+            android:inputType="number"
+            android:hint="@string/verification"
+            android:textSize="@dimen/edit_text_size"
+            android:textColorHint="@color/black1"
+            android:textColor="@color/black"
+            android:lines="1"
+            android:textCursorDrawable="@null"
+            android:background="@null"
+            android:layout_weight="1"
+            />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="30dp"
+            android:background="@color/black1"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
+
+
+
+        <TextView
+            android:id="@+id/sendCodeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/send"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/black1"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/black1"
+        android:layout_marginLeft="@dimen/ListMargin"
+        android:layout_marginRight="@dimen/ListMargin"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/ListMargin"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/check_box_bg"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp"/>
+
+        <TextView
+            android:id="@+id/privacyTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/privacy"
+            android:textColor="@color/black"
+            android:textColorLink="@color/MainColor"
+            android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/signLl"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="12dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center|bottom"
+        android:enabled="false"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/signup_btn_signup"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@drawable/text_bg_button"
+            android:text="@string/sign"
+            android:textSize="15sp"
+            android:layout_marginBottom="15dp"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

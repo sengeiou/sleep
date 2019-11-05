@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">图表</string>
+    <string name="mon">Mon.</string>
+    <string name="tues">Tue.</string>
+    <string name="wed">Wed.</string>
+    <string name="thur">Thu.</string>
+    <string name="fri">Fri.</string>
+    <string name="sat">Sat.</string>
+    <string name="sun">Sun.</string>
+</resources>

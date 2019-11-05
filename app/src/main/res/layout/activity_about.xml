@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".Controller.ChangePasswordActivity">
+
+
+    <include layout="@layout/title1"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:src="@mipmap/signup_bgz"/>
+
+    <ImageView
+        android:id="@+id/sleepeeLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="145dp"
+        android:layout_marginLeft="40dp"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/signup_icon_logo"/>
+
+
+    <TextView
+        android:id="@+id/versionTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/MainColor"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/sleepeeLogo"
+        android:layout_marginTop="15dp"/>
+
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/black1"
+        android:layout_marginLeft="@dimen/ListMargin"
+        android:layout_marginRight="@dimen/ListMargin"
+        android:layout_below="@+id/versionTv"
+        android:layout_marginTop="10dp" />
+
+    <LinearLayout
+        android:id="@+id/protocolLl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/clock_layout_height"
+        android:orientation="horizontal"
+        android:layout_below="@+id/view1"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ListMargin"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:textColor="@color/black1"
+            android:text="@string/protocol"/>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/ListMargin"
+            android:layout_gravity="center_vertical|end"
+            android:src="@mipmap/me_arrow_right"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/black1"
+        android:layout_marginLeft="@dimen/ListMargin"
+        android:layout_marginRight="@dimen/ListMargin"
+        android:layout_below="@+id/protocolLl"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/search_bg_bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

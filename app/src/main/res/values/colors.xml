@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    
+    <color name="MainColor">#1b86a4</color>
+    <color name="MainColor1">#9ed0d8</color>
+    <color name="brown">#d1b290</color>
+    <color name="nullColor">#00ffffff</color>
+    <color name="white">#ffffff</color>
+    <color name="white1">#99ffffff</color>
+    <color name="gray">#38393e</color>
+    <color name="gray1">#ebf0f2</color>
+    <color name="gray2">#a3bbd3</color>
+    <color name="gray3">#575756</color>
+    <color name="black">#000000</color>
+    <color name="black1">#99000000</color>
+    <color name="black2">#44000000</color>
+    <color name="blue">#2222ff</color>
+    <color name="blue1">#992222ff</color>
+
+    <color name="alarmOn">#575756</color>
+    <color name="alarmOff">#B1B1B1</color>
+    <color name="alarmType">#1c1c1b</color>
+
+    <color name="reportUnSelect">#b1aca8</color>
+    <color name="deepColor">#1b86a3</color>
+    <color name="middleColor">#23abcb</color>
+    <color name="lightColor">#48d8ef</color>
+    <color name="wakeColor">#8848d8ef</color>
+    <color name="report_statistics_text_color">#b1aca8</color>
+
+    <color name="report_pb_bg">#e5e4df</color>
+    <color name="report_pb_top">#a3bbd3</color>
+
+</resources>

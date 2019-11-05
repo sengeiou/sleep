@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">sleepee</string>
+    <string name="company">深圳市智能时代科技有限公司\nwww.znsdkj.com</string>
+
+    <!--登录界面-->
+    <string name="phone">手机号</string>
+    <string name="email">电子邮箱</string>
+    <string name="password">密码</string>
+    <string name="forget">忘记密码?</string>
+    <string name="china">中国</string>
+    <string name="remember">记住密码</string>
+    <string name="sign">注册</string>
+    <string name="signLine"><u>注册</u></string>
+    <string name="login">登录</string>
+    <string name="passwordError">密码不一致，请重新输入</string>
+    <string name="unregister">用户不存在</string>
+    <string name="inputNum">请输入您的手机号</string>
+    <string name="inputMail">请输入您的电子邮箱</string>
+    <string name="emailError">邮箱格式有误，请输入正确的邮箱</string>
+    <string name="inputPassword">请输入密码</string>
+    <string name="error">错误</string>
+    <string name="logging">登录中...</string>
+
+    <!--注册界面-->
+    <string name="checkPrivacy">请确认您已阅读过隐私条款</string>
+    <string name="userIsRegister">该用户已经被注册</string>
+    <string name="privacy">已阅读 《<a href="https://cloud.znsdkj.com:8443/sleep/comm/statement">隐私条款</a>》</string>
+    <string name="confirmPasswordError">两次密码输入不一致</string>
+
+
+    <!--忘记密码界面-->
+    <string name="retrieve">找回密码</string>
+    <string name="send">发送</string>
+    <string name="verification">验证码</string>
+    <string name="verificationError">验证码错误，请确认</string>
+    <string name="verificationTimeOut">验证码已过期，请重新获取</string>
+    <string name="inputUser">请输入您的手机号/电子邮箱</string>
+    <string name="inputVerification">请输入验证码</string>
+    <string name="inoutConfirmPassword">请确认您的密码</string>
+    <string name="setPassword">设置密码</string>
+    <string name="confirmPassword">确认密码</string>
+    <string name="resetSuccess">密码重置成功</string>
+    <string name="save">保存</string>
+
+    <!--搜索界面-->
+    <string name="find">搜索设备</string>
+    <string name="finding">搜索中...</string>
+    <string name="select">选择设备ID</string>
+    <string name="search">没有设备？刷新试试</string>
+    <string name="binding">绑定中...</string>
+    <string name="bindError">Bind failed,enter visitor mode</string>
+
+    <!--主界面-->
+    <string name="sleep">睡眠</string>
+    <string name="report">报告</string>
+    <string name="alarm">闹钟</string>
+    <string name="me">我的</string>
+    <string name="lining">连接中...</string>
+    <string name="touchAgain">再按一次退出程序</string>
+    <string name="tokenTimeout">登录已过期，请重新登陆</string>
+    <string name="loginError">登录失败，请检测网络设置</string>
+
+    <!--睡眠界面-->
+    <string name="startSleep">开始监测</string>
+    <string name="stopSleep">结束监测</string>
+    <string name="bluetoochError">蓝牙断开，无法进行该操作</string>
+    <string name="sleepLow">睡眠低于30分钟，无法生成睡眠报告</string>
+    <string name="exitAlso">蓝牙已经断开，确定结束睡眠？</string>
+    <string name="monitor">实时监测</string>
+    <string name="heartUnit">次/分钟</string>
+    <string name="heart">心率</string>
+    <string name="breath">呼吸率</string>
+    <string name="turnOver">次/小时</string>
+
+    <!--报告界面-->
+    <string name="day">日</string>
+    <string name="week">周</string>
+    <string name="month">月</string>
+    <string name="awake">清醒</string>
+    <string name="deep">深睡</string>
+    <string name="mid">中睡</string>
+    <string name="light">浅睡</string>
+    <string name="realSleepTime">总睡眠时长</string>
+    <string name="deepSleepTime">深睡时长</string>
+    <string name="midSleepTime">中睡时长</string>
+    <string name="lightSleepTime">浅睡时长</string>
+    <string name="dreamTime">清醒时长</string>
+    <string name="wakeTimes">翻身次数</string>
+    <string name="sleepMonitoring">睡眠监测</string>
+    <string name="averageSleep">每日睡眠</string>
+    <string name="averageDeep">深睡时长</string>
+    <string name="averageMid">中睡时长</string>
+    <string name="averageLight">浅睡时长</string>
+    <string name="averageAwake">清醒时长</string>
+    <string name="syncing">数据同步中...</string>
+    <string name="synError">同步失败，请确认蓝牙是否正常连接</string>
+    <string name="sleepReport">你的睡眠报告</string>
+    <string name="more"><u>获取更多报告</u></string>
+    <string name="today">今天</string>
+    <string name="yesterday">昨天</string>
+    <string name="future">所选日期没有睡眠数据</string>
+
+
+    <!--闹钟界面-->
+    <string name="wakeItem">起床</string>
+    <string name="goodNightItem">睡眠</string>
+    <string name="nurseItem">监护</string>
+    <string name="smart">智能唤醒</string>
+    <string name="wake">起床唤醒闹钟</string>
+    <string name="goodNight">早睡提醒闹钟</string>
+    <string name="nurse">事件监护闹钟</string>
+    <string name="add">添加</string>
+    <string name="repeat">重复周</string>
+    <string name="type">类型</string>
+    <string name="remark">备注</string>
+    <string name="remind">响铃设备</string>
+    <string name="intelligent">智能唤醒</string>
+    <string name="addAlarm">添加闹钟</string>
+    <string name="changeAlarm">修改闹钟</string>
+    <string name="phoneNoty">手机</string>
+    <string name="deviceNoty">睡眠带</string>
+    <string name="inputRemark">请选择闹钟类型</string>
+    <string name="addClockError">对不起，闹钟列表已满，添加闹钟失败</string>
+    <string name="remarkError">请输入监护的内容</string>
+    <string name="mon">一</string>
+    <string name="tues">二</string>
+    <string name="wed">三</string>
+    <string name="thur">四</string>
+    <string name="fri">五</string>
+    <string name="sat">六</string>
+    <string name="sun">日</string>
+    <string name="cencelClock">上划停止响铃</string>
+    <string name="awakeTime">起床啦~</string>
+    <string name="sleepTime">睡眠时间到啦~</string>
+    <string name="nurseTime">时间到啦~</string>
+    <string name="noRepeat">请选择闹钟运行时间</string>
+
+    <!--我的界面-->
+    <string name="data">Server Data Synced</string>
+    <string name="myDevice">我的设备</string>
+    <string name="userInfo">账号信息</string>
+    <string name="personInfo">用户资料</string>
+    <string name="help">帮助</string>
+    <string name="advise">睡眠建议</string>
+    <string name="feedback">意见反馈</string>
+    <string name="about">关于我们</string>
+    <string name="updown">同步中...</string>
+
+    <!--关于我们界面-->
+    <string name="protocol">用户保护协议</string>
+    <string name="your_feedback">您的反馈/问题</string>
+    <string name="tooLong">您输入的文本太长了</string>
+    <string name="empty">意见不能为空</string>
+    <string name="send_success">提交成功</string>
+    <string name="submit">提交</string>
+
+    <!--我的设备界面-->
+    <string name="power">电池</string>
+    <string name="checking">查询中...</string>
+    <string name="softV">软件版本</string>
+    <string name="deviceID">设备ID</string>
+    <string name="blueMac">蓝牙IP</string>
+    <string name="unBindDevice">解绑设备</string>
+    <string name="newVersion">软件更新</string>
+    <string name="versionMsg">检测到新的软件版本，是否现在更新?</string>
+    <string name="connectting">连接中...</string>
+    <string name="realStart">准备烧录</string>
+    <string name="enableDfu">初始化DFU</string>
+    <string name="reallyFirm">校验固件</string>
+    <string name="firming">升级中...</string>
+    <string name="current">当前版本:</string>
+    <string name="touchToUpdata">最新版本:</string>
+    <string name="channel_connected_devices_title">后台连接</string>
+    <string name="channel_connected_devices_description">显示设备在后台连接时的通知</string>
+    <string name="channel_files_title">文件</string>
+    <string name="channel_files_description">显示保存新文件时的通知</string>
+    <string name="channel_proximity_warnings_title">邻近的警告</string>
+    <string name="channel_proximity_warnings_description">显示当接近设备超出范围时的通知</string>
+    <string name="bettery">睡眠带电池电量不足15%，请注意</string>
+
+    <!--账号管理界面-->
+    <string name="mailAcount">电子邮箱</string>
+    <string name="phoneAcount">手机号</string>
+    <string name="resetPassword">修改密码</string>
+    <string name="newPassword">请输入您的新密码</string>
+    <string name="confirmNewPassword">请确认您的新密码</string>
+    <string name="unbind">解除绑定</string>
+    <string name="reMail">修改电子邮箱</string>
+    <string name="bindMail">绑定电子邮箱</string>
+    <string name="bindPhone">绑定手机号</string>
+    <string name="rePhone">修改手机号</string>
+    <string name="noMail">没绑定电子邮箱</string>
+    <string name="noPhone">没绑定手机号</string>
+    <string name="unBindSeccuss">成功解除邮箱绑定</string>
+    <string name="bindSeccuss">恭喜您，绑定成功</string>
+    <string name="changeSeccuss">恭喜您，修改密码成功</string>
+    <string name="oldPassword">旧密码</string>
+    <string name="newPassword1">新密码</string>
+    <string name="logout">注销</string>
+
+    <!--个人中心界面-->
+    <string name="name">名字</string>
+    <string name="inputName">请输入您的名字</string>
+    <string name="inputStature">请输入您的身高</string>
+    <string name="inputWeight">请输入您的体重</string>
+    <string name="gender">性别</string>
+    <string name="age">年龄</string>
+    <string name="stature">身高</string>
+    <string name="weight">体重</string>
+    <string name="male">男生</string>
+    <string name="female">女生</string>
+    <string name="birthday">生日</string>
+    <string name="unit">单位</string>
+    <string name="metric">公制</string>
+    <string name="british">英制</string>
+    <string name="writeInfoError">保存成功，但设备未连接，内容无法同步到设备</string>
+    <string name="saveOK">保存成功</string>
+    <string name="writeToDev">同步到设备中...</string>
+
+
+    <string name="question">常见问题</string>
+    <string name="problem1">新手操作指南</string>
+    <string name="problem2">sleepee的监测原理是什么？</string>
+    <string name="problem3">设备工作时，可以将手机关机吗？</string>
+    <string name="problem4">能否远程控制SP18？</string>
+    <string name="problem5">我的睡眠数据可以存储多久？</string>
+    <string name="problem6">手机配置设备失败？</string>
+    <string name="problem7">在双人床上能否使用SP18？</string>
+    <string name="problem8">我检测了睡眠但是没有生成报告</string>
+    <string name="problem9">我设置的手机闹钟为什么没有响？</string>
+    <string name="problem10">初次使用睡眠带如何配置？</string>
+    <string name="problem11">手机与睡眠带断开连接之后如何恢复连接？</string>
+
+    <string name="answer2">\t\t\t\t通过硬件设计采集人体睡眠状态下呼吸引起的微小信号变化，通过这些信号处理提取出呼吸率、心率等生理特征信号进行统计分析，根据睡眠算法分析出睡眠报告。</string>
+    <string name="answer3">\t\t\t\t开始睡眠监测后，可以断开手机蓝牙、关闭APP、关闭手机， 7天内重新开启APP即可同步数据并生成睡眠报告。</string>
+    <string name="answer4">\t\t\t\t设备通过BLE与手机连接，蓝牙覆盖范围内可以远程控制。</string>
+    <string name="answer5">\t\t\t\t睡眠带上数据最大存储7天数据。</string>
+    <string name="answer6">1.确认设备与手机app是否处于连接状态\n2.确认设备配对是否正确\n3.在APP里面进行蓝牙设备搜索绑定，而不是手机系统设置里进行蓝牙搜索</string>
+    <string name="answer7">\t\t\t\t可以。虽然旁边人的信号会有所干扰，但对监测准确度的影响很小。设备默认监测躺在其上的用户。</string>
+    <string name="answer8">\t\t\t\t确保手机与设备连接成功，请点击报告页右上角的”同步”按钮进行同步。</string>
+    <string name="answer9">以下几种情况，可能会导致智能闹钟无法响铃：\n1.检查是否正确配置了智能闹钟模式\n2. sleepee APP没有后台运行APP(sleepee)\n3. sleepee APP被手机系统列入黑名单APP(sleepee)\n4. sleepee APP的后台被安全类软件误清理APP(sleepee )\n5. sleepee APP安装在手机SD卡，手机重启后软件无法自启\n6.使用耳机时无法外放响铃\n7.闹钟铃声被调至最小 </string>
+    <string name="answer10">1.长按设备开关至橙色灯亮起\n2.开启手机蓝牙开关\n3.打开手机APP完成注册/登录操作\n4.连接搜索到的设备ID，看到设备指示灯由红色变为蓝色表示配置成功。</string>
+    <string name="answer11">1.打开APP，完成登录操作\n2.点击页面中右上角连接按钮重新连接设备</string>
+
+    <string name="lineDevice">连接设备</string>
+    <string name="step1">第1步</string>
+    <string name="step1Info">长按睡眠带至橙灯亮</string>
+    <string name="step2">第2步</string>
+    <string name="step2Info">打开手机蓝牙</string>
+    <string name="step3">第3步</string>
+    <string name="step3Info">打开手机完成登录/注册操作</string>
+    <string name="step4">第4步</string>
+    <string name="step4Info">连接搜索到的睡眠带，连接成功睡眠带指示灯变为蓝色</string>
+    <string name="dataStatistics">数据统计</string>
+    <string name="NO1">NO.1 开始监测和结束检测</string>
+    <string name="NO1Info">在睡眠界面点击“开始监测”开始监测，手机开始监测用户的心率及呼吸率\n点击“结束检测”即结束检测，手机不会再显示用户的心率以及呼吸率</string>
+    <string name="NO2">NO.2 睡眠报告</string>
+    <string name="NO2Info">当用户使用睡眠带完成一段睡眠之后，可以在报告中查看当次睡眠的睡眠状况</string>
+
+    <!--睡眠建议-->
+    <string name="advise1">睡眠质量</string>
+    <string name="advise2">人的睡眠状态</string>
+    <string name="advise3">各年龄阶段建议睡眠时间</string>
+    <string name="advise4">快速入睡的方法</string>
+    <string name="advise5">呼吸率</string>
+    <string name="advise6">心率</string>
+
+    <string name="advise1Info">\t\t\t\t人的夜间睡眠，一般分5到6个周而复始的周期，研究表明睡眠的长度并不影响我们醒来时的清醒程度而是我们完成了多少个完整的睡眠周期,每个睡眠周期约90分钟。根据睡眠中脑电波、肌电波及眼球活动的变化，睡眠周期由浅睡期、轻睡期、中睡期、深睡期和快速眼动周期组成。而占整个睡眠时间大约55%的浅睡期和轻睡期，对解除疲劳作用甚微，只有进入深睡眠状态的中睡期、深睡期及快速眼动睡眠期，才对解除疲劳有较大作用。因此对睡眠好坏的评价，不能光看时间，更重 要的是看深度睡眠时间的长短。 “深度睡眠”是你入睡以后大脑不进行活动的深度休息。\n\t\t\t\t如果我们睡得很完整，很自然，不使用闹 钟把我们叫醒的话，我们将会在90分钟的倍数后醒来。例如，6小时，7个半小时或9小时，而不是7小时或8小时。在两个睡眠阶段之间，我们实际上并没有在睡，而是处于两个阶段的交接阶段，如果我们没有被打扰的话，我们很自然地进入下一个睡眠周期。一个只睡4个周期(6小时)的人将会比一个被打断完整周期的睡8个小时，10个小时的人感觉更好。</string>
+    <string name="advise3Info">新生儿（0~3个月）一天睡眠时间为14到17个小时\n婴\t\t儿（4~11个月）一天睡眠时间为12到15个小时\n幼\t\t儿（1~2岁）一天睡眠时间为11到14个小时\n学龄前（3~5岁）一天睡眠时间为10到13个小时\n学龄儿童（6~13岁）一天睡眠时间为9到11个小时\n青少年（14~17岁）一天睡眠时间为8到10个小时\n轻年人（18~25岁）一天睡眠时间为7到9个小时\n成年人（26~64岁）一天睡眠时间为7到9个小时\n老年人（65岁以上）一天睡眠时间为7到8个小时\n--以上数据来自美国国家睡眠基金会</string>
+    <string name="advise6Info">\t\t\t\t心率是指正常人安静状态下每分钟心跳的次数，也叫心率，一般为60-100次/分，可因年龄、性别或其他生理因素产生个体差异。一般来说，年龄越小，心率越快，老年人心跳比年轻人慢，女性的心率比同龄男性快，这些都是正常的生理现象。安静状态下，成人正常心率为60～100次/分钟，理想心率应为55～70次/分钟(运动员的心率较普通成人偏慢，一般为50次/分钟左右)。\n\t\t\t\t心率变化与心脏疾病密切相关。成人安静时心率超过100次/分钟(一般不超过160次/分钟)，称为窦性心动过速，常见于兴奋、激动、吸烟、饮酒、喝浓茶或咖啡后，或见于感染、发热、休克、贫血、缺氧、甲亢、心力衰竭等病理状态下，或见于应用阿托品、肾上腺素、麻黄素等药物后。\n\t\t\t\t成人安静时心率低于60次/分钟(一般在45次/分钟以上)，称为窦性心动过缓，可见于长期从事重体力劳动的健康人和运动员；或见于甲状腺机能低下、颅内压增高、阻塞性黄疸以及洋地黄、奎尼丁或心得安类药物过量。如果心率低于40次/分钟，应考虑有病态窦房结综合征、房室传导阻滞等情况。如果脉搏强弱不等、不齐且脉率少于心率，应考虑心房纤颤。如果心率超过160次/分钟，或低于40次/分钟，大多见于心脏病患者，如常伴有心悸、胸闷等不适感，应及早进行详细检查，以便针对病因进行治疗。</string>
+
+    <string name="sleepState">\t\t\t\t睡眠状态指人在睡觉时，表现出来的形态。与清醒状态相对，人睡觉有五个阶段的。分别是：浅睡、轻睡、中睡、深睡及快速眼动期，每一周期的睡眠过程也可由浅至深分为五个睡眠阶段。</string>
+    <string name="state1">1.浅睡阶段</string>
+    <string name="state2">2.轻睡阶段</string>
+    <string name="state3">3.中睡和深睡阶段</string>
+    <string name="state4">4.快速眼动期</string>
+
+    <string name="state1Info">\t\t\t\t从昏昏欲睡开始，逐渐入睡，不再保持觉醒状态。这时候，呼吸变慢，肌肉张力下降，身体轻度放松，此时属于浅睡状态，睡眠者较易被外界声音或触动所唤醒。</string>
+    <string name="state2Info">\t\t\t\t本阶段睡眠属轻睡或轻度至中度睡眠状态，睡眠者已不易被唤醒，此时肌肉进一步放松，脑电图显示梭状睡眠波。</string>
+    <string name="state3Info">\t\t\t\t这时候睡眠者进入中睡或深度睡眠状态，肌张力消失，肌肉充分松弛，感觉功能进一步降低，更不易被唤醒。\n\t\t\t\t睡眠的生理修复功效大多产生于这一阶段，比如生长激素分泌量的增加，生长激素能促进新细胞生长和组织的修复、让人体能在日常劳作后获得休整，恢复生机和活力。我们希望在每晚的睡眠时间中，深睡眠能占20%左右。</string>
+    <string name="state4Info">\t\t\t\t在这个阶段，眼球会呈现快速跳动现象，通常会有翻身的动作，并很容易惊醒。但是通常情况下，我们不会记得自己曾经醒来，然后就进入下一个睡眠周期，如果此时将其唤醒，大部分人报告说正在做梦。</string>
+
+    <string name="toSleep1">1.自我放松训练</string>
+    <string name="toSleep2">2.音乐疗法</string>
+    <string name="toSleep3">3.饮一杯温热的牛奶</string>
+    <string name="toSleep4">4.睡觉前先洗个澡</string>
+    <string name="toSleep5">5.睡前1小时远离电视、电脑</string>
+
+    <string name="toSleep1Info">\t\t\t\t卧在床上，闭眼，自然呼吸。然后把注意力集中在双手或双脚上，全身肌肉极度放松，用沉重感来体验肌肉的松驰程度。默念自我暗示的语句：“我的脚越来越沉重了”，“我的下肢越来越沉重了”....“我的全身都越来越沉重了”。一意识到与四肢沉重感无关的意念，应立即停止，把注意力集中到对手脚沉重感的体验上，患者一般都能在练习过程中放松入睡。坚持一段时间训练此法，有良好效果。</string>
+    <string name="toSleep2Info">\t\t\t\t临睡前，来一段柔和、单调的音乐可能有一定的效果。听到好的音乐，就象一个夏夜乘凉的孩子坐在老槐树上倾听老祖母讲述美丽的神话故事那样，叫人心旷神怡，暂时忘记烦恼，心情放松，从而安然入睡。</string>
+    <string name="toSleep3Info">\t\t\t\t牛奶中的钙是一种镇静物质。饮温热饮料是一种很好的习惯，可以使身体放松，犹如一天生活结束时的奖赏。牛奶中含有两种催眠物质。一种是能够促进睡眠血清素合成的原料L色氨酸，由于L色氨酸的作用，往往只需一杯牛奶就可以使人入睡。另一种是对机体生理功能具有调节作用的肽类，其中有数种“类鸦片肽”，这些物质可以和中枢神经或末梢鸦片肽受体结合，发挥类似鸦片的麻醉镇痛作用，使全身产生舒适感，有利于入睡和解除疲劳，且又不会使人成瘾。牛奶对体虚而致神经衰弱者的催眠作用尤为明显。因此，临睡前可以饮一杯温牛奶。</string>
+    <string name="toSleep4Info">\t\t\t\t临睡前60—75分钟洗个热水澡，使身体放松，因为洗澡可以提高体温，使人困倦。睡前洗澡要养成习惯。不过要注意以下几个问题：1，水温 以37—40摄氏度为宜，超过40摄氏度会加快心跳、刺激交感神经，使人过于兴奋，难以入睡。洗澡后体温上升0.5—1摄氏度有利于进入深睡眠，如果体温上升超过2摄氏度则不利于入睡。2，时间 以在37—40摄氏度的温水中泡20—30分钟为宜。人在体温下降时容易入睡，而入浴后体温会有所上升，所以最好出浴后先稍事间隔，待体温下降后再就寝。</string>
+    <string name="toSleep5Info">\t\t\t\t睡前1小时要远离电视，因为电视屏幕闪烁的光线会使人神经兴奋而影响睡眠。临睡前使用电脑，可能给睡眠带来不良影响。研究显示，体温在白天活动时会升高，而夜间睡眠时，体温会降低。如果两者温差大，就容易获得深度睡眠。那些睡眠浅的人，则多是白天体温不高，夜间体温也不低，神经温差小的缘故。在睡前，使用电脑的过程中，明亮的显示屏，开闭程序的活动，都对眼睛和神经系统有强烈的刺激，使体温处于相对较高的工作状态。中枢神经昼夜温差小，睡眠质量自然也就差了。不妨睡前用温水洗澡，喝一杯热牛奶，可以减轻睡眠不良的症状。</string>
+
+    <string name="breathMsg">\t\t\t\t正常成年人每分钟呼吸大约16-20次。呼吸与脉搏的比是1：4，即每呼吸1次，脉搏搏动4次。小儿呼吸比成人快，每分钟可达20～30次；新生儿的呼吸频率可达每分钟44次, 随着年龄的增长而逐渐减慢。正常成人静息状态下，呼吸为12到18次/分，呼吸与脉搏之比为1：4。</string>
+    <string name="breathPro1">1.呼吸过速</string>
+    <string name="breathPro2">2.呼吸过缓</string>
+
+    <string name="breathPro1Info">\t\t\t\t指呼吸频率超过24次/分而言。见于发热、疼痛、贫血、甲状腺功能亢进及心力衰竭等。一般体温升高1℃，呼吸大约增加4次/分。</string>
+    <string name="breathPro2Info">\t\t\t\t指呼吸频率低于12次/分而言。呼吸浅慢见于麻醉剂或镇静剂过量和颅内压增高等。</string>
+
+    <!--loading相关-->
+    <string name="ok">好的</string>
+    <string name="cancel">取消</string>
+    <string name="lineError">连接失败，请检查设备</string>
+    <string name="tip">提醒</string>
+    <string name="confirmDis">设备连接中，是否确定断开连接?</string>
+    <string name="waitting">请等待...</string>
+    <string name="confirm">确认</string>
+    <string name="httpError">网络应答超时，请检查网络连接状况</string>
+    <string name="blueUnline">蓝牙未连接，无法设置该闹钟</string>
+
+</resources>

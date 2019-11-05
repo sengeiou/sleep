@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_marginTop="25dp"
+    android:background="#00000000">
+
+    <ImageView
+        android:id="@+id/menuIv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/sleep_icon_meny"/>
+
+    <TextView
+        android:id="@+id/titleTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textColor="@color/gray"
+        android:text="xxx"
+        android:textSize="17sp" />
+
+    <ImageView
+        android:id="@+id/imageOne"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/report_btn_refresh"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/imageTwo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/imageOne"
+        android:layout_marginRight="10dp"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/report_btn_calenda"
+        android:visibility="gone"/>
+
+</RelativeLayout>

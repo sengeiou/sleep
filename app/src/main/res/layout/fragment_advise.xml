@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="100dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="0.5dp"-->
+                <!--android:background="@color/black1"-->
+                <!--android:layout_marginLeft="@dimen/ListMargin"-->
+                <!--android:layout_marginRight="@dimen/ListMargin"/>-->
+
+            <LinearLayout
+                android:id="@+id/adviseLl1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/clock_layout_height"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ListMargin"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:textColor="@color/black1"
+                    android:text="@string/advise1"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/ListMargin"
+                    android:layout_gravity="center_vertical|end"
+                    android:src="@mipmap/me_arrow_right"/>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/black1"
+                android:layout_marginLeft="@dimen/ListMargin"
+                android:layout_marginRight="@dimen/ListMargin"/>
+
+            <LinearLayout
+                android:id="@+id/adviseLl2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/clock_layout_height"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ListMargin"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:textColor="@color/black1"
+                    android:text="@string/advise2"/>
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/ListMargin"
+                    android:layout_gravity="center_vertical|end"
+                    android:src="@mipmap/me_arrow_right"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/black1"
+                android:layout_marginLeft="@dimen/ListMargin"
+                android:layout_marginRight="@dimen/ListMargin"/>
+
+            <LinearLayout
+                android:id="@+id/adviseLl3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/clock_layout_height"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ListMargin"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:textColor="@color/black1"
+                    android:text="@string/advise3"/>
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/ListMargin"
+                    android:layout_gravity="center_vertical|end"
+                    android:src="@mipmap/me_arrow_right"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/black1"
+                android:layout_marginLeft="@dimen/ListMargin"
+                android:layout_marginRight="@dimen/ListMargin"/>
+
+            <LinearLayout
+                android:id="@+id/adviseLl4"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/clock_layout_height"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ListMargin"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:textColor="@color/black1"
+                    android:text="@string/advise4"/>
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/ListMargin"
+                    android:layout_gravity="center_vertical|end"
+                    android:src="@mipmap/me_arrow_right"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/black1"
+                android:layout_marginLeft="@dimen/ListMargin"
+                android:layout_marginRight="@dimen/ListMargin"/>
+
+            <LinearLayout
+                android:id="@+id/adviseLl5"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/clock_layout_height"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ListMargin"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:textColor="@color/black1"
+                    android:text="@string/advise5"/>
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/ListMargin"
+                    android:layout_gravity="center_vertical|end"
+                    android:src="@mipmap/me_arrow_right"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/black1"
+                android:layout_marginLeft="@dimen/ListMargin"
+                android:layout_marginRight="@dimen/ListMargin"/>
+
+            <LinearLayout
+                android:id="@+id/adviseLl6"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/clock_layout_height"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ListMargin"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:textColor="@color/black1"
+                    android:text="@string/advise6"/>
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/ListMargin"
+                    android:layout_gravity="center_vertical|end"
+                    android:src="@mipmap/me_arrow_right"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/black1"
+                android:layout_marginLeft="@dimen/ListMargin"
+                android:layout_marginRight="@dimen/ListMargin"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:src="@mipmap/search_bg_bottom"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>
