@@ -159,7 +159,6 @@ public class LoginActivity extends BaseActivity implements HttpCallbackWithLogin
                     startActivityForResult(intent,REQUEST_CODE);
                 }
                 break;
-
             }
         }
     };

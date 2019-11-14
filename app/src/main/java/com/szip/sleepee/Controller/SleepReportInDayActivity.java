@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -24,15 +25,17 @@ import com.szip.sleepee.DB.DBModel.HeartData;
 import com.szip.sleepee.DB.DBModel.SleepData;
 import com.szip.sleepee.DB.DBModel.TurnOverData;
 import com.szip.sleepee.DB.LoadDataUtil;
+import com.szip.sleepee.Interface.MyTouchListener;
 import com.szip.sleepee.R;
 import com.szip.sleepee.Util.StatusBarCompat;
+import com.szip.sleepee.View.NoScrollViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SleepReportInDayActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
 
-    private ViewPager viewPager;
+    private NoScrollViewPager viewPager;
 
     private ArrayList<View> dots = new ArrayList<>();
 
@@ -85,8 +88,10 @@ public class SleepReportInDayActivity extends BaseActivity implements ViewPager.
 
         //根据睡眠段数绘制报告
         for (int i = 0;i<sleepDataList.size();i++){
-            views.add(SleepReortInDayFragment.newInstance(reportDay,gson.toJson(sleepDataList.get(i)),
-                    gson.toJson(heartDataList.get(i)),gson.toJson(breathDataList.get(i)),gson.toJson(turnOverDataList.get(i))));
+            SleepReortInDayFragment sleepReortInDayFragment = SleepReortInDayFragment.newInstance(reportDay,gson.toJson(sleepDataList.get(i)),
+                    gson.toJson(heartDataList.get(i)),gson.toJson(breathDataList.get(i)),gson.toJson(turnOverDataList.get(i)));
+            sleepReortInDayFragment.setSleepReportInDayActivity(this);
+            views.add(sleepReortInDayFragment);
             View view = new View(this);
             LinearLayout.LayoutParams viewLayoutParams1 = new LinearLayout.LayoutParams(MathHelper.dip2px(this,5),
                     MathHelper.dip2px(this,5));
@@ -129,6 +134,31 @@ public class SleepReportInDayActivity extends BaseActivity implements ViewPager.
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    /** 保存MyTouchListener接口的列表 */
+    private MyTouchListener myTouchListener;
+
+    /** 提供给Fragment通过getActivity()方法来注册自己的触摸事件的方法 */
+    public void registerMyTouchListener(MyTouchListener listener) {
+        this.myTouchListener = listener;
+    }
+
+    /** 提供给Fragment通过getActivity()方法来取消注册自己的触摸事件的方法 */
+    public void unRegisterMyTouchListener() {
+        myTouchListener = null;
+    }
+
+
+    public void setViewPagerScroll(boolean isScroll){
+        viewPager.setScroll(isScroll);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (myTouchListener!=null)
+            myTouchListener.onTouchEvent(ev);
+        return super.dispatchTouchEvent(ev);
     }
 
 }

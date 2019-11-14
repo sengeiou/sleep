@@ -19,7 +19,6 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -244,8 +243,17 @@ public abstract class BaseGraph extends View  {
     protected ArrayList<PointF> mAllLastPoints = new ArrayList<>();
     protected ValueAnimator mValueAnimator = new ValueAnimator();
 
-    private int date,size;
+    private int data,size;
     private int startTime = -1,endTime = -1;
+
+    /**
+     * 报告没被拉伸前的宽度
+     * */
+    private float widthOne;
+    /**
+     * 拉伸长度
+     * */
+    private float stretchValue = 0;
 
     /**
      * 越来越快	AccelerateInterpolator()
@@ -354,13 +362,7 @@ public abstract class BaseGraph extends View  {
             yMsgLength = bounds.width()<yMsgLength ? bounds.width() : yMsgLength;
             yMsgLength += 5;
         }
-//        if(mSelectedMode == SELECETD_MSG_SHOW_TOP) {
-//            //选中文字的背景的高度
-////            yMsgHeight = mSelectedTextPaint.getTextSize()+3f*mBgTriangleHeight;
-//            yMsgHeight = CalloutHelper.getCalloutHeight();
-//        }else {
-//            yMsgHeight = bounds.height();
-//        }
+
         mChartArea = new RectF(yMsgLength+getPaddingLeft(), getPaddingTop()+CalloutHelper.getCalloutHeight(), mWidth+getPaddingLeft(),
                 getPaddingTop()+mHeight-2*mAbscissaMsgSize);
         refreshChartSetData();
@@ -379,19 +381,27 @@ public abstract class BaseGraph extends View  {
             mBarWidth = 3;
         }
 
-        if(mScrollAble) {
-            mVisibleNums = mVisibleNums<=0 ? 5 : mVisibleNums;//可滚动的状态下 默认可见个数为5
-        }else {
-            //不可滚动的状态下 可见的数量必须 大于等于 数据数量
-            mVisibleNums = mVisibleNums>=mJcharts.size() ? mVisibleNums : mJcharts.size();
-        }
+//        if(mScrollAble) {
+//            mVisibleNums = mVisibleNums<=0 ? 5 : mVisibleNums;//可滚动的状态下 默认可见个数为5
+//        }else {
+//            //不可滚动的状态下 可见的数量必须 大于等于 数据数量
+//            mVisibleNums = mVisibleNums>=mJcharts.size() ? mVisibleNums : mJcharts.size();
+//        }
 
         //画 图表区域的宽度
-        if (mScrollAble){
-            mCharAreaWidth = (mChartArea.right-mChartArea.left)*4;
-        }else {
-            mCharAreaWidth = mChartArea.right-mChartArea.left;
-        }
+//        if (widthOne!=mCharAreaWidth){
+//            mCharAreaWidth = (mChartArea.right-mChartArea.left)*4;
+//        }else {
+        widthOne = mChartArea.right-mChartArea.left;//保存未缩放前的宽度
+        if(mCharAreaWidth == 0)
+            mCharAreaWidth = widthOne;
+        this.mCharAreaWidth = ((stretchValue-1)/32*mCharAreaWidth)+mCharAreaWidth;//按比例缩放
+        //限制最大可以放大到五倍，最小缩小到一倍
+        if (this.mCharAreaWidth>=widthOne*5)
+            this.mCharAreaWidth = widthOne*5;
+        if (this.mCharAreaWidth<widthOne)
+            this.mCharAreaWidth = widthOne;
+//        }
 
         //不可滚动 则必须全部显示在界面上  无视mVisibleNums
         if(mGraphStyle == BAR) {
@@ -480,28 +490,20 @@ public abstract class BaseGraph extends View  {
 //                    drawSelectedText(canvas, mJcharts.get(mHeightestChart.getIndex()));
                 }
             }
-            if (!mScrollAble){
-                drawAbscissaMsg(canvas,size,date);
-//                for(Jchart excel : mJcharts) {
-//                    drawAbscissaMsg(canvas, excel);
-//                }
-            } else{
-                int time = MathHelper.time2min(mJcharts.get(0).getXmsg());
-                int a = 0;
-                for (int i = 0;i<7;i++){
-                    a = time+60*4*i;
-                    if (a>=24*60)
-                        a = a-24*60;
-                    if (i != 6){
-                        canvas.drawText(String.format("%02d:%02d",a/60,a%60), mChartArea.left+((float) i/(float) 6)*mCharAreaWidth,
-                                mChartArea.bottom+MathHelper.dip2px(mContext, 3)+mAbscissaMsgSize, mAbscissaPaint);
-                    }else
-                        canvas.drawText(String.format("%02d:%02d",a/60,a%60), mChartArea.left+
-                                        ((float) i/(float) 6)*mCharAreaWidth-MathHelper.dip2px(mContext,10)*3,
-                                mChartArea.bottom+MathHelper.dip2px(mContext, 3)+mAbscissaMsgSize, mAbscissaPaint);
-                }
 
+            if (startTime!=-1&&endTime!=-1){//日报告的横坐标
+                float msgInterval = widthOne/5;
+                int msgForXSize = (int)(mCharAreaWidth/msgInterval);
+                if (widthOne == mCharAreaWidth){//未缩放
+                    drawAbscissaMsg(canvas,5);
+                } else{
+                    drawAbscissaMsg(canvas,msgForXSize);
+                }
+            }else {
+                drawAbscissaMsg(canvas,size, data);
             }
+
+
 
         }
         drawCoordinateAxes(canvas);
@@ -522,6 +524,8 @@ public abstract class BaseGraph extends View  {
 //        mScroller.forceFinished(true);
 //        return true;
 //    }
+
+
 
     protected boolean onMyDown(MotionEvent e){
         mScroller.forceFinished(true);
@@ -709,7 +713,7 @@ public abstract class BaseGraph extends View  {
                 midPointF.y-mSelectedTextMarging-mBgTriangleHeight-mBounds.height()-mBgTriangleHeight*2f,
                 midPointF.x+mBounds.width()/2f+bgWidth, midPointF.y-mSelectedTextMarging-mBgTriangleHeight);
         float dffw = 0;
-        if(!mScrollAble) {
+        if(widthOne==mCharAreaWidth) {
             //防止 画出到屏幕外
             dffw = rectF.right-mWidth-getPaddingRight()-getPaddingLeft();
         }
@@ -792,7 +796,7 @@ public abstract class BaseGraph extends View  {
                 if(!TextUtils.isEmpty(excel.getXmsg())) {
                     String xmsg = excel.getXmsg();
                     float w = mAbscissaPaint.measureText(xmsg, 0, xmsg.length());
-                    if(!mScrollAble) {
+                    if(widthOne==mCharAreaWidth) {
                         if(midPointF.x-w/2<0) {
                             //最左边
                             canvas.drawText(excel.getXmsg(), w/2,
@@ -814,82 +818,59 @@ public abstract class BaseGraph extends View  {
     }
 
     /**
-     * 画横轴坐标刻度
+     * 画横轴坐标刻度(周/月)
      * */
     private void drawAbscissaMsg(Canvas canvas,int size,int date){
-        int num = date/size;
-        if (startTime!=-1&&endTime!=-1){//日报告的横坐标
+        float intervalForX;
+        intervalForX = (mCharAreaWidth-MathHelper.dip2px(mContext,10)*size)/(size-1);
+        if (size==4){//月报告的横坐标
             for (int i = 0;i<size;i++){
-                if (i != size-1){
-                    int str = startTime+num*i;
-                    if (str>=24*60)
-                        str = str - 24*60;
-                    if (i==0){
-                        canvas.drawText(String.format("%02d:%02d",str/60,str%60), mChartArea.left+
-                                        ((float) (i)/(float) (size-1))*mCharAreaWidth,
-                                mChartArea.bottom+MathHelper.dip2px(mContext, 3)+mAbscissaMsgSize, mAbscissaPaint);
-                    }else {
-                        canvas.drawText(String.format("%02d:%02d",str/60,str%60), mChartArea.left+
-                                        ((float) (i)/(float) (size-1))*(mCharAreaWidth-MathHelper.dip2px(mContext,10)*3),
-                                mChartArea.bottom+MathHelper.dip2px(mContext, 3)+mAbscissaMsgSize, mAbscissaPaint);
-                    }
-                }else
-                    canvas.drawText(String.format("%02d:%02d",endTime/60%24,endTime%60), mChartArea.left+
-                                    ((float) (i)/(float)(size-1) )*(mCharAreaWidth-MathHelper.dip2px(mContext,10)*3),
-                            mChartArea.bottom+MathHelper.dip2px(mContext, 3)+mAbscissaMsgSize, mAbscissaPaint);
-            }
-        }else {
-            float intervalForX;
-            intervalForX = (mCharAreaWidth-MathHelper.dip2px(mContext,10)*size)/(size-1);
-            if (size==4){//月报告的横坐标
-                for (int i = 0;i<size;i++){
-                    if (i!=3)
-                        canvas.drawText(String.format("%d",1+10*i), mChartArea.left+MathHelper.dip2px(mContext,6)+
-                                (intervalForX+MathHelper.dip2px(mContext,10))*i, mChartArea.bottom+
-                                MathHelper.dip2px(mContext, 3)+mAbscissaMsgSize, mAbscissaPaint);
-                    else
-                        canvas.drawText(String.format("%d",date), mChartArea.left+
-                                (intervalForX+MathHelper.dip2px(mContext,10))*i, mChartArea.bottom+
-                                MathHelper.dip2px(mContext, 3)+mAbscissaMsgSize, mAbscissaPaint);
+                if (i!=3)
+                    canvas.drawText(String.format("%d",1+10*i), mChartArea.left+MathHelper.dip2px(mContext,6)+
+                            (intervalForX+MathHelper.dip2px(mContext,10))*i, mChartArea.bottom+
+                            MathHelper.dip2px(mContext, 3)+mAbscissaMsgSize, mAbscissaPaint);
+                else
+                    canvas.drawText(String.format("%d",date), mChartArea.left+
+                            (intervalForX+MathHelper.dip2px(mContext,10))*i, mChartArea.bottom+
+                            MathHelper.dip2px(mContext, 3)+mAbscissaMsgSize, mAbscissaPaint);
 
-                }
-            }else{//周报告的横坐标
-                if (mJcharts.size() == 7){
-                    for (int i = 0;i<mJcharts.size();i++){
-                        PointF midPointF = mJcharts.get(i).getMidPointF();
-                        if(!TextUtils.isEmpty(mJcharts.get(i).getXmsg())) {
-                            String string = "";
-                            if (i == 0){
-                                string = mContext.getString(R.string.sun);
-                            }else if (i == 1){
-                                string = mContext.getString(R.string.mon);
-                            }else if (i == 2){
-                                string = mContext.getString(R.string.tues);
-                            }else if (i == 3){
-                                string = mContext.getString(R.string.wed);
-                            }else if (i == 4){
-                                string = mContext.getString(R.string.thur);
-                            }else if (i == 5){
-                                string = mContext.getString(R.string.fri);
-                            }else if (i == 6){
-                                string = mContext.getString(R.string.sat);
-                            }
-                            float w = mAbscissaPaint.measureText(string, 0, string.length());
-                            if (sleepLine == 1){//睡眠柱状图
-                                canvas.drawText(string, midPointF.x-w/2,
+            }
+        }else{//周报告的横坐标
+            if (mJcharts.size() == 7){
+                for (int i = 0;i<mJcharts.size();i++){
+                    PointF midPointF = mJcharts.get(i).getMidPointF();
+                    if(!TextUtils.isEmpty(mJcharts.get(i).getXmsg())) {
+                        String string = "";
+                        if (i == 0){
+                            string = mContext.getString(R.string.sun);
+                        }else if (i == 1){
+                            string = mContext.getString(R.string.mon);
+                        }else if (i == 2){
+                            string = mContext.getString(R.string.tues);
+                        }else if (i == 3){
+                            string = mContext.getString(R.string.wed);
+                        }else if (i == 4){
+                            string = mContext.getString(R.string.thur);
+                        }else if (i == 5){
+                            string = mContext.getString(R.string.fri);
+                        }else if (i == 6){
+                            string = mContext.getString(R.string.sat);
+                        }
+                        float w = mAbscissaPaint.measureText(string, 0, string.length());
+                        if (sleepLine == 1){//睡眠柱状图
+                            canvas.drawText(string, midPointF.x-w/2,
+                                    mChartArea.bottom+MathHelper.dip2px(mContext, 3)+mAbscissaMsgSize, mAbscissaPaint);
+
+                        }else{
+                            intervalForX = (mCharAreaWidth-MathHelper.dip2px(mContext,10)*size)/6;
+                            if(i==6) {
+                                //最右边
+                                canvas.drawText(string, mChartArea.right-w,
+                                        mChartArea.bottom+MathHelper.dip2px(mContext, 3)+mAbscissaMsgSize, mAbscissaPaint);
+                            }else {
+                                canvas.drawText(string, mChartArea.left+ (intervalForX+MathHelper.dip2px(mContext,10))*i,
                                         mChartArea.bottom+MathHelper.dip2px(mContext, 3)+mAbscissaMsgSize, mAbscissaPaint);
 
-                            }else{
-                                intervalForX = (mCharAreaWidth-MathHelper.dip2px(mContext,10)*size)/6;
-                                if(i==6) {
-                                    //最右边
-                                    canvas.drawText(string, mChartArea.right-w,
-                                            mChartArea.bottom+MathHelper.dip2px(mContext, 3)+mAbscissaMsgSize, mAbscissaPaint);
-                                }else {
-                                    canvas.drawText(string, mChartArea.left+ (intervalForX+MathHelper.dip2px(mContext,10))*i,
-                                            mChartArea.bottom+MathHelper.dip2px(mContext, 3)+mAbscissaMsgSize, mAbscissaPaint);
-
-                                }
                             }
                         }
                     }
@@ -897,6 +878,35 @@ public abstract class BaseGraph extends View  {
             }
         }
     }
+
+    /**
+     * 画横轴坐标刻度(日)
+     * */
+    private void drawAbscissaMsg(Canvas canvas,int size){
+        int num = data/size;
+        for (int i = 0;i<size;i++){
+            if (i != size-1){
+                int str = startTime+num*i;
+                if (str>=24*60)
+                    str = str - 24*60;
+                if (i==0){
+                    canvas.drawText(String.format("%02d:%02d",str/60,str%60), mChartArea.left+
+                                    ((float) (i)/(float) (size-1))*mCharAreaWidth,
+                            mChartArea.bottom+MathHelper.dip2px(mContext, 3)+mAbscissaMsgSize, mAbscissaPaint);
+                }else {
+                    canvas.drawText(String.format("%02d:%02d",str/60,str%60), mChartArea.left+
+                                    ((float) (i)/(float) (size-1))*(mCharAreaWidth-MathHelper.dip2px(mContext,10)*3),
+                            mChartArea.bottom+MathHelper.dip2px(mContext, 3)+mAbscissaMsgSize, mAbscissaPaint);
+                }
+            }else
+                canvas.drawText(String.format("%02d:%02d",endTime/60%24,endTime%60), mChartArea.left+
+                                ((float) (i)/(float)(size-1) )*(mCharAreaWidth-MathHelper.dip2px(mContext,10)*3),
+                        mChartArea.bottom+MathHelper.dip2px(mContext, 3)+mAbscissaMsgSize, mAbscissaPaint);
+        }
+
+
+    }
+
 
     private void drawAbscissaMsg(Canvas canvas){
         int mTotalTime = mXinterval*mXNums;
@@ -924,7 +934,7 @@ public abstract class BaseGraph extends View  {
      * 画 坐标轴  横轴
      */
     protected void drawCoordinateAxes(Canvas canvas){
-        if(mScrollAble) {
+        if(widthOne!=mCharAreaWidth) {
             float coordinate_x = mChartRithtest_x+mBarWidth/2;
             coordinate_x = coordinate_x<mChartArea.right ? mChartArea.right : coordinate_x;
             mCoordinatePaint.setPathEffect(pathDashEffect(new float[]{15, 5}));
@@ -1278,6 +1288,19 @@ public abstract class BaseGraph extends View  {
         return mScrollAble;
     }
 
+
+    /**
+     * 设置缩放值
+     * */
+    public void addStretchValue(float stretchValue) {
+        this.stretchValue = stretchValue;
+
+        if (mWidth>0){
+            refreshChartArea();
+            postInvalidate();
+        }
+    }
+
     /**
      * 设置可滚动的时候 建议同时可见个数{@link #setVisibleNums(int)}
      *
@@ -1362,12 +1385,12 @@ public abstract class BaseGraph extends View  {
 
     public void setXvelue(int size,int date){
         this.size = size;
-        this.date = date;
+        this.data = date;
     }
 
     public void setXvelue(int size,int startTime,int endTime){
         this.size = size;
-        this.date = (endTime>startTime)?(endTime-startTime):(24*60-startTime+endTime);
+        this.data = (endTime>startTime)?(endTime-startTime):(24*60-startTime+endTime);
         this.startTime = startTime;
         this.endTime = endTime;
     }

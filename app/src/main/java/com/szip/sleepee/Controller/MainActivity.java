@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -45,6 +46,7 @@ import com.szip.sleepee.DB.SaveDataUtil;
 import com.szip.sleepee.Interface.HttpCallbackWithClockData;
 import com.szip.sleepee.Interface.HttpCallbackWithReport;
 import com.szip.sleepee.Interface.HttpCallbackWithUserInfo;
+import com.szip.sleepee.Interface.MyTouchListener;
 import com.szip.sleepee.Interface.OnProgressTimeout;
 import com.szip.sleepee.Model.ProgressHudModel;
 import com.szip.sleepee.MyApplication;
@@ -218,6 +220,25 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
         HttpMessgeUtil.getInstance(mContext).setHttpCallbackWithUserInfo(this);
     }
 
+    /** 保存MyTouchListener接口的列表 */
+    private MyTouchListener myTouchListener;
+
+    /** 提供给Fragment通过getActivity()方法来注册自己的触摸事件的方法 */
+    public void registerMyTouchListener(MyTouchListener listener) {
+        this.myTouchListener = listener;
+    }
+
+    /** 提供给Fragment通过getActivity()方法来取消注册自己的触摸事件的方法 */
+    public void unRegisterMyTouchListener() {
+        myTouchListener = null;
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (myTouchListener!=null)
+            myTouchListener.onTouchEvent(ev);
+        return super.dispatchTouchEvent(ev);
+    }
 
     /**
      * 更新连接按钮
@@ -297,6 +318,9 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
      * 更新界面
      * */
     private void updateView(int pos) {
+
+        reportFragment.setActivity(this);
+
         switch (pos){
             case 0:
                 ((TextView)findViewById(R.id.titleTv)).setText(getString(R.string.sleep));

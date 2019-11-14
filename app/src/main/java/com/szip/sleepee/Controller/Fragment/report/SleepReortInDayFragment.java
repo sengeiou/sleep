@@ -4,6 +4,9 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -14,15 +17,20 @@ import com.jonas.jgraph.models.Jchart;
 import com.szip.sleepee.Bean.HealthDataBean;
 import com.szip.sleepee.Bean.SleepStateBean;
 import com.szip.sleepee.Controller.Fragment.BaseFragment;
+import com.szip.sleepee.Controller.MainActivity;
+import com.szip.sleepee.Controller.SleepReportInDayActivity;
 import com.szip.sleepee.DB.DBModel.BreathData;
 import com.szip.sleepee.DB.DBModel.HeartData;
 import com.szip.sleepee.DB.DBModel.SleepData;
 import com.szip.sleepee.DB.DBModel.TurnOverData;
 import com.szip.sleepee.DB.LoadDataUtil;
+import com.szip.sleepee.Interface.MyTouchListener;
 import com.szip.sleepee.MyApplication;
 import com.szip.sleepee.R;
 import com.szip.sleepee.Util.DateUtil;
 import com.szip.sleepee.Util.MathUitl;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -38,6 +46,9 @@ import static com.jonas.jgraph.graph.JcoolGraph.LINE_EVERYPOINT;
 
 public class SleepReortInDayFragment extends BaseFragment {
     private int [] value;
+
+    private GestureDetector gestureDetector;
+    private boolean scrollAble = false;
 
     /**
      * 六项菜单（平均心率、呼吸率等）
@@ -100,10 +111,12 @@ public class SleepReortInDayFragment extends BaseFragment {
     private BreathData breathData;
     private TurnOverData turnOverData;
 
+    private SleepReportInDayActivity sleepReportInDayActivity;
+
     /**
      * 返回一个fragment实例，Activity中调用
      * */
-    public static SleepReortInDayFragment newInstance(int date,String sleep,String heart,String breath,String turnOver){
+    public static SleepReortInDayFragment newInstance(int date, String sleep, String heart, String breath, String turnOver){
         Bundle bundle = new Bundle();
         bundle.putInt("date",date);
         bundle.putString("sleep",sleep);
@@ -115,6 +128,22 @@ public class SleepReortInDayFragment extends BaseFragment {
         return fragment;
     }
 
+    public void setSleepReportInDayActivity(SleepReportInDayActivity sleepReportInDayActivity) {
+        this.sleepReportInDayActivity = sleepReportInDayActivity;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            if (sleepReportInDayActivity!=null)
+                sleepReportInDayActivity.registerMyTouchListener(myTouchListener);
+        }else{
+            if (sleepReportInDayActivity!=null)
+                sleepReportInDayActivity.unRegisterMyTouchListener();
+        }
+    }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_report_data;
@@ -122,6 +151,7 @@ public class SleepReortInDayFragment extends BaseFragment {
 
     @Override
     protected void afterOnCreated(Bundle savedInstanceState) {
+        gestureDetector = new GestureDetector(getActivity(),gestureListener);
         reportTime = getArguments().getInt("date");
         initData(getArguments().getString("sleep"),getArguments().getString("heart"),
                 getArguments().getString("breath"),getArguments().getString("turnOver"));
@@ -164,7 +194,7 @@ public class SleepReortInDayFragment extends BaseFragment {
 
         String outputarray;
         /**
-         * 拿周睡眠数据
+         * 拿睡眠数据
          * */
         outputarray = sleepData.getDataForSleep();
         ArrayList<SleepStateBean> sleepStateBeanArrayList = gson.fromJson(outputarray, type);
@@ -177,8 +207,10 @@ public class SleepReortInDayFragment extends BaseFragment {
             lightSleepTime = value[3];
             awakeSleepTime = value[4];
 
-            for (int i = 0;i<sleepStateBeanArrayList.size();i++)
-                lines1.add(new Jchart((float) (sleepStateBeanArrayList.get(i).getState()),"",MathUitl.getRadioWithSleep(sleepStateBeanArrayList,
+            //优化曲线
+            ArrayList<SleepStateBean> sleepDataForDraw = MathUitl.makeDrawDataWithSleep(sleepStateBeanArrayList);
+            for (int i = 0;i<sleepDataForDraw.size();i++)
+                lines1.add(new Jchart((float) (sleepDataForDraw.get(i).getState()),"",MathUitl.getRadioWithSleep(sleepDataForDraw,
                         i,allSleepTime)));
         }else {
             lines1.add(new Jchart((float) 0,"",(float) 0));
@@ -305,6 +337,7 @@ public class SleepReortInDayFragment extends BaseFragment {
         mLineChar.setShaderAreaColors(Color.parseColor("#bb21a0bf"), Color.TRANSPARENT);
         mLineChar.setLinePointRadio((int)mLineChar.getLineWidth());
         mLineChar.setNormalColor(Color.parseColor("#21a0bf"));
+        mLineChar.setOnTouchListener(onTouchListener);
         if (!mLineChar.isDetachFlag())
             mLineChar.feedData(lines1);
 
@@ -316,6 +349,7 @@ public class SleepReortInDayFragment extends BaseFragment {
         mLineCharforHeart.setLineMode(LINE_EVERYPOINT);
         mLineCharforHeart.setLinePointRadio((int)mLineCharforHeart.getLineWidth());
         mLineCharforHeart.setNormalColor(Color.parseColor("#d1b793"));
+        mLineCharforHeart.setOnTouchListener(onTouchListener);
         if (!mLineCharforHeart.isDetachFlag())
             mLineCharforHeart.feedData(lines2);
 
@@ -327,6 +361,7 @@ public class SleepReortInDayFragment extends BaseFragment {
         mLineCharforBreath.setLineMode(LINE_EVERYPOINT);
         mLineCharforBreath.setLinePointRadio((int)mLineCharforBreath.getLineWidth());
         mLineCharforBreath.setNormalColor(Color.parseColor("#21a0bf"));
+        mLineCharforBreath.setOnTouchListener(onTouchListener);
         if (!mLineCharforBreath.isDetachFlag())
             mLineCharforBreath.feedData(lines3);
 
@@ -338,6 +373,7 @@ public class SleepReortInDayFragment extends BaseFragment {
         mLineCharforThird.setLineMode(LINE_EVERYPOINT);
         mLineCharforThird.setLinePointRadio((int)mLineCharforThird.getLineWidth());
         mLineCharforThird.setNormalColor(Color.parseColor("#d1b793"));
+        mLineCharforThird.setOnTouchListener(onTouchListener);
         if (!mLineCharforThird.isDetachFlag())
             mLineCharforThird.feedData(lines4);
     }
@@ -346,12 +382,131 @@ public class SleepReortInDayFragment extends BaseFragment {
      * 更新时间
      * */
     private void updataDate(){
-//        if (app.getReportDate() == app.getTodayTime()){
-//            reportTimeTv.setText(getString(R.string.today));
-//        }else if (app.getTodayTime()-app.getReportDate() == 1){
-//            reportTimeTv.setText(getString(R.string.yesterday));
-//        }else {
         reportTimeTv.setText(DateUtil.getDateToString(reportTime));
-//        }
     }
+
+
+    /** 接收MainActivity的Touch回调的对象，重写其中的onTouchEvent函数 */
+    private MyTouchListener myTouchListener = new MyTouchListener() {
+        @Override
+        public boolean onTouchEvent(MotionEvent event) {
+            //处理手势事件（根据个人需要去返回和逻辑的处理）
+            return gestureDetector.onTouchEvent(event);
+        }
+    };
+
+    private GestureDetector.OnGestureListener gestureListener = new GestureDetector.OnGestureListener() {
+        @Override
+        public boolean onDown(MotionEvent e) {
+            if(scrollAble){
+                mLineCharforBreath.onMyDown(e);
+                mLineCharforHeart.onMyDown(e);
+                mLineCharforThird.onMyDown(e);
+                return mLineChar.onMyDown(e);
+            }else
+                return false;
+
+        }
+
+        @Override
+        public void onShowPress(MotionEvent e) {
+            if (scrollAble){
+                mLineCharforBreath.onMyShowPress(e);
+                mLineCharforHeart.onMyShowPress(e);
+                mLineCharforThird.onMyShowPress(e);
+                mLineChar.onMyShowPress(e);
+            }
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            if (scrollAble){
+                mLineCharforBreath.onMySingleTapUp(e);
+                mLineCharforHeart.onMySingleTapUp(e);
+                mLineCharforThird.onMySingleTapUp(e);
+                return mLineChar.onMySingleTapUp(e);
+            }else
+                return false;
+
+        }
+
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            if (scrollAble){
+                mLineCharforBreath.onMyScroll(e1,e2,distanceX,distanceY);
+                mLineCharforHeart.onMyScroll(e1,e2,distanceX,distanceY);
+                mLineCharforThird.onMyScroll(e1,e2,distanceX,distanceY);
+                return mLineChar.onMyScroll(e1,e2,distanceX,distanceY);
+            }else
+                return false;
+
+        }
+
+        @Override
+        public void onLongPress(MotionEvent e) {
+            if (scrollAble){
+                mLineCharforBreath.onMyLongPress(e);
+                mLineCharforHeart.onMyLongPress(e);
+                mLineCharforThird.onMyLongPress(e);
+                mLineChar.onMyLongPress(e);
+            }
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            if (scrollAble){
+                mLineCharforBreath.onMyFling(e1,e2,velocityX,velocityY);
+                mLineCharforHeart.onMyFling(e1,e2,velocityX,velocityY);
+                mLineCharforThird.onMyFling(e1,e2,velocityX,velocityY);
+                return mLineChar.onMyFling(e1,e2,velocityX,velocityY);
+            }else
+                return false;
+        }
+
+    };
+
+    float last_x = -1;
+    float last_y = -1;
+    private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
+        float baseValue;
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                baseValue = 0;
+                float x = last_x = event.getRawX();
+                float y = last_y = event.getRawY();
+                scrollAble = true;//点击到图表的时候才可以滑动
+                if (sleepReportInDayActivity!=null)//图标在滑动的时候禁止滑动换页
+                    sleepReportInDayActivity.setViewPagerScroll(false);
+            } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                if (event.getPointerCount() == 2) {
+                    scrollAble = false;//缩放的时候图表禁止滑动
+                    if (sleepReportInDayActivity!=null)//缩放的时候禁止滑动换页
+                        sleepReportInDayActivity.setViewPagerScroll(false);
+                    float x = event.getX(0) - event.getX(1);
+                    float y = event.getY(0) - event.getY(1);
+                    float value = (float) Math.sqrt(x * x + y * y);// 计算两点的距离
+                    if (baseValue == 0) {
+                        baseValue = value;
+                    } else {
+                        if (value - baseValue >= 10 || value - baseValue <= -10) {
+                            float scale = value / baseValue;// 当前两点间的距离除以手指落下时两点间的距离就是需要缩放的比例。
+                            mLineChar.addStretchValue(scale);
+                            mLineCharforBreath.addStretchValue(scale);
+                            mLineCharforHeart.addStretchValue(scale);
+                            mLineCharforThird.addStretchValue(scale);
+                        }
+                    }
+                }
+            }else if (event.getAction() == MotionEvent.ACTION_UP) {
+                scrollAble = false;//没点击图标，不可滑动
+                if (sleepReportInDayActivity!=null)//没在滑动的时候可以滑动换页
+                    sleepReportInDayActivity.setViewPagerScroll(true);
+            }
+            return true;
+        }
+
+
+    };
+
 }

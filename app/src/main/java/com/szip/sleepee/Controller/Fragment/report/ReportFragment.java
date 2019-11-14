@@ -46,7 +46,7 @@ public class ReportFragment extends BaseFragment {
     private MyPagerAdapter myPagerAdapter;
     private ArrayList<Fragment> fragments = new ArrayList<>();
 
-
+    private MainActivity activity;
     /**
      * 返回一个fragment实例，Activity中调用
      * */
@@ -72,7 +72,9 @@ public class ReportFragment extends BaseFragment {
         }
     }
 
-
+    public void setActivity(MainActivity activity) {
+        this.activity = activity;
+    }
 
     /**
      * 初始化界面
@@ -87,10 +89,15 @@ public class ReportFragment extends BaseFragment {
      * */
     private void initPager() {
         // 创建一个集合,装填Fragment
+        ReportDayFragment dayFragment =  ReportDayFragment.newInstance("szip");
+        dayFragment.setMainActivity(activity);
+        ReportWeekFragment weekFragment =  ReportWeekFragment.newInstance("szip");
+        ReportMonthFragment monthFragment =  ReportMonthFragment.newInstance("szip");
+
         // 装填
-        fragments.add(ReportDayFragment.newInstance("szip"));
-        fragments.add(ReportWeekFragment.newInstance("szip"));
-        fragments.add(ReportMonthFragment.newInstance("szip"));
+        fragments.add(dayFragment);
+        fragments.add(weekFragment);
+        fragments.add(monthFragment);
         // 创建ViewPager适配器
         myPagerAdapter = new MyPagerAdapter(getActivity().getSupportFragmentManager());
         myPagerAdapter.setFragmentArrayList(fragments);
