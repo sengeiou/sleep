@@ -1,6 +1,7 @@
 package com.szip.sleepee.Controller;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.szip.sleepee.Bean.ConnectBean;
+import com.szip.sleepee.Model.ProgressHudModel;
 import com.szip.sleepee.R;
 import com.szip.sleepee.Service.BleService;
 import com.szip.sleepee.Service.DfuService;
@@ -23,6 +25,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 
 import no.nordicsemi.android.dfu.DfuProgressListener;
@@ -77,7 +81,6 @@ public class UpdataFirmwareActivity extends BaseActivity {
         currentTv = findViewById(R.id.currentTv);
         currentTv.setText(getString(R.string.current)+current);
         if (updataAble){
-
             versionTv.setText(getString(R.string.touchToUpdata)+version);
             updataBtn = findViewById(R.id.updataBtn);
             updataBtn.setImageResource(R.mipmap.me_version_btn_update);
@@ -125,8 +128,6 @@ public class UpdataFirmwareActivity extends BaseActivity {
                 .setUnsafeExperimentalButtonlessServiceInSecureDfuEnabled(true);
 
         starter.setZip(null, fileUtil.getPath()+"/"+version+".zip");
-//        starter.setZip(null, fileUtil.getPath()+"/"+"v1.0_2.3.zip");
-
         starter.start(this, DfuService.class);
     }
 
@@ -209,9 +210,11 @@ public class UpdataFirmwareActivity extends BaseActivity {
         @Override
         public void onDfuCompleted(final String deviceAddress) {
 
-            if (progressHUD!=null)
+            if (progressHUD!=null){
                 progressHUD.dismiss();
-            Toast.makeText(UpdataFirmwareActivity.this,"烧录完成",Toast.LENGTH_SHORT).show();
+            }
+            Toast.makeText(UpdataFirmwareActivity.this,getString(R.string.updata),Toast.LENGTH_SHORT).show();
+            finish();
             Log.d("SZIP******","烧录完成");
         }
 
@@ -226,7 +229,6 @@ public class UpdataFirmwareActivity extends BaseActivity {
 
             if (progressHUD!=null){
                 progressHUD.dismiss();
-
             }
 
             if (progressHUD1==null){
@@ -248,6 +250,10 @@ public class UpdataFirmwareActivity extends BaseActivity {
 
         @Override
         public void onError(final String deviceAddress, final int error, final int errorType, final String message) {
+            if (progressHUD!=null){
+                progressHUD.dismiss();
+            }
+            Toast.makeText(UpdataFirmwareActivity.this,getString(R.string.updataFail),Toast.LENGTH_SHORT).show();
             Log.d("SZIP******","烧录错误"+message);
         }
     };
@@ -280,4 +286,6 @@ public class UpdataFirmwareActivity extends BaseActivity {
         super.onDestroy();
         DfuServiceListenerHelper.unregisterProgressListener(this,mDfuProgressListener);
     }
+
+
 }

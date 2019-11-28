@@ -129,6 +129,7 @@ public class MyApplication extends Application{
     public static final String CONNECTED_DEVICE_CHANNEL = "connected_device_channel";
     public static final String FILE_SAVED_CHANNEL = "file_saved_channel";
     public static final String PROXIMITY_WARNINGS_CHANNEL = "proximity_warnings_channel";
+    private boolean updownAble = false;
 
     @Override
     public void onCreate() {
@@ -522,10 +523,16 @@ public class MyApplication extends Application{
         isUpdating = updating;
     }
 
+
+
+    public void setUpdownAble(boolean updownAble) {
+        this.updownAble = updownAble;
+    }
+
     /**
      * 判断数据是否全部同步完毕
      * */
-    public void setDataUpdateState(int flag,boolean updownAble){
+    public void setDataUpdateState(int flag){
         switch (flag){
             case 0:
                 isSleepDataStandby = true;
@@ -569,17 +576,17 @@ public class MyApplication extends Application{
             isTurnOverDataStanby = false;
             isTurnOverDataIndayStanby = false;
             isUpdating = false;
-
-            if(updownAble){
-                String json = MathUitl.getStringWithJson(upLoadTime);
-                if (!json.equals("{\"data\":[]}")){
-                    try {
-                        HttpMessgeUtil.getInstance(this).postForUpdownReportData(json, UPDOWNDATA_FLAG);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
+//            if(updownAble){
+//                String json = MathUitl.getStringWithJson(upLoadTime);
+//                if (!json.equals("{\"data\":[]}")){
+//                    try {
+//                        HttpMessgeUtil.getInstance(this).postForUpdownReportData(json, UPDOWNDATA_FLAG);
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                updownAble = false;
+//            }
         }
     }
 

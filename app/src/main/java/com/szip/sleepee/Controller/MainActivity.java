@@ -235,8 +235,8 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (myTouchListener!=null)
-            myTouchListener.onTouchEvent(ev);
+//        if (myTouchListener!=null)
+//            myTouchListener.onTouchEvent(ev);
         return super.dispatchTouchEvent(ev);
     }
 
@@ -250,7 +250,7 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
             if (BleService.getInstance().isConnect()){
                 imageOne.setImageResource(R.mipmap.sleep_icon_connect);
                 if (app.isUpdating())
-                    ProgressHudModel.newInstance().show(MainActivity.this,getString(R.string.syncing),getString(R.string.synError),15000);
+                    ProgressHudModel.newInstance().show(MainActivity.this,getString(R.string.syncing),null,15000);
             }else {
                 imageOne.setImageResource(R.mipmap.sleep_icon_ununited);
                 if (ClientManager.getClient().isBluetoothOpened()){
@@ -464,7 +464,7 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
                         //TODO 刷新数据
                         ((MyApplication)getApplicationContext()).setUpdating(true);
                         ProgressHudModel.newInstance().show(MainActivity.this,getString(R.string.syncing)
-                                ,getString(R.string.synError),10000);
+                                ,null,10000);
                         BleService.getInstance().write(ProtocolWriter.writeForReadSleepState());
                         new Handler().postDelayed(new Runnable() {
                             @Override
@@ -540,7 +540,7 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
             if (set.isStarted())
                 set.end();
             imageOne.setImageResource(R.mipmap.sleep_icon_connect);
-            ProgressHudModel.newInstance().show(MainActivity.this,getString(R.string.syncing),getString(R.string.synError),15000);
+            ProgressHudModel.newInstance().show(MainActivity.this,getString(R.string.syncing),null,15000);
             /**
              * 15秒后重置把更新状态置false
              * */

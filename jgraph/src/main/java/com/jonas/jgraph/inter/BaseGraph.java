@@ -251,9 +251,14 @@ public abstract class BaseGraph extends View  {
      * */
     private float widthOne;
     /**
+     * 报告缩放后的宽度
+     * */
+    private float widthTwo;
+    /**
      * 拉伸长度
      * */
-    private float stretchValue = 0;
+    private float stretchValue = 1;
+    private float newSliding = 0;
 
     /**
      * 越来越快	AccelerateInterpolator()
@@ -395,13 +400,17 @@ public abstract class BaseGraph extends View  {
         widthOne = mChartArea.right-mChartArea.left;//保存未缩放前的宽度
         if(mCharAreaWidth == 0)
             mCharAreaWidth = widthOne;
-        this.mCharAreaWidth = ((stretchValue-1)/32*mCharAreaWidth)+mCharAreaWidth;//按比例缩放
+        if (widthTwo == 0)
+            widthTwo = widthOne;
+        this.mCharAreaWidth = stretchValue*widthTwo;//按比例缩放
+
         //限制最大可以放大到五倍，最小缩小到一倍
-        if (this.mCharAreaWidth>=widthOne*5)
-            this.mCharAreaWidth = widthOne*5;
-        if (this.mCharAreaWidth<widthOne)
-            this.mCharAreaWidth = widthOne;
-//        }
+        if (this.mCharAreaWidth>=widthOne*5 || this.mCharAreaWidth<widthOne){
+            this.mCharAreaWidth = this.mCharAreaWidth>=widthOne*5?widthOne*5:this.mCharAreaWidth<widthOne?widthOne:this.mCharAreaWidth;
+        }else {
+            mSliding = (widthTwo-mCharAreaWidth)/2;
+            judgeSliding();
+        }
 
         //不可滚动 则必须全部显示在界面上  无视mVisibleNums
         if(mGraphStyle == BAR) {
@@ -633,6 +642,29 @@ public abstract class BaseGraph extends View  {
 
     protected boolean judgeSliding(float tempSlided){
         mSliding += tempSlided;
+        newSliding = mSliding;
+        if(mJcharts != null && mJcharts.size()>0) {
+            if(mSliding>=0 || mSliding<=-( mChartRithtest_x-mChartArea.right )) {
+                //跨越两边界了
+                mSliding = mSliding>=0 ? 0 : mSliding<=-( mChartRithtest_x-mChartArea.right ) ? -( mChartRithtest_x-mChartArea.right ) : mSliding;
+                invalidate();
+                return false;
+            }else {
+                Log.d("SZIP******","触发");
+                //正常滑动距离刷新界面
+                invalidate();
+                return true;
+            }
+        }else {
+            mSliding = mSliding>=0 ? 0 : mSliding;
+            invalidate();
+            return false;
+        }
+    }
+
+
+    protected boolean judgeSliding(){
+        mSliding = newSliding+mSliding;
         if(mJcharts != null && mJcharts.size()>0) {
             if(mSliding>=0 || mSliding<=-( mChartRithtest_x-mChartArea.right )) {
                 //跨越两边界了
@@ -1299,6 +1331,17 @@ public abstract class BaseGraph extends View  {
             refreshChartArea();
             postInvalidate();
         }
+    }
+
+    /**
+     * 设置是否完成一次缩放
+     * */
+    public void setStretchTimes(boolean state) {
+        if (state){
+            widthTwo = mCharAreaWidth;
+            newSliding = mSliding;
+        }
+
     }
 
     /**

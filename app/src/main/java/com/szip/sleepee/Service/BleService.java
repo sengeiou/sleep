@@ -348,11 +348,12 @@ public class BleService extends Service {
          * */
         @Override
         public void onReadSleepData(byte[] sleepDatas) {
+            ((MyApplication)getApplicationContext()).setUpdownAble(true);
             if (sleepDatas.length!=0) {
                 MathUitl.bytesToArray(sleepDatas,0,BleService.this);
             }else {
-                ((MyApplication)getApplicationContext()).setDataUpdateState(0,false);
-                ((MyApplication)getApplicationContext()).setDataUpdateState(1,false);
+                ((MyApplication)getApplicationContext()).setDataUpdateState(0);
+                ((MyApplication)getApplicationContext()).setDataUpdateState(1);
             }
             //开始读取心率呼吸率数据
             write(ProtocolWriter.writeForReadHistoryHealth());
@@ -365,10 +366,10 @@ public class BleService extends Service {
             if (healthDatas.length!=0){
                 MathUitl.bytesToArray(healthDatas,1,BleService.this);
             }else {
-                ((MyApplication)getApplicationContext()).setDataUpdateState(2,false);
-                ((MyApplication)getApplicationContext()).setDataUpdateState(3,false);
-                ((MyApplication)getApplicationContext()).setDataUpdateState(4,false);
-                ((MyApplication)getApplicationContext()).setDataUpdateState(5,false);
+                ((MyApplication)getApplicationContext()).setDataUpdateState(2);
+                ((MyApplication)getApplicationContext()).setDataUpdateState(3);
+                ((MyApplication)getApplicationContext()).setDataUpdateState(4);
+                ((MyApplication)getApplicationContext()).setDataUpdateState(5);
             }
             //开始读取翻身数据
             write(ProtocolWriter.writeForReadHistoryTurnNum());
@@ -381,8 +382,8 @@ public class BleService extends Service {
             if (turnOverDatas.length!=0){
                 MathUitl.bytesToArray(turnOverDatas,2,BleService.this);
             }else{
-                ((MyApplication)getApplicationContext()).setDataUpdateState(6,false);
-                ((MyApplication)getApplicationContext()).setDataUpdateState(7,false);
+                ((MyApplication)getApplicationContext()).setDataUpdateState(6);
+                ((MyApplication)getApplicationContext()).setDataUpdateState(7);
             }
 
         }

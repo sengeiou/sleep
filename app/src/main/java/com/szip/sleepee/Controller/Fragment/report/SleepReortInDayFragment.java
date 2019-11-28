@@ -29,6 +29,7 @@ import com.szip.sleepee.MyApplication;
 import com.szip.sleepee.R;
 import com.szip.sleepee.Util.DateUtil;
 import com.szip.sleepee.Util.MathUitl;
+import com.szip.sleepee.View.MyScrollView;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -47,6 +48,7 @@ import static com.jonas.jgraph.graph.JcoolGraph.LINE_EVERYPOINT;
 public class SleepReortInDayFragment extends BaseFragment {
     private int [] value;
 
+    private MyScrollView myScrollView;
     private GestureDetector gestureDetector;
     private boolean scrollAble = false;
 
@@ -130,18 +132,8 @@ public class SleepReortInDayFragment extends BaseFragment {
 
     public void setSleepReportInDayActivity(SleepReportInDayActivity sleepReportInDayActivity) {
         this.sleepReportInDayActivity = sleepReportInDayActivity;
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            if (sleepReportInDayActivity!=null)
-                sleepReportInDayActivity.registerMyTouchListener(myTouchListener);
-        }else{
-            if (sleepReportInDayActivity!=null)
-                sleepReportInDayActivity.unRegisterMyTouchListener();
-        }
+        if (sleepReportInDayActivity!=null)//图标在滑动的时候禁止滑动换页
+            sleepReportInDayActivity.setViewPagerScroll(true);
     }
 
     @Override
@@ -167,6 +159,7 @@ public class SleepReortInDayFragment extends BaseFragment {
      * 初始化数据
      * */
     private void initData(String sleep,String heart,String breath,String turnOver) {
+        Log.d("SZIP******","SLEEP STRING = "+sleep);
         Gson gson = new Gson();
         Type type = new TypeToken<SleepData>(){}.getType();
         Type type1 = new TypeToken<HeartData>(){}.getType();
@@ -292,6 +285,8 @@ public class SleepReortInDayFragment extends BaseFragment {
     @SuppressLint("WrongConstant")
     private void initView() {
 
+        myScrollView = getView().findViewById(R.id.myScollView);
+
         reportTimeTv = getView().findViewById(R.id.reportTimeTv);
 
         menuOneTv = getView().findViewById(R.id.menuOneTv);
@@ -385,16 +380,6 @@ public class SleepReortInDayFragment extends BaseFragment {
         reportTimeTv.setText(DateUtil.getDateToString(reportTime));
     }
 
-
-    /** 接收MainActivity的Touch回调的对象，重写其中的onTouchEvent函数 */
-    private MyTouchListener myTouchListener = new MyTouchListener() {
-        @Override
-        public boolean onTouchEvent(MotionEvent event) {
-            //处理手势事件（根据个人需要去返回和逻辑的处理）
-            return gestureDetector.onTouchEvent(event);
-        }
-    };
-
     private GestureDetector.OnGestureListener gestureListener = new GestureDetector.OnGestureListener() {
         @Override
         public boolean onDown(MotionEvent e) {
@@ -420,6 +405,7 @@ public class SleepReortInDayFragment extends BaseFragment {
 
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
+
             if (scrollAble){
                 mLineCharforBreath.onMySingleTapUp(e);
                 mLineCharforHeart.onMySingleTapUp(e);
@@ -465,17 +451,14 @@ public class SleepReortInDayFragment extends BaseFragment {
 
     };
 
-    float last_x = -1;
-    float last_y = -1;
+
+    boolean state;
     private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
         float baseValue;
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 baseValue = 0;
-                float x = last_x = event.getRawX();
-                float y = last_y = event.getRawY();
-                scrollAble = true;//点击到图表的时候才可以滑动
                 if (sleepReportInDayActivity!=null)//图标在滑动的时候禁止滑动换页
                     sleepReportInDayActivity.setViewPagerScroll(false);
             } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
@@ -483,6 +466,7 @@ public class SleepReortInDayFragment extends BaseFragment {
                     scrollAble = false;//缩放的时候图表禁止滑动
                     if (sleepReportInDayActivity!=null)//缩放的时候禁止滑动换页
                         sleepReportInDayActivity.setViewPagerScroll(false);
+                    myScrollView.setScroll(false);
                     float x = event.getX(0) - event.getX(1);
                     float y = event.getY(0) - event.getY(1);
                     float value = (float) Math.sqrt(x * x + y * y);// 计算两点的距离
@@ -490,6 +474,7 @@ public class SleepReortInDayFragment extends BaseFragment {
                         baseValue = value;
                     } else {
                         if (value - baseValue >= 10 || value - baseValue <= -10) {
+                            state = true;
                             float scale = value / baseValue;// 当前两点间的距离除以手指落下时两点间的距离就是需要缩放的比例。
                             mLineChar.addStretchValue(scale);
                             mLineCharforBreath.addStretchValue(scale);
@@ -499,11 +484,19 @@ public class SleepReortInDayFragment extends BaseFragment {
                     }
                 }
             }else if (event.getAction() == MotionEvent.ACTION_UP) {
-                scrollAble = false;//没点击图标，不可滑动
                 if (sleepReportInDayActivity!=null)//没在滑动的时候可以滑动换页
                     sleepReportInDayActivity.setViewPagerScroll(true);
+                if (state){
+                    scrollAble = true;
+                    myScrollView.setScroll(true);
+                    state = false;
+                    mLineChar.setStretchTimes(true);
+                    mLineCharforBreath.setStretchTimes(true);
+                    mLineCharforHeart.setStretchTimes(true);
+                    mLineCharforThird.setStretchTimes(true);
+                }
             }
-            return true;
+            return gestureDetector.onTouchEvent(event);
         }
 
 

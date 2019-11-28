@@ -60,7 +60,7 @@ public class SaveDataUtil {
     /**
      * 批量保存睡眠数据
      * */
-    public void saveSleepDataListData(List<SleepData> sleepDataList, final boolean updownAble){
+    public void saveSleepDataListData(List<SleepData> sleepDataList){
         FlowManager.getDatabase(AppDatabase.class)
                 .beginTransactionAsync(new ProcessModelTransaction.Builder<>(
                         new ProcessModelTransaction.ProcessModel<SleepData>() {
@@ -86,7 +86,7 @@ public class SaveDataUtil {
                     @Override
                     public void onSuccess(Transaction transaction) {
                         Log.d("SZIP******","睡眠数据保存成功");
-                        ((MyApplication)mContext.getApplicationContext()).setDataUpdateState(0,updownAble);
+                        ((MyApplication)mContext.getApplicationContext()).setDataUpdateState(0);
                     }
                 }).build().execute();
     }
@@ -94,7 +94,7 @@ public class SaveDataUtil {
     /**
      * 批量保存日均睡眠数据
      * */
-    public void saveSleepInDayDataListData(List<SleepData> sleepDataList, final boolean updownAble){
+    public void saveSleepInDayDataListData(List<SleepData> sleepDataList){
         List<SleepInDayData> sleepInDayDataList = new ArrayList<>();
         List<SleepData> dataForDay = new ArrayList<>();
         long time[] = new long[2];
@@ -151,7 +151,7 @@ public class SaveDataUtil {
                     @Override
                     public void onSuccess(Transaction transaction) {
                         Log.d("SZIP******","统计睡眠数据保存成功");
-                        ((MyApplication)mContext.getApplicationContext()).setDataUpdateState(1,updownAble);
+                        ((MyApplication)mContext.getApplicationContext()).setDataUpdateState(1);
                     }
                 }).build().execute();
     }
@@ -191,7 +191,7 @@ public class SaveDataUtil {
     /**
      * 批量保存心率
      * */
-    public void saveHeartDataListData(List<HeartData> heartDataList, final boolean updownAble){
+    public void saveHeartDataListData(List<HeartData> heartDataList){
         Log.d("SZIP******","heartDataList.size = "+heartDataList.size());
         FlowManager.getDatabase(AppDatabase.class)
                 .beginTransactionAsync(new ProcessModelTransaction.Builder<>(
@@ -219,7 +219,7 @@ public class SaveDataUtil {
                     @Override
                     public void onSuccess(Transaction transaction) {
                         Log.d("SZIP******","心率数据保存成功");
-                        ((MyApplication)mContext.getApplicationContext()).setDataUpdateState(2,updownAble);
+                        ((MyApplication)mContext.getApplicationContext()).setDataUpdateState(2);
                     }
                 }).build().execute();
     }
@@ -227,7 +227,7 @@ public class SaveDataUtil {
     /**
      * 批量保存日均心率数据
      * */
-    public void saveHeartInDayDataListData(List<HeartData> heartDataList, final boolean updownAble){
+    public void saveHeartInDayDataListData(List<HeartData> heartDataList){
         List<HeartInDayData> heartInDayDataList = new ArrayList<>();
         List<HeartData> dataForDay = new ArrayList<>();
         long time[] = new long[2];
@@ -284,7 +284,7 @@ public class SaveDataUtil {
                     @Override
                     public void onSuccess(Transaction transaction) {
                         Log.d("SZIP******","心率统计数据保存成功");
-                        ((MyApplication)mContext.getApplicationContext()).setDataUpdateState(3,updownAble);
+                        ((MyApplication)mContext.getApplicationContext()).setDataUpdateState(3);
                     }
                 }).build().execute();
     }
@@ -323,7 +323,7 @@ public class SaveDataUtil {
     /**
      * 批量保存呼吸率数据
      * */
-    public void saveBreathDataListData(List<BreathData> breathDataList, final boolean updownAble){
+    public void saveBreathDataListData(List<BreathData> breathDataList){
         FlowManager.getDatabase(AppDatabase.class)
                 .beginTransactionAsync(new ProcessModelTransaction.Builder<>(
                         new ProcessModelTransaction.ProcessModel<BreathData>() {
@@ -350,7 +350,7 @@ public class SaveDataUtil {
                     @Override
                     public void onSuccess(Transaction transaction) {
                         Log.d("SZIP******","呼吸率数据保存成功");
-                        ((MyApplication)mContext.getApplicationContext()).setDataUpdateState(4,updownAble);
+                        ((MyApplication)mContext.getApplicationContext()).setDataUpdateState(4);
                     }
                 }).build().execute();
     }
@@ -360,7 +360,7 @@ public class SaveDataUtil {
     /**
      * 批量保存日均呼吸率数据
      * */
-    public void saveBreathInDayDataListData(List<BreathData> breathDataList, final boolean updownAble){
+    public void saveBreathInDayDataListData(List<BreathData> breathDataList){
         List<BreathInDayData> breathInDayDataList = new ArrayList<>();
         List<BreathData> dataForDay = new ArrayList<>();
         long time[] = new long[2];
@@ -418,7 +418,7 @@ public class SaveDataUtil {
                     @Override
                     public void onSuccess(Transaction transaction) {
                         Log.d("SZIP******","呼吸率统计数据保存成功");
-                        ((MyApplication)mContext.getApplicationContext()).setDataUpdateState(5,updownAble);
+                        ((MyApplication)mContext.getApplicationContext()).setDataUpdateState(5);
                     }
                 }).build().execute();
     }
@@ -458,7 +458,7 @@ public class SaveDataUtil {
     /**
      * 批量保存翻身数据
      * */
-    public void saveTurnOverDataListData(List<TurnOverData> turnOverDataList, final boolean updownAble){
+    public void saveTurnOverDataListData(List<TurnOverData> turnOverDataList){
         Log.d("SZIP******","turnOverDataList.size = "+turnOverDataList.size());
         FlowManager.getDatabase(AppDatabase.class)
                 .beginTransactionAsync(new ProcessModelTransaction.Builder<>(
@@ -486,7 +486,7 @@ public class SaveDataUtil {
                     @Override
                     public void onSuccess(Transaction transaction) {
                         Log.d("SZIP******","翻身数据保存成功");
-                        ((MyApplication)mContext.getApplicationContext()).setDataUpdateState(6,updownAble);
+                        ((MyApplication)mContext.getApplicationContext()).setDataUpdateState(6);
                     }
                 }).build().execute();
     }
@@ -495,7 +495,7 @@ public class SaveDataUtil {
     /**
      * 批量保存日均翻身数据
      * */
-    public void saveTurnOverInDayDataListData(List<TurnOverData> turnOverDataList, final boolean updownAble){
+    public void saveTurnOverInDayDataListData(List<TurnOverData> turnOverDataList){
         List<TurnOverInDayData> turnOverInDayDataList = new ArrayList<>();
         List<TurnOverData> dataForDay = new ArrayList<>();
         long time[] = new long[2];
@@ -553,7 +553,7 @@ public class SaveDataUtil {
                     @Override
                     public void onSuccess(Transaction transaction) {
                         Log.d("SZIP******","翻身次数统计数据保存成功");
-                        ((MyApplication)mContext.getApplicationContext()).setDataUpdateState(7,updownAble);
+                        ((MyApplication)mContext.getApplicationContext()).setDataUpdateState(7);
                     }
                 }).build().execute();
     }

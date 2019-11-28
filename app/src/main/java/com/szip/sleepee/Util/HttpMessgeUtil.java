@@ -44,6 +44,7 @@ public class HttpMessgeUtil {
 
     private String FILE = "sleepEE";
     private static HttpMessgeUtil mInstance;
+//    private String url = "https://cloud.znsdkj.com:8443/sleep/";
     private String url = "https://test.znsdkj.com:8443/sleep/";
     private String token = "null";
     private String language = "zh-CN";

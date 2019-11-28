@@ -31,7 +31,8 @@ public class ProgressHudModel {
             if (progressHUD!=null){
                 progressHUD.dismiss();
                 progressHUD = null;
-                Toast.makeText(mContext,error,Toast.LENGTH_SHORT).show();
+                if(error!=null)
+                    Toast.makeText(mContext,error,Toast.LENGTH_SHORT).show();
                 if (onProgressTimeout!=null)
                     onProgressTimeout.onTimeout();
             }

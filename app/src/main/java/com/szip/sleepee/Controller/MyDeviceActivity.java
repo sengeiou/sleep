@@ -167,8 +167,7 @@ public class MyDeviceActivity extends BaseActivity implements HttpCallbackWithUp
                             intent.putExtra("version",updataBean.getData().getVersionNumber());
                             intent.putExtra("current",version);
                             startActivity(intent);
-                        }else;
-                            checkUpdata();
+                        }
                     }else
                         showToast(getString(R.string.bluetoochError));
                 }
@@ -195,7 +194,6 @@ public class MyDeviceActivity extends BaseActivity implements HttpCallbackWithUp
         ProgressHudModel.newInstance().show(MyDeviceActivity.this,getString(R.string.waitting),getString(R.string.httpError),10000);
         try {
             HttpMessgeUtil.getInstance(mContext).getForUpdata("v"+app.getHardV()+"_"+app.getSoftV(),SOFT_FLAG);
-//            HttpMessgeUtil.getInstance(mContext).getForUpdata("v1.0_2.18",SOFT_FLAG);
         } catch (IOException e) {
             e.printStackTrace();
         }

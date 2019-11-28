@@ -146,80 +146,22 @@ public class WH_ECGView extends View {
      */
     private float getY_coordinate(int data){
         data = (data - 1024) *(-1);
-        float y_coor = 0.0f;
+        float y_coor;
         if (isHeart){
-//            if (Math.abs(data)>=0&&Math.abs(data)<25)
-//                y_coor = data*12+y_center;
-//            else if (Math.abs(data)>=25&&Math.abs(data)<33)
-//                y_coor = data*9+y_center;
-//            else if (Math.abs(data)>=33&&Math.abs(data)<37)
-//                y_coor = data*8+y_center;
-//            else if (Math.abs(data)>=37&&Math.abs(data)<42)
-//                y_coor = data*7+y_center;
-//            else if (Math.abs(data)>=42&&Math.abs(data)<50)
-//                y_coor = data*6+y_center;
-//            else if (Math.abs(data)>=50&&Math.abs(data)<60)
-//                y_coor = data*5+y_center;
-//            else if (Math.abs(data)>=60&&Math.abs(data)<75)
-//                y_coor = data*4+y_center;
-//            else if (Math.abs(data)>=75&&Math.abs(data)<100)
-//                y_coor = data*3+y_center;
-//            else if (Math.abs(data)>=100&&Math.abs(data)<150)
-                y_coor = (float) (data*2+y_center);
-//            if (Math.abs(data)>=150&&Math.abs(data)<300)
-////                y_coor = (float) (data*0.8+y_center);
-
-            if (y_coor>599)
-                y_coor = 599;
-            else if (y_coor<1)
-                y_coor = 1;
+            y_coor = (data*2+y_center);
+            if (y_coor>480)
+                y_coor = 480;
+            else if (y_coor<120)
+                y_coor = 120;
         }else {
-//            if (Math.abs(data)>=0&&Math.abs(data)<56)
-                y_coor = (float) (data*0.35+y_center);
-//            else if (Math.abs(data)>=56&&Math.abs(data)<70)
-//                y_coor = data*4+y_center;
-//            else if (Math.abs(data)>=70&&Math.abs(data)<94)
-//                y_coor = data*3+y_center;
-//            else if (Math.abs(data)>=94&&Math.abs(data)<140)
-//                y_coor = data*2+y_center;
-//            else if (Math.abs(data)>=140&&Math.abs(data)<280)
-//                y_coor = (float) (data+y_center);
-//            else if (Math.abs(data)>=280&&Math.abs(data)<312)
-//                y_coor = (float) (data*0.9+y_center);
-//            else if (Math.abs(data)>=312&&Math.abs(data)<350)
-//                y_coor = (float) (data*0.8+y_center);
-//            else if (Math.abs(data)>=350&&Math.abs(data)<400)
-//                y_coor = (float) (data*0.7+y_center);
-//            else if (Math.abs(data)>=400&&Math.abs(data)<467)
-//                y_coor = (float) (data*0.6+y_center);
-//            else if (Math.abs(data)>=467&&Math.abs(data)<560)
-//                y_coor = (float) (data*0.5+y_center);
-//            else if (Math.abs(data)>=560&&Math.abs(data)<700)
-//                y_coor = (float) (data*0.4+y_center);
-//            else if (Math.abs(data)>=700&&Math.abs(data)<934)
-//                y_coor = (float) (data*0.3+y_center);
-//            else if (Math.abs(data)>=934&&Math.abs(data)<1024)
-//                y_coor = (float) (data*0.273+y_center);
-
-            if (y_coor>599)
-                y_coor = 599;
-            else if (y_coor<1)
-                y_coor = 1;
-
+            y_coor = (float) (data*0.35+y_center);
+            if (y_coor>480)
+                y_coor = 480;
+            else if (y_coor<120)
+                y_coor = 120;
         }
-
-
         return y_coor;
     }
-
-//    private float getY_coordinate(int data){
-//        data = (data - 2048) *(-1);
-//        float y_coor = 0.0f;
-//
-//        y_coor = data *3/4 + y_center;
-//        return y_coor;
-//    }
-
 
     public void addData(int data[]){
         int sumData[];

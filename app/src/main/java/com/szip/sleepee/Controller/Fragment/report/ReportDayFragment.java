@@ -33,6 +33,7 @@ import com.szip.sleepee.MyApplication;
 import com.szip.sleepee.R;
 import com.szip.sleepee.Util.DateUtil;
 import com.szip.sleepee.Util.MathUitl;
+import com.szip.sleepee.View.MyScrollView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -51,8 +52,8 @@ import static com.jonas.jgraph.graph.JcoolGraph.LINE_EVERYPOINT;
 
 public class ReportDayFragment extends BaseFragment {
 
-    private MainActivity mainActivity;
     private TextView moreTv;
+    private MyScrollView myScrollView;
 
     /**
      * 六项菜单（平均心率、呼吸率等）
@@ -192,12 +193,8 @@ public class ReportDayFragment extends BaseFragment {
         if (isVisibleToUser) {
             upDataView();
             EventBus.getDefault().register(this);
-            if (mainActivity!=null)
-                mainActivity.registerMyTouchListener(myTouchListener);
         }else{
             EventBus.getDefault().unregister(this);
-            if (mainActivity!=null)
-                mainActivity.unRegisterMyTouchListener();
         }
     }
 
@@ -221,15 +218,13 @@ public class ReportDayFragment extends BaseFragment {
         }
     }
 
-    public void setMainActivity(MainActivity mainActivity) {
-        this.mainActivity = mainActivity;
-    }
-
     /**
      * 初始化视图
      */
     @SuppressLint("WrongConstant")
     private void initView() {
+
+        myScrollView = getView().findViewById(R.id.myScollView);
 
         moreTv = getView().findViewById(R.id.moreTv);
         moreTv.setOnClickListener(new View.OnClickListener() {
@@ -533,15 +528,6 @@ public class ReportDayFragment extends BaseFragment {
     }
 
 
-    /** 接收MainActivity的Touch回调的对象，重写其中的onTouchEvent函数 */
-    private MyTouchListener myTouchListener = new MyTouchListener() {
-        @Override
-        public boolean onTouchEvent(MotionEvent event) {
-            //处理手势事件（根据个人需要去返回和逻辑的处理）
-            return gestureDetector.onTouchEvent(event);
-        }
-    };
-
     private GestureDetector.OnGestureListener gestureListener = new GestureDetector.OnGestureListener() {
         @Override
         public boolean onDown(MotionEvent e) {
@@ -579,6 +565,8 @@ public class ReportDayFragment extends BaseFragment {
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            Log.d("SZIP******","x = "+distanceX+" ;y = "+distanceY);
+
             if (scrollAble){
                 mLineCharforBreath.onMyScroll(e1,e2,distanceX,distanceY);
                 mLineCharforHeart.onMyScroll(e1,e2,distanceX,distanceY);
@@ -614,6 +602,7 @@ public class ReportDayFragment extends BaseFragment {
 
     float last_x = -1;
     float last_y = -1;
+    boolean state;
     private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
         float baseValue;
         @Override
@@ -622,10 +611,10 @@ public class ReportDayFragment extends BaseFragment {
                 baseValue = 0;
                 float x = last_x = event.getRawX();
                 float y = last_y = event.getRawY();
-                scrollAble = true;//点击到图表的时候才可以滑动
             } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                 if (event.getPointerCount() == 2) {
                     scrollAble = false;//缩放的时候图表禁止滑动
+                    myScrollView.setScroll(false);
                     float x = event.getX(0) - event.getX(1);
                     float y = event.getY(0) - event.getY(1);
                     float value = (float) Math.sqrt(x * x + y * y);// 计算两点的距离
@@ -633,6 +622,7 @@ public class ReportDayFragment extends BaseFragment {
                         baseValue = value;
                     } else {
                         if (value - baseValue >= 10 || value - baseValue <= -10) {
+                            state = true;
                             float scale = value / baseValue;// 当前两点间的距离除以手指落下时两点间的距离就是需要缩放的比例。
                             mLineChar.addStretchValue(scale);
                             mLineCharforBreath.addStretchValue(scale);
@@ -642,9 +632,19 @@ public class ReportDayFragment extends BaseFragment {
                     }
                 }
             }else if (event.getAction() == MotionEvent.ACTION_UP) {
-                scrollAble = false;//没点击图标，不可滑动
+
+                if (state){
+                    myScrollView.setScroll(true);
+                    scrollAble = true;//缩放的时候图表禁止滑动
+                    state = false;
+                    mLineChar.setStretchTimes(true);
+                    mLineCharforBreath.setStretchTimes(true);
+                    mLineCharforHeart.setStretchTimes(true);
+                    mLineCharforThird.setStretchTimes(true);
+                }
             }
-            return true;
+            return gestureDetector.onTouchEvent(event);
         }
+
     };
 }

@@ -65,14 +65,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginRight="40dp"
-                android:layout_marginLeft="40dp"/>
+                android:layout_marginLeft="40dp" />
 
             <com.szip.sleepee.View.DrawGradView
                 android:id="@+id/draw"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginRight="40dp"
-                android:layout_marginLeft="40dp"/>
+                android:layout_marginLeft="40dp" />
 
         </RelativeLayout>
 
@@ -135,14 +135,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginRight="40dp"
-                android:layout_marginLeft="40dp"/>
+                android:layout_marginLeft="40dp" />
 
             <com.szip.sleepee.View.DrawGradView
 
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginRight="40dp"
-                android:layout_marginLeft="40dp"/>
+                android:layout_marginLeft="40dp" />
 
 
         </RelativeLayout>

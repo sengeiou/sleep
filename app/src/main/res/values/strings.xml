@@ -240,12 +240,12 @@
     <string name="answer7">\t\tYes. Although the signal could be disturbed by the side person, the impact on the accuracy of the monitoring is very small.device monitor the person who lying on default.</string>
     <string name="answer8">\t\tMake sure your phone connected with the device successfully, and click the Sync icon at the upper-right corner of the report page to synchronize.</string>
     <string name="answer9">The following conditions may cause the smart alarm clock does not work:\n1.Check that smart alarm mode is configured correctly\n2. APP(sleepee) does not working in the background\n3.APP(sleepee) blacklisted by Mobile Phone System\n4.APP(sleepee ) is cleaned mistakenly by security software\n5.sleepee APP installed on the phone SD card, t the software cannot be self-startup once the phone reboot\n6.Cannot ring the bell when is using by headphones\n7.the volume of Alarm clock ringtone is tuned to a minimum </string>
-    <string name="answer10">1.Long press the button on the top until the orange light is on\n2.Turn on the Bluetooth on your phone.\n3.Open the app to implement sing up/login\n4.Search the device ID and Connect to the device, it identifies the paired successfully when the light change from red to blue</string>
+    <string name="answer10">1.Long press the button on the top until the blue light is flicker\n2.Turn on the Bluetooth on your phone.\n3.Open the app to implement sing up/login\n4.Search the device ID and Connect to the device, it identifies the paired successfully when the light change from flicker to constant</string>
     <string name="answer11">1.Open the app and login\n2.Click the connect icon at the right corner on the “sleep” menu</string>
 
     <string name="lineDevice">device connection</string>
     <string name="step1">step1</string>
-    <string name="step1Info">long press the button till the orange light on</string>
+    <string name="step1Info">long press the button till the blue light flicker</string>
     <string name="step2">step2</string>
     <string name="step2Info">turn on the phone Bluetooth</string>
     <string name="step3">step3</string>
@@ -311,4 +311,9 @@
     <string name="confirm">confirm</string>
     <string name="httpError">Time out of request, please check the network</string>
     <string name="blueUnline">Unable to set the alarm for Bluetooth disconnected</string>
-</resources>
+
+    <string name="updata">Upgrade success</string>
+    <string name="updataFail">Upgrade failed. Please try again</string>
+
+    <string name="connectAgain">Relinking...</string>
+    </resources>

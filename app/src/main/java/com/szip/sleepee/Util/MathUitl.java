@@ -153,8 +153,8 @@ public class MathUitl {
                 }
                 pos += sleepLenght;
             }
-            SaveDataUtil.newInstance(context).saveSleepDataListData(sleepDataArrayList,true);
-            SaveDataUtil.newInstance(context).saveSleepInDayDataListData(sleepDataArrayList,true);
+            SaveDataUtil.newInstance(context).saveSleepDataListData(sleepDataArrayList);
+            SaveDataUtil.newInstance(context).saveSleepInDayDataListData(sleepDataArrayList);
         }else if (flag == 1){//格式化心率呼吸率数据
             ArrayList<BreathData> breathDataArrayList = new ArrayList<>();
             ArrayList<HeartData> heartDataArrayList = new ArrayList<>();
@@ -178,10 +178,10 @@ public class MathUitl {
                 }
                 pos += dataLengt;
             }
-            SaveDataUtil.newInstance(context).saveBreathDataListData(breathDataArrayList,true);
-            SaveDataUtil.newInstance(context).saveBreathInDayDataListData(breathDataArrayList,true);
-            SaveDataUtil.newInstance(context).saveHeartDataListData(heartDataArrayList,true);
-            SaveDataUtil.newInstance(context).saveHeartInDayDataListData(heartDataArrayList,true);
+            SaveDataUtil.newInstance(context).saveBreathDataListData(breathDataArrayList);
+            SaveDataUtil.newInstance(context).saveBreathInDayDataListData(breathDataArrayList);
+            SaveDataUtil.newInstance(context).saveHeartDataListData(heartDataArrayList);
+            SaveDataUtil.newInstance(context).saveHeartInDayDataListData(heartDataArrayList);
         }else if (flag == 2){//格式化翻身数据
             ArrayList<TurnOverData> turnOverDataArrayList = new ArrayList<>();
             int pos = 0;
@@ -201,8 +201,8 @@ public class MathUitl {
                 pos += dataLengt;
             }
             longs.clear();//同步完了，清空之前的异常数据所在的时间戳列表
-            SaveDataUtil.newInstance(context).saveTurnOverDataListData(turnOverDataArrayList,true);
-            SaveDataUtil.newInstance(context).saveTurnOverInDayDataListData(turnOverDataArrayList,true);
+            SaveDataUtil.newInstance(context).saveTurnOverDataListData(turnOverDataArrayList);
+            SaveDataUtil.newInstance(context).saveTurnOverInDayDataListData(turnOverDataArrayList);
         }
     }
 
@@ -229,14 +229,14 @@ public class MathUitl {
             heartDataArrayList.add(new HeartData(reportBeans.get(i).getTime(),new Gson().toJson(reportBeans.get(i).getDataForHeart())));
             turnOverDataArrayList.add(new TurnOverData(reportBeans.get(i).getTime(),new Gson().toJson(reportBeans.get(i).getDataForTurnOver())));
         }
-        SaveDataUtil.newInstance(context).saveSleepDataListData(sleepDataArrayList,false);
-        SaveDataUtil.newInstance(context).saveSleepInDayDataListData(sleepDataArrayList,false);
-        SaveDataUtil.newInstance(context).saveBreathDataListData(breathDataArrayList,false);
-        SaveDataUtil.newInstance(context).saveBreathInDayDataListData(breathDataArrayList,false);
-        SaveDataUtil.newInstance(context).saveHeartDataListData(heartDataArrayList,false);
-        SaveDataUtil.newInstance(context).saveHeartInDayDataListData(heartDataArrayList,false);
-        SaveDataUtil.newInstance(context).saveTurnOverDataListData(turnOverDataArrayList,false);
-        SaveDataUtil.newInstance(context).saveTurnOverInDayDataListData(turnOverDataArrayList,false);
+        SaveDataUtil.newInstance(context).saveSleepDataListData(sleepDataArrayList);
+        SaveDataUtil.newInstance(context).saveSleepInDayDataListData(sleepDataArrayList);
+        SaveDataUtil.newInstance(context).saveBreathDataListData(breathDataArrayList);
+        SaveDataUtil.newInstance(context).saveBreathInDayDataListData(breathDataArrayList);
+        SaveDataUtil.newInstance(context).saveHeartDataListData(heartDataArrayList);
+        SaveDataUtil.newInstance(context).saveHeartInDayDataListData(heartDataArrayList);
+        SaveDataUtil.newInstance(context).saveTurnOverDataListData(turnOverDataArrayList);
+        SaveDataUtil.newInstance(context).saveTurnOverInDayDataListData(turnOverDataArrayList);
     }
 
     /**
@@ -345,6 +345,7 @@ public class MathUitl {
                 object.put("dataForHeart",new JSONArray(heartDataList.get(i).getDataForHeart()));
                 object.put("dataForTurnOver",new JSONArray(turnOverDataList.get(i).getDataForturnOver()));
                 array.put(object);
+                Log.d("SZIP******","PUT STRING = "+array.toString());
             }
             data.put("data",array);
         } catch (JSONException e) {

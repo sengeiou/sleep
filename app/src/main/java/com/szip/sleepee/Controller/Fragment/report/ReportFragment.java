@@ -90,7 +90,6 @@ public class ReportFragment extends BaseFragment {
     private void initPager() {
         // 创建一个集合,装填Fragment
         ReportDayFragment dayFragment =  ReportDayFragment.newInstance("szip");
-        dayFragment.setMainActivity(activity);
         ReportWeekFragment weekFragment =  ReportWeekFragment.newInstance("szip");
         ReportMonthFragment monthFragment =  ReportMonthFragment.newInstance("szip");
 
