@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,19 +23,15 @@ import com.szip.sleepee.R;
 import com.szip.sleepee.Service.BleService;
 import com.szip.sleepee.Util.DateUtil;
 import com.szip.sleepee.Util.HttpMessgeUtil;
-import com.szip.sleepee.Util.JsonGenericsSerializator;
 import com.szip.sleepee.Util.StatusBarCompat;
 import com.szip.sleepee.View.MyAlerDialog;
 import com.zhuoting.health.write.ProtocolWriter;
-import com.zhy.http.okhttp.callback.GenericsCallback;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
-
-import okhttp3.Call;
 
 import static com.szip.sleepee.Util.HttpMessgeUtil.SOFT_FLAG;
 import static com.szip.sleepee.Util.HttpMessgeUtil.UNBINDDEVICE_FLAG;
@@ -225,7 +219,7 @@ public class MyDeviceActivity extends BaseActivity implements HttpCallbackWithUp
      * */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onUpdataPower(DevicePowerBean devicePowerBean){
-        powerTv.setText(devicePowerBean.getPower());
+        powerTv.setText(devicePowerBean.getPower().equals("")?getString(R.string.charging):devicePowerBean.getPower());
     }
 
     private MyAlerDialog.AlerDialogOnclickListener listener = new MyAlerDialog.AlerDialogOnclickListener() {

@@ -7,8 +7,8 @@ android {
         applicationId "com.szip.sleepee"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 6
-        versionName "1.06"
+        versionCode 8
+        versionName "1.08"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -23,6 +23,15 @@ android {
         }
     }
 }
+
+////对生成的apk文件的名字和路径改到其他地方
+//android.applicationVariants.all { variant ->
+//    variant.outputs.all {
+//        variant.getPackageApplication().outputDirectory = new File("E:/apk")
+//        outputFileName = "sleepee.apk"
+//
+//    }
+//}
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')

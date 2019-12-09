@@ -44,8 +44,8 @@ public class HttpMessgeUtil {
 
     private String FILE = "sleepEE";
     private static HttpMessgeUtil mInstance;
-//    private String url = "https://cloud.znsdkj.com:8443/sleep/";
-    private String url = "https://test.znsdkj.com:8443/sleep/";
+    private String url = "https://cloud.znsdkj.com:8443/sleep/";
+//    private String url = "https://test.znsdkj.com:8443/sleep/";
     private String token = "null";
     private String language = "zh-CN";
     private String time;
@@ -82,7 +82,7 @@ public class HttpMessgeUtil {
     public static int DELETEALARM_FLAG = 118;
     public static int CHANGEALARM_FLAG = 119;
     public static int GETALARM_FLAG = 120;
-
+    public static int UPDOWN_LOG = 121;
 
     public static HttpMessgeUtil getInstance(Context context)
     {
@@ -261,7 +261,7 @@ public class HttpMessgeUtil {
     private void _postSendFeedback(String content,int id)throws IOException{
         String url = this.url+"comm/feedback";
         OkHttpUtils
-                .fpost()
+                .jpost()
                 .url(url)
                 .id(id)
                 .addHeader("Time-Diff",time)
@@ -596,6 +596,22 @@ public class HttpMessgeUtil {
                 .execute(clockDataBeanGenericsCallback);
     }
 
+    /**
+     * 上传log数据
+     * */
+    private void _postAppCrashLog(String appName,String appVersion,String systemInfo,String stackTrace)throws IOException{
+        String url = this.url+"appCrashLog/upload";
+        OkHttpUtils
+                .jpost()
+                .url(url)
+                .id(UPDOWN_LOG)
+                .addParams("appName",appName)
+                .addParams("appVersion",appVersion)
+                .addParams("systemInfo",systemInfo)
+                .addParams("stackTrace",stackTrace)
+                .build()
+                .execute(baseApiGenericsCallback);
+    }
 
 
     /**
@@ -692,6 +708,10 @@ public class HttpMessgeUtil {
         _postSendFeedback(content,id);
     }
 
+    public void postAppCrashLog(String appName,String appVersion,String systemInfo,String stackTrace)throws IOException{
+        _postAppCrashLog(appName,appVersion,systemInfo,stackTrace);
+    }
+
     /**
      * 接口回调
      * */
@@ -709,7 +729,7 @@ public class HttpMessgeUtil {
                     editor.putLong("lastLoadTime",MathUitl.getLastTimeFromData());
                     editor.commit();
                 }
-                if (httpCallbackWithBase != null)
+                if (httpCallbackWithBase != null && id!=UPDOWN_LOG)
                     httpCallbackWithBase.onCallback(response,id);
             }else if (response.getCode() == 401){
                 tokenTimeOut();

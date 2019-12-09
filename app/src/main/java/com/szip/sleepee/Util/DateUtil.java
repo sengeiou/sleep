@@ -549,7 +549,6 @@ public class DateUtil {
 //    public static int[]getGMT(){
 //        TimeZone timeZone = TimeZone.getDefault();
 //        String str = timeZone.getDisplayName(false,TimeZone.SHORT);zai
-//        Log.d("SZIP******","STR = "+str);
 //        int gmt[] = new int[2];
 //        int i = str.indexOf("+");
 //        if (i>0){

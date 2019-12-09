@@ -139,14 +139,14 @@ public class BleService extends Service {
      */
     public void connect(){
         if (!isConnected){
-            Log.d("SZIP******","连接蓝牙mac="+mMac);
+            //Log.d("SZIP******","连接蓝牙mac="+mMac);
             ClientManager.getClient().connect(mMac,bleConnectResponse);
             ClientManager.getClient().registerConnectStatusListener(mMac,connectStatusListener);
         }
     }
 
     public void disConnect(){
-        Log.d("SZIP******","断开连接mac="+mMac);
+        //Log.d("SZIP******","断开连接mac="+mMac);
         ClientManager.getClient().disconnect(mMac);
     }
 
@@ -156,7 +156,7 @@ public class BleService extends Service {
     private BleConnectResponse bleConnectResponse = new BleConnectResponse() {
         @Override
         public void onResponse(int code, BleGattProfile data) {
-            Log.e("connectRes","code = "+code);
+            Log.d("connectRes","code = "+code);
             if( code == 0 ){        // 0 成功
                 isConnected = true;
                 setGattProfile(data);
@@ -174,10 +174,10 @@ public class BleService extends Service {
     private BleConnectStatusListener connectStatusListener = new BleConnectStatusListener() {
         @Override
         public void onConnectStatusChanged(String mac, int status) {
-            Log.e("connectStatus",status+"");
+            Log.d("connectStatus",status+"");
             if( status == 0x10){
                 isConnected = true;
-                Log.d("SZIP******","连接");
+                //Log.d("SZIP******","连接");
                 ((MyApplication)(getApplicationContext())).setConnectting(false);//已经连接已经完成
                 EventBus.getDefault().post(new ConnectBean(isConnected));
                 TimerTask timerTask= new TimerTask() {
@@ -189,7 +189,7 @@ public class BleService extends Service {
                 Timer timer = new Timer();
                 timer.schedule(timerTask,500);
             }else{
-                Log.d("SZIP******","断开");
+                //Log.d("SZIP******","断开");
                 isConnected = false;
                 ((MyApplication)(getApplicationContext())).setConnectting(false);//已经连接已经完成
                 EventBus.getDefault().post(new ConnectBean(isConnected));
@@ -270,7 +270,7 @@ public class BleService extends Service {
                 List<BleGattCharacter> characters = service.getCharacters();
                 for(BleGattCharacter character : characters){
                     String uuidCharacteristic = character.getUuid().toString();
-                    Log.e("uuid","characteristic : "+uuidCharacteristic);
+                    Log.d("uuid","characteristic : "+uuidCharacteristic);
                     if( character.getUuid().toString().equalsIgnoreCase(Config.char2)){     // 主要用于回复等操作
                         openid(serviceUUID,character.getUuid());
                     }else if(character.getUuid().toString().equalsIgnoreCase(Config.char3)){    // 主要用于实时数据、批量数据上传
@@ -291,7 +291,7 @@ public class BleService extends Service {
         @Override
         public void onNotify(UUID service, UUID character, byte[] value) {
             String data = DataUtil.byteToHexString(value);
-            Log.d("SZIP******","收到蓝牙信息:"+data+",UUID = "+character.toString());
+            //Log.d("SZIP******","收到蓝牙信息:"+data+",UUID = "+character.toString());
             DataParser.newInstance().parseData(value);
         }
 
@@ -404,7 +404,7 @@ public class BleService extends Service {
             if (data[0]!=0xff){
                 int size = data.length/10;
                 for (int i = 0;i<size;i++){
-                    Log.d("SZIP******","添加一个新闹钟");
+                    //Log.d("SZIP******","添加一个新闹钟");
                     ClockData clockData = new ClockData();
                     clockData.setId(-1);
                     clockData.setIndex(data[0+i*10]&0xff);
@@ -422,7 +422,7 @@ public class BleService extends Service {
                 MyApplication app = (MyApplication) getApplicationContext();
                 app.setClockList2(clockDataList);
             }
-            Log.d("SZIP******","完成闹钟同步");
+            //Log.d("SZIP******","完成闹钟同步");
         }
     };
 
@@ -430,7 +430,7 @@ public class BleService extends Service {
     IErrorCommand iErrorCommand = new IErrorCommand() {
         @Override
         public void onErrorCommand(String commandIdAndKey, int errorType) {
-            Log.e("errorCommand","commandIdAndKey : "+commandIdAndKey+" errorType : "+errorType);
+            Log.d("errorCommand","commandIdAndKey : "+commandIdAndKey+" errorType : "+errorType);
         }
     };
 
@@ -504,14 +504,14 @@ public class BleService extends Service {
      * @param data      写入蓝牙的数据
      */
     public void write(byte[] data){
-        Log.d("SZIP******","发送的蓝牙数据:"+ DataUtil.byteToHexString(data));
+        //Log.d("SZIP******","发送的蓝牙数据:"+ DataUtil.byteToHexString(data));
         ClientManager.getClient().write(mMac,serviceUUID,UUID.fromString(Config.char1),data,writeResponse);
     }
 
     private BleWriteResponse writeResponse = new BleWriteResponse() {
         @Override
         public void onResponse(int code) {
-            Log.e("writeResp","code = "+code);
+            Log.d("writeResp","code = "+code);
         }
     };
 
@@ -542,7 +542,7 @@ public class BleService extends Service {
         //sdcard的目录下的download文件夹，必须设置
         request.setDestinationInExternalPublicDir("/SleepEE/", versionName);
 //        request.setDestinationInExternalFilesDir(BleService.this,path,versionName);
-        Log.d("SZIP******","path = "+path+";version = "+versionName+";uri = " + versionUrl);
+        //Log.d("SZIP******","path = "+path+";version = "+versionName+";uri = " + versionUrl);
 
         //将下载请求加入下载队列
         downloadManager = (DownloadManager) BleService.this.getSystemService(Context.DOWNLOAD_SERVICE);
@@ -571,18 +571,18 @@ public class BleService extends Service {
             int status = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS));
             switch (status) {
                 case DownloadManager.STATUS_PAUSED:
-                    Log.d("SZIP******",">>>下载暂停");
+                    //Log.d("SZIP******",">>>下载暂停");
                 case DownloadManager.STATUS_PENDING:
-                    Log.d("SZIP******",">>>下载延迟");
+                    //Log.d("SZIP******",">>>下载延迟");
                 case DownloadManager.STATUS_RUNNING:
-                    Log.d("SZIP******",">>>正在下载");
+                    //Log.d("SZIP******",">>>正在下载");
                     break;
                 case DownloadManager.STATUS_SUCCESSFUL:
-                    Log.d("SZIP******",">>>下载完成");
+                    //Log.d("SZIP******",">>>下载完成");
                     EventBus.getDefault().post(new ConnectBean(true));
                     break;
                 case DownloadManager.STATUS_FAILED:
-                    Log.d("SZIP******",">>>下载失败");
+                    //Log.d("SZIP******",">>>下载失败");
                     break;
             }
         }

@@ -197,7 +197,6 @@ public class AlarmClockAdapter extends SlideBaseAdapter {
                             }
                             clockData.setIsOn(1);
                         }
-                        Log.d("SZIP******","第"+position+"个开");
                     }else {
                         if (clockData.getType()==2){
                             if (BleService.getInstance().isConnect()){
@@ -228,7 +227,6 @@ public class AlarmClockAdapter extends SlideBaseAdapter {
                             }
                             clockData.setIsOn(0);
                         }
-                        Log.d("SZIP******","第"+position+"个关");
                     }
                     notifyDataSetChanged();
                 }

@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
@@ -28,13 +27,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.inuker.bluetooth.library.BluetoothClient;
-import com.kaopiz.kprogresshud.KProgressHUD;
 import com.szip.sleepee.Adapter.MyMenuAdapter;
 import com.szip.sleepee.Bean.ConnectBean;
-import com.szip.sleepee.Bean.HttpBean.BaseApi;
 import com.szip.sleepee.Bean.HttpBean.ClockDataBean;
-import com.szip.sleepee.Bean.HttpBean.TokenBean;
 import com.szip.sleepee.Bean.HttpBean.UserInfoBean;
 import com.szip.sleepee.Bean.UpdataReportBean;
 import com.szip.sleepee.Controller.Fragment.AlarmClockFragment;
@@ -55,28 +50,21 @@ import com.szip.sleepee.Service.BleService;
 import com.szip.sleepee.Util.ClientManager;
 import com.szip.sleepee.Util.DateUtil;
 import com.szip.sleepee.Util.HttpMessgeUtil;
-import com.szip.sleepee.Util.JsonGenericsSerializator;
 import com.szip.sleepee.Util.StatusBarCompat;
 import com.szip.sleepee.View.DateSelectView;
 import com.szip.sleepee.View.MenuListView;
 import com.szip.sleepee.View.MyAlerDialog;
 import com.zhuoting.health.write.ProtocolWriter;
-import com.zhy.http.okhttp.callback.GenericsCallback;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.json.JSONArray;
 
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import cn.aigestudio.datepicker.cons.DPMode;
 import cn.aigestudio.datepicker.views.DatePicker;
-import okhttp3.Call;
 
 import static com.szip.sleepee.Util.HttpMessgeUtil.DOWNLOADDATA_FLAG;
 import static com.szip.sleepee.Util.HttpMessgeUtil.GETALARM_FLAG;
@@ -131,7 +119,7 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
             0f, Animation.RELATIVE_TO_SELF, 0f);
 
     private ObjectAnimator anim1;
-    private AnimatorSet set = new AnimatorSet();
+    private AnimatorSet lineAnimator = new AnimatorSet();
 
     private MyApplication app;
 
@@ -169,8 +157,8 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
                 case 402:
                     ProgressHudModel.newInstance().diss();
                     showToast(getString(R.string.loginError));
-                    if (set.isStarted())
-                        set.end();
+                    if (lineAnimator.isStarted())
+                        lineAnimator.end();
                     BleService.getInstance().disConnect();
                     SaveDataUtil.newInstance(MainActivity.this).clearDB();
                     if (sharedPreferences==null)
@@ -209,6 +197,8 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
         HttpMessgeUtil.getInstance(mContext).setHttpCallbackWithReport(null);
         HttpMessgeUtil.getInstance(mContext).setHttpCallbackWithClockData(null);
         HttpMessgeUtil.getInstance(mContext).setHttpCallbackWithUserInfo(null);
+        if (lineAnimator.isStarted())
+            lineAnimator.end();
     }
 
     @Override
@@ -270,8 +260,8 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (app.isConnectting()||app.isSearch()&&!set.isStarted())
-                            set.start();
+                        if (app.isConnectting()||app.isSearch()&&!lineAnimator.isStarted())
+                            lineAnimator.start();
                     }
                 },300);
                 HttpMessgeUtil.getInstance(mContext).getForGetInfo(GETINFO_FLAG);
@@ -342,8 +332,8 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
                 imageOne.setImageResource(R.mipmap.report_btn_refresh);
                 imageTwo.setVisibility(View.VISIBLE);
                 imageTwo.setImageResource(R.mipmap.report_btn_calenda);
-                if (set.isStarted())
-                    set.end();
+                if (lineAnimator.isStarted())
+                    lineAnimator.end();
 
                 fm = getSupportFragmentManager();
                 transaction =  fm.beginTransaction();
@@ -389,8 +379,8 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
         anim1.setInterpolator(new LinearInterpolator());
         anim1.setRepeatCount(-1);
 
-        set.play(anim1);
-        set.setDuration(2000);
+        lineAnimator.play(anim1);
+        lineAnimator.setDuration(2000);
 
         rotateLeft.setDuration(500);//设置动画持续时间
         rotateLeft.setRepeatCount(0);//设置重复次数
@@ -406,12 +396,12 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
      * */
     private void connectBle(){
         if (!BleService.getInstance().isConnect()){
-            if (set.isStarted()){
+            if (lineAnimator.isStarted()){
                 showToast(getString(R.string.lining));
             }else {
                 BluetoothAdapter blueadapter = BluetoothAdapter.getDefaultAdapter();
                 if (blueadapter.isEnabled()){
-                    set.start();
+                    lineAnimator.start();
                     app.AutoConnectBle();
                 }else {
                     Intent bleIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -537,8 +527,8 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
     public void onBleConnectStateChange(ConnectBean connectBean){
         Log.e("eventBus",connectBean.isConnect+"");
         if( connectBean.isConnect && fragmentPos!=1){
-            if (set.isStarted())
-                set.end();
+            if (lineAnimator.isStarted())
+                lineAnimator.end();
             imageOne.setImageResource(R.mipmap.sleep_icon_connect);
             ProgressHudModel.newInstance().show(MainActivity.this,getString(R.string.syncing),null,15000);
             /**
@@ -552,9 +542,9 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
             },15000);
 
         }else if (!connectBean.isConnect && fragmentPos!=1){
-            if (set.isStarted()){
+            if (lineAnimator.isStarted()){
                 showToast(getString(R.string.lineError));
-                set.end();
+                lineAnimator.end();
             }
             imageOne.setImageResource(R.mipmap.sleep_icon_ununited);
         }

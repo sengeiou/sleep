@@ -78,7 +78,7 @@ public class BluetoothServiceImpl extends IBluetoothService.Stub implements Hand
                     try {
                         response.onResponse(code, data);
                     } catch (Throwable e) {
-                        BluetoothLog.e(e);
+                        BluetoothLog.w(e);
                     }
                 }
             }

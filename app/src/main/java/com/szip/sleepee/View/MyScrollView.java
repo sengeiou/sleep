@@ -2,8 +2,11 @@ package com.szip.sleepee.View;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ScrollView;
+
+import com.szip.sleepee.Controller.Fragment.report.SleepReortInDayFragment;
 
 /**
  * Created by Administrator on 2019/11/19.
@@ -11,6 +14,7 @@ import android.widget.ScrollView;
 
 public class MyScrollView extends ScrollView {
     private boolean isScroll = true;
+    private SleepReortInDayFragment.MyScrollIsEnd myScrollIsEnd;
 
     public MyScrollView(Context context) {
         super(context);
@@ -26,6 +30,14 @@ public class MyScrollView extends ScrollView {
 
     public MyScrollView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+    }
+
+    public SleepReortInDayFragment.MyScrollIsEnd getMyScrollIsEnd() {
+        return myScrollIsEnd;
+    }
+
+    public void setMyScrollIsEnd(SleepReortInDayFragment.MyScrollIsEnd myScrollIsEnd) {
+        this.myScrollIsEnd = myScrollIsEnd;
     }
 
     /**
@@ -64,6 +76,11 @@ public class MyScrollView extends ScrollView {
         //super.onTouchEvent(ev); //不行,
         //虽然onInterceptTouchEvent中拦截了,
         //但是如果viewpage里面子控件不是viewgroup,还是会调用这个方法.
+        if (ev.getAction()==MotionEvent.ACTION_UP){
+            if (myScrollIsEnd!=null){
+                myScrollIsEnd.onEnd();
+            }
+        }
         if (isScroll){
             return super.onTouchEvent(ev);
         }else {

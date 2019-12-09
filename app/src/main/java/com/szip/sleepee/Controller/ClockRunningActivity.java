@@ -163,7 +163,6 @@ public class ClockRunningActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             PowerManager pm =(PowerManager)context.getSystemService(Context.POWER_SERVICE);
             if(!pm.isScreenOn()){
-                Log.d("SZIP******","点击电源键");
                 mediaPlayer.stop();
                 am.setStreamVolume (STREAM_MUSIC, volume, FLAG_PLAY_SOUND);//播放完毕，设置回之前的音量
                 ClockRunningActivity.this.finish();

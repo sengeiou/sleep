@@ -339,7 +339,6 @@ public class ReportMonthFragment extends BaseFragment {
              * */
             lines2.add(new Jchart(heartInDayDataList.get(i).heartInDay, String.format("%d", i + 1), 1));
 
-            Log.e("SZIP******", heartInDayDataList.get(i).heartInDay + "");
             /**
              * 拿周呼吸率数据
              * */

@@ -179,6 +179,7 @@
     <string name="channel_proximity_warnings_title">邻近的警告</string>
     <string name="channel_proximity_warnings_description">显示当接近设备超出范围时的通知</string>
     <string name="bettery">睡眠带电池电量不足15%，请注意</string>
+    <string name="charging">正在充电...</string>
 
     <!--账号管理界面-->
     <string name="mailAcount">电子邮箱</string>
@@ -311,6 +312,7 @@
     <string name="confirm">确认</string>
     <string name="httpError">网络应答超时，请检查网络连接状况</string>
     <string name="blueUnline">蓝牙未连接，无法设置该闹钟</string>
+    <string name="blueUnline1">蓝牙未连接，无法添加这种类型的闹钟</string>
 
     <string name="updata">烧录成功</string>
     <string name="updataFail">烧录失败，请重试</string>

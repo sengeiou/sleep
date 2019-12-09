@@ -85,14 +85,13 @@ public class LoadDataUtil {
     }
 
     /**
-     * 取一天的最后一次睡眠数据
+     * 根据时间戳拿数据
      * */
     public SleepData loadSleepStateListInDayLast(int day){
         SleepData sleepData;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         String dateStr = DateUtil.getDateToString(day);
-        String dateStr1 = DateUtil.getDateToString(day+1);
         long startTime,endTime;
         try {
             date = dateFormat.parse(dateStr+" 05:00:00");
@@ -110,15 +109,6 @@ public class LoadDataUtil {
                 .limit(0)
                 .querySingle();
 
-        /**
-         * 拿测试数据
-         * */
-//        sleepData = SQLite.select()
-//                .from(SleepData.class)
-//                .orderBy(OrderBy.fromString(SleepData_Table.time+OrderBy.DESCENDING))
-//                .limit(0)
-//                .querySingle();
-
         return sleepData;
     }
 
@@ -134,7 +124,6 @@ public class LoadDataUtil {
                 .queryList();
         if (sleepInDayDataArrayList.size() == 7)//如果拿到七天数据，说明已经有缓存，直接返回数据用于绘图
         {
-            Log.d("SZIP******","get 7 days");
             return sleepInDayDataArrayList;
         }else {
             for (int i = monday;i<=monday+6;i++){
@@ -215,30 +204,14 @@ public class LoadDataUtil {
     }
 
     /**
-     * 取一天的最后一次心率数据
+     * 根据时间戳取心率数据
      * */
-    public HeartData loadHeartDataListInDayLast(int day){
+    public HeartData loadHeartDataWithTime(long time){
         HeartData heartData;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = new Date();
-        String dateStr = DateUtil.getDateToString(day);
-        long startTime,endTime;
-        try {
-            date = dateFormat.parse(dateStr+" 05:00:00");
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        startTime = date.getTime()/1000;
-        endTime = startTime+24*60*60-1;
-
         heartData = SQLite.select()
                 .from(HeartData.class)
-                .where(HeartData_Table.time.lessThanOrEq(endTime),HeartData_Table.time.greaterThanOrEq(startTime))
-                .orderBy(OrderBy.fromString(SleepData_Table.time+OrderBy.DESCENDING))
-                .limit(0)
+                .where(HeartData_Table.time.is(time))
                 .querySingle();
-
         return heartData;
     }
 
@@ -332,30 +305,14 @@ public class LoadDataUtil {
     }
 
     /**
-     * 取一天的最后一次呼吸率数据
+     * 取呼吸率数据
      * */
-    public BreathData loadBreathDataListInDayLast(int day){
+    public BreathData loadBreathDataWithTime(long time){
         BreathData breathData;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = new Date();
-        String dateStr = DateUtil.getDateToString(day);
-        long startTime,endTime;
-        try {
-            date = dateFormat.parse(dateStr+" 05:00:00");
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        startTime = date.getTime()/1000;
-        endTime = startTime+24*60*60-1;
-
         breathData = SQLite.select()
                 .from(BreathData.class)
-                .where(BreathData_Table.time.lessThanOrEq(endTime),BreathData_Table.time.greaterThanOrEq(startTime))
-                .orderBy(OrderBy.fromString(SleepData_Table.time+OrderBy.DESCENDING))
-                .limit(0)
+                .where(BreathData_Table.time.is(time))
                 .querySingle();
-
         return breathData;
     }
 
@@ -448,30 +405,14 @@ public class LoadDataUtil {
     }
 
     /**
-     * 取一天的最后一次翻身数据
+     * 取翻身数据
      * */
-    public TurnOverData loadTurnOverDataListInDayLast(int day){
+    public TurnOverData loadTurnOverDataWithTime(long time){
         TurnOverData turnOverData;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = new Date();
-        String dateStr = DateUtil.getDateToString(day);
-        long startTime,endTime;
-        try {
-            date = dateFormat.parse(dateStr+" 05:00:00");
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        startTime = date.getTime()/1000;
-        endTime = startTime+24*60*60-1;
-
         turnOverData = SQLite.select()
                 .from(TurnOverData.class)
-                .where(TurnOverData_Table.time.lessThanOrEq(endTime),TurnOverData_Table.time.greaterThanOrEq(startTime))
-                .orderBy(OrderBy.fromString(TurnOverData_Table.time+OrderBy.DESCENDING))
-                .limit(0)
+                .where(TurnOverData_Table.time.is(time))
                 .querySingle();
-
         return turnOverData;
     }
 

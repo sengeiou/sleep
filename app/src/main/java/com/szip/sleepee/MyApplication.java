@@ -9,6 +9,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -39,13 +40,16 @@ import com.szip.sleepee.Util.HttpMessgeUtil;
 import com.szip.sleepee.Util.JsonGenericsSerializator;
 import com.szip.sleepee.Util.LogcatHelper;
 import com.szip.sleepee.Util.MathUitl;
+import com.szip.sleepee.Util.TopExceptionHandler;
 import com.zhuoting.health.write.ProtocolWriter;
 import com.zhy.http.okhttp.callback.GenericsCallback;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -81,7 +85,7 @@ public class MyApplication extends Application{
         return instance;
     }
 
-    int mFinalCount;
+    private int mFinalCount;
 
     /**
      * 报告的日期
@@ -142,7 +146,14 @@ public class MyApplication extends Application{
 
         FlowManager.init(this);
 
-        LogcatHelper.getInstance(this).start();
+        /**
+         * 把log上传到云端
+         * */
+        Thread.setDefaultUncaughtExceptionHandler(new TopExceptionHandler(this));
+
+        /**
+         * Android8.0之后DFU升级需要获取部分弹框权限
+         * */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             DfuServiceInitiator.createDfuNotificationChannel(this);
 
@@ -576,17 +587,17 @@ public class MyApplication extends Application{
             isTurnOverDataStanby = false;
             isTurnOverDataIndayStanby = false;
             isUpdating = false;
-//            if(updownAble){
-//                String json = MathUitl.getStringWithJson(upLoadTime);
-//                if (!json.equals("{\"data\":[]}")){
-//                    try {
-//                        HttpMessgeUtil.getInstance(this).postForUpdownReportData(json, UPDOWNDATA_FLAG);
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                updownAble = false;
-//            }
+            if(updownAble){
+                String json = MathUitl.getStringWithJson(upLoadTime);
+                if (!json.equals("{\"data\":[]}")){
+                    try {
+                        HttpMessgeUtil.getInstance(this).postForUpdownReportData(json, UPDOWNDATA_FLAG);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                updownAble = false;
+            }
         }
     }
 

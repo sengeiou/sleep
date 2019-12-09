@@ -28,6 +28,7 @@ import com.szip.sleepee.DB.DBModel.SleepData;
 import com.szip.sleepee.DB.DBModel.SleepData_Table;
 import com.szip.sleepee.DB.DBModel.TurnOverData;
 import com.szip.sleepee.DB.DBModel.TurnOverData_Table;
+import com.szip.sleepee.DB.LoadDataUtil;
 import com.szip.sleepee.DB.SaveDataUtil;
 import com.zhuoting.health.bean.TurnOverListBean;
 import com.zhuoting.health.util.DataUtil;
@@ -127,8 +128,6 @@ public class MathUitl {
             return "";
     }
 
-    private static ArrayList<Long> longs = new ArrayList<>();//异常数据所在的时间戳列表
-
     /**
      * 格式化睡眠数据(byte数组的数据，格式化成时间戳+数据组的格式)
      * */
@@ -136,7 +135,6 @@ public class MathUitl {
         if (flag == 0){//格式化睡眠数据
             ArrayList<SleepData> sleepDataArrayList = new ArrayList<>();
             int pos = 0;
-            Log.d("SZIP******","datas = "+ DataUtil.byteToHexString(datas));
             while (pos != datas.length){
                 int stateNum = (datas[pos+5]&0xff)<<8|(datas[pos+4]&0xff)&0x0ffff;//状态个数
                 int sleepLenght = stateNum*3+6;//一段睡眠状态的总字节数
@@ -146,10 +144,7 @@ public class MathUitl {
                     stateBeans.add(new SleepStateBean(((datas[a+1]&0xff)<<8|(datas[a]&0xff)),datas[a+2]&0xff));
                 }
                 if (getAllSleepTime(stateBeans)>=30){//过滤掉睡眠总时长小于30分钟的异常数据
-                    Log.d("SZIP******","data time = "+DateUtil.getDateToString(time)+"; data state = "+new Gson().toJson(stateBeans));
                     sleepDataArrayList.add(new SleepData(time,new Gson().toJson(stateBeans)));
-                }else {
-                    longs.add(time);//如果出现异常数据，把异常数据所在的时间戳加入列表里面
                 }
                 pos += sleepLenght;
             }
@@ -159,7 +154,6 @@ public class MathUitl {
             ArrayList<BreathData> breathDataArrayList = new ArrayList<>();
             ArrayList<HeartData> heartDataArrayList = new ArrayList<>();
             int pos = 0;
-            Log.d("SZIP******","datas = "+ DataUtil.byteToHexString(datas));
             while (pos != datas.length){
                 int stateNum = (datas[pos+5]&0xff)<<8|(datas[pos+4]&0xff)&0x0ffff;//数据个数
                 int dataLengt = stateNum*2+6;//一段睡眠的心率呼吸总字节数
@@ -170,10 +164,8 @@ public class MathUitl {
                     heartList.add(new HealthDataBean(datas[a]&0xff));
                     breathList.add(new HealthDataBean(datas[a+1]&0xff));
                 }
-                if (!longs.contains(time)){//过滤掉睡眠总时长小于30分钟的异常数据
-                    Log.d("SZIP******","data time = "+DateUtil.getDateToString(time)+"; heart datas = "+new Gson().toJson(heartList));
-                    Log.d("SZIP******","data time = "+DateUtil.getDateToString(time)+"; breath datas = "+new Gson().toJson(breathList));
-                    breathDataArrayList.add(new BreathData(time,new Gson().toJson(breathList)));
+                if (heartList.size()>=6){//过滤掉睡眠总时长小于30分钟的异常数据
+                      breathDataArrayList.add(new BreathData(time,new Gson().toJson(breathList)));
                     heartDataArrayList.add(new HeartData(time,new Gson().toJson(heartList)));
                 }
                 pos += dataLengt;
@@ -185,7 +177,6 @@ public class MathUitl {
         }else if (flag == 2){//格式化翻身数据
             ArrayList<TurnOverData> turnOverDataArrayList = new ArrayList<>();
             int pos = 0;
-            Log.d("SZIP******","datas = "+ DataUtil.byteToHexString(datas));
             while (pos != datas.length){
                 int stateNum = (datas[pos+5]&0xff)<<8|(datas[pos+4]&0xff)&0x0ffff;//状态个数
                 int dataLengt = stateNum+6;//一段翻身次数的总字节数
@@ -194,13 +185,11 @@ public class MathUitl {
                 for (int i = 0,a = pos+6;i<stateNum;i++,a+=1){//初始化翻身次数链表（byte数组->list）
                     turnOverList.add(new HealthDataBean(datas[a]&0xff));
                 }
-                if (!longs.contains(time)){//过滤掉睡眠总时长小于30分钟的异常数据
-                    Log.d("SZIP******","data time = "+DateUtil.getDateToString(time)+"; data state = "+new Gson().toJson(turnOverList));
+                if (turnOverList.size()>=10){//过滤掉睡眠总时长小于30分钟的异常数据
                     turnOverDataArrayList.add(new TurnOverData(time,new Gson().toJson(turnOverList)));
                 }
                 pos += dataLengt;
             }
-            longs.clear();//同步完了，清空之前的异常数据所在的时间戳列表
             SaveDataUtil.newInstance(context).saveTurnOverDataListData(turnOverDataArrayList);
             SaveDataUtil.newInstance(context).saveTurnOverInDayDataListData(turnOverDataArrayList);
         }
@@ -225,9 +214,12 @@ public class MathUitl {
 
         for (int i = 0;i<reportBeans.size();i++){
             sleepDataArrayList.add(new SleepData(reportBeans.get(i).getTime(),new Gson().toJson(reportBeans.get(i).getDataForSleep())));
-            breathDataArrayList.add(new BreathData(reportBeans.get(i).getTime(),new Gson().toJson(reportBeans.get(i).getDataForBreath())));
-            heartDataArrayList.add(new HeartData(reportBeans.get(i).getTime(),new Gson().toJson(reportBeans.get(i).getDataForHeart())));
-            turnOverDataArrayList.add(new TurnOverData(reportBeans.get(i).getTime(),new Gson().toJson(reportBeans.get(i).getDataForTurnOver())));
+            if (reportBeans.get(i).getDataForBreath()!=null)
+                breathDataArrayList.add(new BreathData(reportBeans.get(i).getTime(),new Gson().toJson(reportBeans.get(i).getDataForBreath())));
+            if (reportBeans.get(i).getDataForHeart()!=null)
+                heartDataArrayList.add(new HeartData(reportBeans.get(i).getTime(),new Gson().toJson(reportBeans.get(i).getDataForHeart())));
+            if (reportBeans.get(i).getDataForTurnOver()!=null)
+                turnOverDataArrayList.add(new TurnOverData(reportBeans.get(i).getTime(),new Gson().toJson(reportBeans.get(i).getDataForTurnOver())));
         }
         SaveDataUtil.newInstance(context).saveSleepDataListData(sleepDataArrayList);
         SaveDataUtil.newInstance(context).saveSleepInDayDataListData(sleepDataArrayList);
@@ -315,20 +307,20 @@ public class MathUitl {
                 .where(SleepData_Table.time.greaterThan(time))
                 .queryList();
 
-        List<HeartData> heartDataList = SQLite.select()
-                .from(HeartData.class)
-                .where(HeartData_Table.time.greaterThan(time))
-                .queryList();
-
-        List<BreathData> breathDataList = SQLite.select()
-                .from(BreathData.class)
-                .where(BreathData_Table.time.greaterThan(time))
-                .queryList();
-
-        List<TurnOverData> turnOverDataList = SQLite.select()
-                .from(TurnOverData.class)
-                .where(TurnOverData_Table.time.greaterThan(time))
-                .queryList();
+//        List<HeartData> heartDataList = SQLite.select()
+//                .from(HeartData.class)
+//                .where(HeartData_Table.time.greaterThan(time))
+//                .queryList();
+//
+//        List<BreathData> breathDataList = SQLite.select()
+//                .from(BreathData.class)
+//                .where(BreathData_Table.time.greaterThan(time))
+//                .queryList();
+//
+//        List<TurnOverData> turnOverDataList = SQLite.select()
+//                .from(TurnOverData.class)
+//                .where(TurnOverData_Table.time.greaterThan(time))
+//                .queryList();
 
         JSONArray array = new JSONArray();
         JSONObject data = new JSONObject();
@@ -338,14 +330,16 @@ public class MathUitl {
          * */
         try {
             for (int i = 0;i<sleepDataList.size();i++){
+                BreathData breathData = LoadDataUtil.newInstance().loadBreathDataWithTime(sleepDataList.get(i).getTime());
+                HeartData heartData = LoadDataUtil.newInstance().loadHeartDataWithTime(sleepDataList.get(i).getTime());
+                TurnOverData turnOverData = LoadDataUtil.newInstance().loadTurnOverDataWithTime(sleepDataList.get(i).getTime());
                 JSONObject object = new JSONObject();
                 object.put("time",sleepDataList.get(i).getTime());
                 object.put("dataForSleep",new JSONArray(sleepDataList.get(i).getDataForSleep()));
-                object.put("dataForBreath",new JSONArray(breathDataList.get(i).getDataForBreath()));
-                object.put("dataForHeart",new JSONArray(heartDataList.get(i).getDataForHeart()));
-                object.put("dataForTurnOver",new JSONArray(turnOverDataList.get(i).getDataForturnOver()));
+                object.put("dataForBreath",breathData == null?null:new JSONArray(breathData));
+                object.put("dataForHeart",heartData == null?null:new JSONArray(heartData));
+                object.put("dataForTurnOver",turnOverData == null?null:new JSONArray(turnOverData));
                 array.put(object);
-                Log.d("SZIP******","PUT STRING = "+array.toString());
             }
             data.put("data",array);
         } catch (JSONException e) {

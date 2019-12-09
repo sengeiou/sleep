@@ -47,7 +47,7 @@ public class PostFormRequest extends OkHttpRequest {
             FormBody.Builder builder = new FormBody.Builder();
             addParams(builder);
             FormBody formBody = builder.build();
-            Log.d("TOKENSZIP******","param = "+formBody.toString());
+//            Log.d("TOKENSZIP******","form param = "+formBody.toString());
             return formBody;
 
         } else

@@ -21,14 +21,12 @@ import com.szip.sleepee.Bean.HealthDataBean;
 import com.szip.sleepee.Bean.SleepStateBean;
 import com.szip.sleepee.Bean.UpdataReportBean;
 import com.szip.sleepee.Controller.Fragment.BaseFragment;
-import com.szip.sleepee.Controller.MainActivity;
 import com.szip.sleepee.Controller.SleepReportInDayActivity;
 import com.szip.sleepee.DB.DBModel.BreathData;
 import com.szip.sleepee.DB.DBModel.HeartData;
 import com.szip.sleepee.DB.DBModel.SleepData;
 import com.szip.sleepee.DB.DBModel.TurnOverData;
 import com.szip.sleepee.DB.LoadDataUtil;
-import com.szip.sleepee.Interface.MyTouchListener;
 import com.szip.sleepee.MyApplication;
 import com.szip.sleepee.R;
 import com.szip.sleepee.Util.DateUtil;
@@ -392,10 +390,13 @@ public class ReportDayFragment extends BaseFragment {
             });
         }
 
+
+
         SleepData sleepData = LoadDataUtil.newInstance().loadSleepStateListInDayLast(app.getReportDate());
-        HeartData heartData = LoadDataUtil.newInstance().loadHeartDataListInDayLast(app.getReportDate());
-        BreathData breathData = LoadDataUtil.newInstance().loadBreathDataListInDayLast(app.getReportDate());
-        TurnOverData turnOverData = LoadDataUtil.newInstance().loadTurnOverDataListInDayLast(app.getReportDate());
+        //以睡眠数据当天的最后一条数据的时间戳取其他几项数据（可能存在有心率数据而无睡眠数据的情况）
+        HeartData heartData = sleepData==null?null:LoadDataUtil.newInstance().loadHeartDataWithTime(sleepData.getTime());
+        BreathData breathData = sleepData==null?null:LoadDataUtil.newInstance().loadBreathDataWithTime(sleepData.getTime());
+        TurnOverData turnOverData = sleepData==null?null:LoadDataUtil.newInstance().loadTurnOverDataWithTime(sleepData.getTime());
 
         String outputarray;
 
@@ -522,6 +523,8 @@ public class ReportDayFragment extends BaseFragment {
         }
     }
 
+    float distance = 0;
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMsgFromDatabase(UpdataReportBean connectBean){
         upDataView();
@@ -565,8 +568,7 @@ public class ReportDayFragment extends BaseFragment {
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            Log.d("SZIP******","x = "+distanceX+" ;y = "+distanceY);
-
+            myScrollView.setScroll(false);
             if (scrollAble){
                 mLineCharforBreath.onMyScroll(e1,e2,distanceX,distanceY);
                 mLineCharforHeart.onMyScroll(e1,e2,distanceX,distanceY);
@@ -600,19 +602,15 @@ public class ReportDayFragment extends BaseFragment {
 
     };
 
-    float last_x = -1;
-    float last_y = -1;
-    boolean state;
+    private boolean inZoom;
     private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
         float baseValue;
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 baseValue = 0;
-                float x = last_x = event.getRawX();
-                float y = last_y = event.getRawY();
             } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                if (event.getPointerCount() == 2) {
+                if (event.getPointerCount() == 2) {//缩放
                     scrollAble = false;//缩放的时候图表禁止滑动
                     myScrollView.setScroll(false);
                     float x = event.getX(0) - event.getX(1);
@@ -622,7 +620,7 @@ public class ReportDayFragment extends BaseFragment {
                         baseValue = value;
                     } else {
                         if (value - baseValue >= 10 || value - baseValue <= -10) {
-                            state = true;
+                            inZoom = true;
                             float scale = value / baseValue;// 当前两点间的距离除以手指落下时两点间的距离就是需要缩放的比例。
                             mLineChar.addStretchValue(scale);
                             mLineCharforBreath.addStretchValue(scale);
@@ -632,11 +630,10 @@ public class ReportDayFragment extends BaseFragment {
                     }
                 }
             }else if (event.getAction() == MotionEvent.ACTION_UP) {
-
-                if (state){
-                    myScrollView.setScroll(true);
+                myScrollView.setScroll(true);
+                if (inZoom){//缩放停止，使能滑动，设置图表当前大小
                     scrollAble = true;//缩放的时候图表禁止滑动
-                    state = false;
+                    inZoom = false;
                     mLineChar.setStretchTimes(true);
                     mLineCharforBreath.setStretchTimes(true);
                     mLineCharforHeart.setStretchTimes(true);

@@ -306,7 +306,7 @@ public class BleConnectWorker implements Handler.Callback, IBleConnectWorker, IB
         BluetoothLog.v(String.format("openGatt for %s", getAddress()));
 
         if (mBluetoothGatt != null) {
-            BluetoothLog.e(String.format("Previous gatt not closed"));
+            BluetoothLog.w(String.format("Previous gatt not closed"));
             return true;
         }
 
@@ -320,7 +320,7 @@ public class BleConnectWorker implements Handler.Callback, IBleConnectWorker, IB
         }
 
         if (mBluetoothGatt == null) {
-            BluetoothLog.e(String.format("openGatt failed: connectGatt return null!"));
+            BluetoothLog.w(String.format("openGatt failed: connectGatt return null!"));
             return false;
         }
 
@@ -357,12 +357,12 @@ public class BleConnectWorker implements Handler.Callback, IBleConnectWorker, IB
         BluetoothLog.v(String.format("discoverService for %s", getAddress()));
 
         if (mBluetoothGatt == null) {
-            BluetoothLog.e(String.format("discoverService but gatt is null!"));
+            BluetoothLog.w(String.format("discoverService but gatt is null!"));
             return false;
         }
 
         if (!mBluetoothGatt.discoverServices()) {
-            BluetoothLog.e(String.format("discoverServices failed"));
+            BluetoothLog.w(String.format("discoverServices failed"));
             return false;
         }
 
@@ -397,12 +397,12 @@ public class BleConnectWorker implements Handler.Callback, IBleConnectWorker, IB
         checkRuntime();
 
         if (mBluetoothGatt == null) {
-            BluetoothLog.e(String.format("ble gatt null"));
+            BluetoothLog.w(String.format("ble gatt null"));
             return false;
         }
 
         if (!BluetoothUtils.refreshGattCache(mBluetoothGatt)) {
-            BluetoothLog.e(String.format("refreshDeviceCache failed"));
+            BluetoothLog.w(String.format("refreshDeviceCache failed"));
             return false;
         }
 
@@ -419,7 +419,7 @@ public class BleConnectWorker implements Handler.Callback, IBleConnectWorker, IB
         BluetoothGattCharacteristic characteristic = getCharacter(service, character);
 
         if (characteristic == null) {
-            BluetoothLog.e(String.format("characteristic not exist!"));
+            BluetoothLog.w(String.format("characteristic not exist!"));
             return false;
         }
 
@@ -429,12 +429,12 @@ public class BleConnectWorker implements Handler.Callback, IBleConnectWorker, IB
 //        }
 
         if (mBluetoothGatt == null) {
-            BluetoothLog.e(String.format("ble gatt null"));
+            BluetoothLog.w(String.format("ble gatt null"));
             return false;
         }
 
         if (!mBluetoothGatt.readCharacteristic(characteristic)) {
-            BluetoothLog.e(String.format("readCharacteristic failed"));
+            BluetoothLog.w(String.format("readCharacteristic failed"));
             return false;
         }
 
@@ -451,7 +451,7 @@ public class BleConnectWorker implements Handler.Callback, IBleConnectWorker, IB
         BluetoothGattCharacteristic characteristic = getCharacter(service, character);
 
         if (characteristic == null) {
-            BluetoothLog.e(String.format("characteristic not exist!"));
+            BluetoothLog.w(String.format("characteristic not exist!"));
             return false;
         }
 
@@ -461,14 +461,14 @@ public class BleConnectWorker implements Handler.Callback, IBleConnectWorker, IB
 //        }
 
         if (mBluetoothGatt == null) {
-            BluetoothLog.e(String.format("ble gatt null"));
+            BluetoothLog.w(String.format("ble gatt null"));
             return false;
         }
 
         characteristic.setValue(value != null ? value : ByteUtils.EMPTY_BYTES);
 
         if (!mBluetoothGatt.writeCharacteristic(characteristic)) {
-            BluetoothLog.e(String.format("writeCharacteristic failed"));
+            BluetoothLog.w(String.format("writeCharacteristic failed"));
             return false;
         }
 
@@ -485,23 +485,23 @@ public class BleConnectWorker implements Handler.Callback, IBleConnectWorker, IB
         BluetoothGattCharacteristic characteristic = getCharacter(service, character);
 
         if (characteristic == null) {
-            BluetoothLog.e(String.format("characteristic not exist!"));
+            BluetoothLog.w(String.format("characteristic not exist!"));
             return false;
         }
 
         BluetoothGattDescriptor gattDescriptor = characteristic.getDescriptor(descriptor);
         if (gattDescriptor == null) {
-            BluetoothLog.e(String.format("descriptor not exist"));
+            BluetoothLog.w(String.format("descriptor not exist"));
             return false;
         }
 
         if (mBluetoothGatt == null) {
-            BluetoothLog.e(String.format("ble gatt null"));
+            BluetoothLog.w(String.format("ble gatt null"));
             return false;
         }
 
         if (!mBluetoothGatt.readDescriptor(gattDescriptor)) {
-            BluetoothLog.e(String.format("readDescriptor failed"));
+            BluetoothLog.w(String.format("readDescriptor failed"));
             return false;
         }
 
@@ -518,25 +518,25 @@ public class BleConnectWorker implements Handler.Callback, IBleConnectWorker, IB
         BluetoothGattCharacteristic characteristic = getCharacter(service, character);
 
         if (characteristic == null) {
-            BluetoothLog.e(String.format("characteristic not exist!"));
+            BluetoothLog.w(String.format("characteristic not exist!"));
             return false;
         }
 
         BluetoothGattDescriptor gattDescriptor = characteristic.getDescriptor(descriptor);
         if (gattDescriptor == null) {
-            BluetoothLog.e(String.format("descriptor not exist"));
+            BluetoothLog.w(String.format("descriptor not exist"));
             return false;
         }
 
         if (mBluetoothGatt == null) {
-            BluetoothLog.e(String.format("ble gatt null"));
+            BluetoothLog.w(String.format("ble gatt null"));
             return false;
         }
 
         gattDescriptor.setValue(value != null ? value : ByteUtils.EMPTY_BYTES);
 
         if (!mBluetoothGatt.writeDescriptor(gattDescriptor)) {
-            BluetoothLog.e(String.format("writeDescriptor failed"));
+            BluetoothLog.w(String.format("writeDescriptor failed"));
             return false;
         }
 
@@ -553,7 +553,7 @@ public class BleConnectWorker implements Handler.Callback, IBleConnectWorker, IB
         BluetoothGattCharacteristic characteristic = getCharacter(service, character);
 
         if (characteristic == null) {
-            BluetoothLog.e(String.format("characteristic not exist!"));
+            BluetoothLog.w(String.format("characteristic not exist!"));
             return false;
         }
 
@@ -563,7 +563,7 @@ public class BleConnectWorker implements Handler.Callback, IBleConnectWorker, IB
 //        }
 
         if (mBluetoothGatt == null) {
-            BluetoothLog.e(String.format("ble gatt null"));
+            BluetoothLog.w(String.format("ble gatt null"));
             return false;
         }
 
@@ -571,7 +571,7 @@ public class BleConnectWorker implements Handler.Callback, IBleConnectWorker, IB
         characteristic.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE);
 
         if (!mBluetoothGatt.writeCharacteristic(characteristic)) {
-            BluetoothLog.e(String.format("writeCharacteristic failed"));
+            BluetoothLog.w(String.format("writeCharacteristic failed"));
             return false;
         }
 
@@ -588,7 +588,7 @@ public class BleConnectWorker implements Handler.Callback, IBleConnectWorker, IB
         BluetoothGattCharacteristic characteristic = getCharacter(service, character);
 
         if (characteristic == null) {
-            BluetoothLog.e(String.format("characteristic not exist!"));
+            BluetoothLog.w(String.format("characteristic not exist!"));
             return false;
         }
 
@@ -598,31 +598,31 @@ public class BleConnectWorker implements Handler.Callback, IBleConnectWorker, IB
 //        }
 
         if (mBluetoothGatt == null) {
-            BluetoothLog.e(String.format("ble gatt null"));
+            BluetoothLog.w(String.format("ble gatt null"));
             return false;
         }
 
         if (!mBluetoothGatt.setCharacteristicNotification(characteristic, enable)) {
-            BluetoothLog.e(String.format("setCharacteristicNotification failed"));
+            BluetoothLog.w(String.format("setCharacteristicNotification failed"));
             return false;
         }
 
         BluetoothGattDescriptor descriptor = characteristic.getDescriptor(Constants.CLIENT_CHARACTERISTIC_CONFIG);
 
         if (descriptor == null) {
-            BluetoothLog.e(String.format("getDescriptor for notify null!"));
+            BluetoothLog.w(String.format("getDescriptor for notify null!"));
             return false;
         }
 
         byte[] value = (enable ? BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE : BluetoothGattDescriptor.DISABLE_NOTIFICATION_VALUE);
 
         if (!descriptor.setValue(value)) {
-            BluetoothLog.e(String.format("setValue for notify descriptor failed!"));
+            BluetoothLog.w(String.format("setValue for notify descriptor failed!"));
             return false;
         }
 
         if (!mBluetoothGatt.writeDescriptor(descriptor)) {
-            BluetoothLog.e(String.format("writeDescriptor for notify failed"));
+            BluetoothLog.w(String.format("writeDescriptor for notify failed"));
             return false;
         }
 
@@ -639,7 +639,7 @@ public class BleConnectWorker implements Handler.Callback, IBleConnectWorker, IB
         BluetoothGattCharacteristic characteristic = getCharacter(service, character);
 
         if (characteristic == null) {
-            BluetoothLog.e(String.format("characteristic not exist!"));
+            BluetoothLog.w(String.format("characteristic not exist!"));
             return false;
         }
 
@@ -649,31 +649,31 @@ public class BleConnectWorker implements Handler.Callback, IBleConnectWorker, IB
 //        }
 
         if (mBluetoothGatt == null) {
-            BluetoothLog.e(String.format("ble gatt null"));
+            BluetoothLog.w(String.format("ble gatt null"));
             return false;
         }
 
         if (!mBluetoothGatt.setCharacteristicNotification(characteristic, enable)) {
-            BluetoothLog.e(String.format("setCharacteristicIndication failed"));
+            BluetoothLog.w(String.format("setCharacteristicIndication failed"));
             return false;
         }
 
         BluetoothGattDescriptor descriptor = characteristic.getDescriptor(Constants.CLIENT_CHARACTERISTIC_CONFIG);
 
         if (descriptor == null) {
-            BluetoothLog.e(String.format("getDescriptor for indicate null!"));
+            BluetoothLog.w(String.format("getDescriptor for indicate null!"));
             return false;
         }
 
         byte[] value = (enable ? BluetoothGattDescriptor.ENABLE_INDICATION_VALUE : BluetoothGattDescriptor.DISABLE_NOTIFICATION_VALUE);
 
         if (!descriptor.setValue(value)) {
-            BluetoothLog.e(String.format("setValue for indicate descriptor failed!"));
+            BluetoothLog.w(String.format("setValue for indicate descriptor failed!"));
             return false;
         }
 
         if (!mBluetoothGatt.writeDescriptor(descriptor)) {
-            BluetoothLog.e(String.format("writeDescriptor for indicate failed"));
+            BluetoothLog.w(String.format("writeDescriptor for indicate failed"));
             return false;
         }
 
@@ -687,12 +687,12 @@ public class BleConnectWorker implements Handler.Callback, IBleConnectWorker, IB
         BluetoothLog.v(String.format("readRemoteRssi for %s", getAddress()));
 
         if (mBluetoothGatt == null) {
-            BluetoothLog.e(String.format("ble gatt null"));
+            BluetoothLog.w(String.format("ble gatt null"));
             return false;
         }
 
         if (!mBluetoothGatt.readRemoteRssi()) {
-            BluetoothLog.e(String.format("readRemoteRssi failed"));
+            BluetoothLog.w(String.format("readRemoteRssi failed"));
             return false;
         }
 
@@ -707,12 +707,12 @@ public class BleConnectWorker implements Handler.Callback, IBleConnectWorker, IB
         BluetoothLog.v(String.format("requestMtu for %s, mtu = %d", getAddress(), mtu));
 
         if (mBluetoothGatt == null) {
-            BluetoothLog.e(String.format("ble gatt null"));
+            BluetoothLog.w(String.format("ble gatt null"));
             return false;
         }
 
         if (!mBluetoothGatt.requestMtu(mtu)) {
-            BluetoothLog.e(String.format("requestMtu failed"));
+            BluetoothLog.w(String.format("requestMtu failed"));
             return false;
         }
         return true;

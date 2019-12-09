@@ -189,13 +189,11 @@ public class UserInfoActivity extends BaseActivity implements HttpCallbackWithUs
                 break;
                 case R.id.button1:{
                     if (isMail){
-                        Log.d("SZIP******","邮箱解除绑定");
                         Intent intent = new Intent();
                         intent.setClass(UserInfoActivity.this,BindPhoneOrMailActivity.class);
                         intent.putExtra("flag",2);
                         startActivity(intent);
                     }else {
-                        Log.d("SZIP******","电话解除绑定");
                         Intent intent = new Intent();
                         intent.setClass(UserInfoActivity.this,BindPhoneOrMailActivity.class);
                         intent.putExtra("flag",3);

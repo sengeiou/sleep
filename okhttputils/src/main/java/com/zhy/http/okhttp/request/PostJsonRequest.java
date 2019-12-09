@@ -43,7 +43,7 @@ public class PostJsonRequest extends OkHttpRequest {
             RequestBody body = FormBody.create(MediaType.parse("application/json"),
                     params==null?"{}":gson.toJson(params));
 
-            Log.d("TOKENSZIP******","param = "+gson.toJson(params));
+//            Log.d("TOKENSZIP******","json param = "+gson.toJson(params));
             return body;
 
 //            FormBody.Builder builder = new FormBody.Builder();

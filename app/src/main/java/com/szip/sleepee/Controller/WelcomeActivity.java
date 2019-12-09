@@ -10,8 +10,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
 
+import com.google.gson.Gson;
+import com.szip.sleepee.DB.DBModel.SleepData;
+import com.szip.sleepee.DB.LoadDataUtil;
 import com.szip.sleepee.MyApplication;
 import com.szip.sleepee.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class WelcomeActivity extends BaseActivity implements Runnable{
 

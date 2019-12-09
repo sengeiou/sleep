@@ -139,7 +139,7 @@ public class UpdataFirmwareActivity extends BaseActivity {
         public void onDeviceConnecting(final String deviceAddress) {
             if (progressHUD!=null)
                 progressHUD.setLabel(getString(R.string.connectting));
-            Log.d("SZIP******","正在连接");
+            //Log.d("SZIP******","正在连接");
         }
 
         @Override
@@ -156,7 +156,7 @@ public class UpdataFirmwareActivity extends BaseActivity {
             }
 
 
-            Log.d("SZIP******","准备开始");
+            //Log.d("SZIP******","准备开始");
         }
 
         @Override
@@ -172,7 +172,7 @@ public class UpdataFirmwareActivity extends BaseActivity {
                         .setDimAmount(0.5f);
                 progressHUD.show();
             }
-            Log.d("SZIP******","使能Dfu");
+            //Log.d("SZIP******","使能Dfu");
         }
 
         @Override
@@ -188,13 +188,13 @@ public class UpdataFirmwareActivity extends BaseActivity {
                         .setDimAmount(0.5f);
                 progressHUD.show();
             }
-            Log.d("SZIP******","确认固件");
+            //Log.d("SZIP******","确认固件");
         }
 
         @Override
         public void onDeviceDisconnecting(final String deviceAddress) {
 
-            Log.d("SZIP******","设备断开连接");
+            //Log.d("SZIP******","设备断开连接");
             if (progressHUD!=null){
                 progressHUD.dismiss();
                 progressHUD  = KProgressHUD.create(UpdataFirmwareActivity.this)
@@ -215,13 +215,13 @@ public class UpdataFirmwareActivity extends BaseActivity {
             }
             Toast.makeText(UpdataFirmwareActivity.this,getString(R.string.updata),Toast.LENGTH_SHORT).show();
             finish();
-            Log.d("SZIP******","烧录完成");
+            //Log.d("SZIP******","烧录完成");
         }
 
         @Override
         public void onDfuAborted(final String deviceAddress) {
 
-            Log.d("SZIP******","烧录终止");
+            //Log.d("SZIP******","烧录终止");
         }
 
         @Override
@@ -245,7 +245,7 @@ public class UpdataFirmwareActivity extends BaseActivity {
             }
 
 
-            Log.d("SZIP******","烧录完成度"+percent);
+            //Log.d("SZIP******","烧录完成度"+percent);
         }
 
         @Override
@@ -254,7 +254,7 @@ public class UpdataFirmwareActivity extends BaseActivity {
                 progressHUD.dismiss();
             }
             Toast.makeText(UpdataFirmwareActivity.this,getString(R.string.updataFail),Toast.LENGTH_SHORT).show();
-            Log.d("SZIP******","烧录错误"+message);
+            //Log.d("SZIP******","烧录错误"+message);
         }
     };
 

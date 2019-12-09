@@ -159,7 +159,6 @@ public class SleepReortInDayFragment extends BaseFragment {
      * 初始化数据
      * */
     private void initData(String sleep,String heart,String breath,String turnOver) {
-        Log.d("SZIP******","SLEEP STRING = "+sleep);
         Gson gson = new Gson();
         Type type = new TypeToken<SleepData>(){}.getType();
         Type type1 = new TypeToken<HeartData>(){}.getType();
@@ -189,55 +188,67 @@ public class SleepReortInDayFragment extends BaseFragment {
         /**
          * 拿睡眠数据
          * */
-        outputarray = sleepData.getDataForSleep();
-        ArrayList<SleepStateBean> sleepStateBeanArrayList = gson.fromJson(outputarray, type);
-        if (sleepStateBeanArrayList.size()!=0){
-            value = MathUitl.getSleepStateValue(sleepData.getTime(),sleepStateBeanArrayList);
-            //取各项数据的数值
-            allSleepTime = value[0];
-            deepSleepTime = value[1];
-            middleSleepTime = value[2];
-            lightSleepTime = value[3];
-            awakeSleepTime = value[4];
+        if(sleepData!=null){
+            outputarray = sleepData.getDataForSleep();
+            ArrayList<SleepStateBean> sleepStateBeanArrayList = gson.fromJson(outputarray, type);
+            if (sleepStateBeanArrayList.size()!=0){
+                value = MathUitl.getSleepStateValue(sleepData.getTime(),sleepStateBeanArrayList);
+                //取各项数据的数值
+                allSleepTime = value[0];
+                deepSleepTime = value[1];
+                middleSleepTime = value[2];
+                lightSleepTime = value[3];
+                awakeSleepTime = value[4];
 
-            //优化曲线
-            ArrayList<SleepStateBean> sleepDataForDraw = MathUitl.makeDrawDataWithSleep(sleepStateBeanArrayList);
-            for (int i = 0;i<sleepDataForDraw.size();i++)
-                lines1.add(new Jchart((float) (sleepDataForDraw.get(i).getState()),"",MathUitl.getRadioWithSleep(sleepDataForDraw,
-                        i,allSleepTime)));
+                //优化曲线
+                ArrayList<SleepStateBean> sleepDataForDraw = MathUitl.makeDrawDataWithSleep(sleepStateBeanArrayList);
+                for (int i = 0;i<sleepDataForDraw.size();i++)
+                    lines1.add(new Jchart((float) (sleepDataForDraw.get(i).getState()),"",MathUitl.getRadioWithSleep(sleepDataForDraw,
+                            i,allSleepTime)));
+            }
         }else {
             lines1.add(new Jchart((float) 0,"",(float) 0));
         }
 
+
         /**
          * 拿心率/呼吸率数据
          * */
-        outputarray = heartData.getDataForHeart();
-        ArrayList<HealthDataBean> heartDatas = gson.fromJson(outputarray, type1);
-        outputarray = breathData.getDataForBreath();
-        ArrayList<HealthDataBean> breathDatas = gson.fromJson(outputarray, type1);
-        if (heartDatas.size()!=0&&breathDatas.size()!=0){
-            for (int i = 0;i<heartDatas.size();i++){
-                lines2.add(new Jchart(heartDatas.get(i).getValue()&0xff, "",1));
-                lines3.add(new Jchart(breathDatas.get(i).getValue(), "", 1));
+        if (heartData!=null && breathData!=null){
+            outputarray = heartData.getDataForHeart();
+            ArrayList<HealthDataBean> heartDatas = gson.fromJson(outputarray, type1);
+            outputarray = breathData.getDataForBreath();
+            ArrayList<HealthDataBean> breathDatas = gson.fromJson(outputarray, type1);
+            if (heartDatas.size()!=0&&breathDatas.size()!=0){
+                for (int i = 0;i<heartDatas.size();i++){
+                    lines2.add(new Jchart(heartDatas.get(i).getValue()&0xff, "",1));
+                    lines3.add(new Jchart(breathDatas.get(i).getValue(), "", 1));
+                }
+                averageHeartData = MathUitl.getAverageDataOfList(heartDatas,false);
+                averageBreathData =  MathUitl.getAverageDataOfList(breathDatas,false);
+            }else {
+                lines2.add(new Jchart(0, "",1));
+                lines3.add(new Jchart(0, "",1));
             }
-            averageHeartData = MathUitl.getAverageDataOfList(heartDatas,false);
-            averageBreathData =  MathUitl.getAverageDataOfList(breathDatas,false);
         }else {
             lines2.add(new Jchart(0, "",1));
             lines3.add(new Jchart(0, "",1));
         }
 
+
         /**
          * 拿起床次数数据
          * */
-        outputarray = turnOverData.getDataForturnOver();
-        ArrayList<HealthDataBean> turnOverData = gson.fromJson(outputarray, type1);
-        if (turnOverData.size()!=0){
-            for (int i = 0;i<turnOverData.size();i++){
-                lines4.add(new Jchart(turnOverData.get(i).getValue()&0x0f, "",1));
-            }
-            averageTurnOver = MathUitl.getAverageDataOfList(turnOverData,true);
+        if (turnOverData!=null){
+            outputarray = turnOverData.getDataForturnOver();
+            ArrayList<HealthDataBean> turnOverData = gson.fromJson(outputarray, type1);
+            if (turnOverData.size()!=0){
+                for (int i = 0;i<turnOverData.size();i++){
+                    lines4.add(new Jchart(turnOverData.get(i).getValue()&0x0f, "",1));
+                }
+                averageTurnOver = MathUitl.getAverageDataOfList(turnOverData,true);
+            }else
+                lines4.add(new Jchart(0, "",1));
         }else
             lines4.add(new Jchart(0, "",1));
     }
@@ -247,36 +258,38 @@ public class SleepReortInDayFragment extends BaseFragment {
      * */
     private void updataView() {
 
-        //设置4个图像X轴刻度
-        mLineChar.setXvelue(5,value[5],value[6]);
-        mLineCharforHeart.setXvelue(5,value[5],value[6]);
-        mLineCharforBreath.setXvelue(5,value[5],value[6]);
-        mLineCharforThird.setXvelue(5,value[5],value[6]);
+        if(value!=null){
+            //设置4个图像X轴刻度
+            mLineChar.setXvelue(5,value[5],value[6]);
+            mLineCharforHeart.setXvelue(5,value[5],value[6]);
+            mLineCharforBreath.setXvelue(5,value[5],value[6]);
+            mLineCharforThird.setXvelue(5,value[5],value[6]);
 
-        //设置进度条的max值
-        deepSleepTimePb.setMax(allSleepTime);
-        midSleepTimePb.setMax(allSleepTime);
-        lightSleepTimePb.setMax(allSleepTime);
-        dreamTimePb.setMax(allSleepTime);
-        averageHeartPb.setMax(180);
-        averageBreathPb.setMax(40);
+            //设置进度条的max值
+            deepSleepTimePb.setMax(allSleepTime);
+            midSleepTimePb.setMax(allSleepTime);
+            lightSleepTimePb.setMax(allSleepTime);
+            dreamTimePb.setMax(allSleepTime);
+            averageHeartPb.setMax(180);
+            averageBreathPb.setMax(40);
 
-        averageRealSleepTimeTv.setText(DateUtil.initText(String.format("%02dh%02dmin",allSleepTime/60,allSleepTime%60), true));
-        averageDeepSleepTimeTv.setText(DateUtil.initText(String.format("%02dh%02dmin",deepSleepTime/60,deepSleepTime%60), true));
-        averageMidSleepTimeTv.setText(DateUtil.initText(String.format("%02dh%02dmin",middleSleepTime/60,middleSleepTime%60), true));
-        averageLightSleepTimeTv.setText(DateUtil.initText(String.format("%02dh%02dmin",lightSleepTime/60,lightSleepTime%60), true));
-        averageDreamTimeTv.setText(DateUtil.initText(String.format("%02dh%02dmin",awakeSleepTime/60,awakeSleepTime%60), true));
-        averageHeartTv.setText(DateUtil.initText(String.format("%02d", averageHeartData)+getString(R.string.heartUnit), false));
-        averageBreathTv.setText(DateUtil.initText(String.format("%02d",averageBreathData) +getString(R.string.heartUnit), false));
-        heartForTableTv.setText(String.format("%02d", averageHeartData)+getString(R.string.heartUnit));
-        breathForTableTv.setText(String.format("%02d",averageBreathData) +getString(R.string.heartUnit));
-        averageHeartPb.setProgress(averageHeartData);
-        averageBreathPb.setProgress(averageBreathData);
-        deepSleepTimePb.setProgress(deepSleepTime);
-        midSleepTimePb.setProgress(middleSleepTime);
-        lightSleepTimePb.setProgress(lightSleepTime);
-        dreamTimePb.setProgress(awakeSleepTime);
-        awakaTimesForTableTv.setText(String.format("%02d",averageTurnOver) +getString(R.string.turnOver));
+            averageRealSleepTimeTv.setText(DateUtil.initText(String.format("%02dh%02dmin",allSleepTime/60,allSleepTime%60), true));
+            averageDeepSleepTimeTv.setText(DateUtil.initText(String.format("%02dh%02dmin",deepSleepTime/60,deepSleepTime%60), true));
+            averageMidSleepTimeTv.setText(DateUtil.initText(String.format("%02dh%02dmin",middleSleepTime/60,middleSleepTime%60), true));
+            averageLightSleepTimeTv.setText(DateUtil.initText(String.format("%02dh%02dmin",lightSleepTime/60,lightSleepTime%60), true));
+            averageDreamTimeTv.setText(DateUtil.initText(String.format("%02dh%02dmin",awakeSleepTime/60,awakeSleepTime%60), true));
+            averageHeartTv.setText(DateUtil.initText(String.format("%02d", averageHeartData)+getString(R.string.heartUnit), false));
+            averageBreathTv.setText(DateUtil.initText(String.format("%02d",averageBreathData) +getString(R.string.heartUnit), false));
+            heartForTableTv.setText(String.format("%02d", averageHeartData)+getString(R.string.heartUnit));
+            breathForTableTv.setText(String.format("%02d",averageBreathData) +getString(R.string.heartUnit));
+            averageHeartPb.setProgress(averageHeartData);
+            averageBreathPb.setProgress(averageBreathData);
+            deepSleepTimePb.setProgress(deepSleepTime);
+            midSleepTimePb.setProgress(middleSleepTime);
+            lightSleepTimePb.setProgress(lightSleepTime);
+            dreamTimePb.setProgress(awakeSleepTime);
+            awakaTimesForTableTv.setText(String.format("%02d",averageTurnOver) +getString(R.string.turnOver));
+        }
     }
 
     /**
@@ -287,6 +300,7 @@ public class SleepReortInDayFragment extends BaseFragment {
 
         myScrollView = getView().findViewById(R.id.myScollView);
 
+        myScrollView.setMyScrollIsEnd(myScrollIsEnd);
         reportTimeTv = getView().findViewById(R.id.reportTimeTv);
 
         menuOneTv = getView().findViewById(R.id.menuOneTv);
@@ -418,6 +432,9 @@ public class SleepReortInDayFragment extends BaseFragment {
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            myScrollView.setScroll(false);
+            if (sleepReportInDayActivity!=null)//图标在滑动的时候禁止滑动换页
+                sleepReportInDayActivity.setViewPagerScroll(false);
             if (scrollAble){
                 mLineCharforBreath.onMyScroll(e1,e2,distanceX,distanceY);
                 mLineCharforHeart.onMyScroll(e1,e2,distanceX,distanceY);
@@ -440,6 +457,8 @@ public class SleepReortInDayFragment extends BaseFragment {
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            if (sleepReportInDayActivity!=null)//没在滑动的时候可以滑动换页
+                sleepReportInDayActivity.setViewPagerScroll(true);
             if (scrollAble){
                 mLineCharforBreath.onMyFling(e1,e2,velocityX,velocityY);
                 mLineCharforHeart.onMyFling(e1,e2,velocityX,velocityY);
@@ -459,7 +478,7 @@ public class SleepReortInDayFragment extends BaseFragment {
         public boolean onTouch(View v, MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 baseValue = 0;
-                if (sleepReportInDayActivity!=null)//图标在滑动的时候禁止滑动换页
+                if (sleepReportInDayActivity!=null)//缩放的时候禁止滑动换页
                     sleepReportInDayActivity.setViewPagerScroll(false);
             } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                 if (event.getPointerCount() == 2) {
@@ -486,9 +505,9 @@ public class SleepReortInDayFragment extends BaseFragment {
             }else if (event.getAction() == MotionEvent.ACTION_UP) {
                 if (sleepReportInDayActivity!=null)//没在滑动的时候可以滑动换页
                     sleepReportInDayActivity.setViewPagerScroll(true);
+                myScrollView.setScroll(true);
                 if (state){
                     scrollAble = true;
-                    myScrollView.setScroll(true);
                     state = false;
                     mLineChar.setStretchTimes(true);
                     mLineCharforBreath.setStretchTimes(true);
@@ -501,5 +520,20 @@ public class SleepReortInDayFragment extends BaseFragment {
 
 
     };
+
+    private MyScrollIsEnd myScrollIsEnd = new MyScrollIsEnd() {
+        @Override
+        public void onEnd() {
+            if (sleepReportInDayActivity!=null)//上下滑动结束，使能左右滑动
+                sleepReportInDayActivity.setViewPagerScroll(true);
+        }
+    };
+
+    /**
+     * 监听上下滑动结束的接口
+     * */
+    public interface MyScrollIsEnd{
+        void onEnd();
+    }
 
 }

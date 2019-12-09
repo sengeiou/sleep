@@ -2,23 +2,15 @@ package com.szip.sleepee.Controller;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.jonas.jgraph.utils.MathHelper;
 import com.szip.sleepee.Adapter.MyPagerAdapter;
-import com.szip.sleepee.Controller.Fragment.LoginForPhoneFragment;
-import com.szip.sleepee.Controller.Fragment.report.ReportDayFragment;
 import com.szip.sleepee.Controller.Fragment.report.SleepReortInDayFragment;
 import com.szip.sleepee.DB.DBModel.BreathData;
 import com.szip.sleepee.DB.DBModel.HeartData;
@@ -48,7 +40,6 @@ public class SleepReportInDayActivity extends BaseActivity implements ViewPager.
     private int reportDay;//报告的时间
 
     private int oldPosition = 0;// 记录上一次点的位置
-    private int currentItem; // 当前页面
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,16 +71,15 @@ public class SleepReportInDayActivity extends BaseActivity implements ViewPager.
     private void initData() {
         Gson gson = new Gson();
         //获取当天的所有睡眠报告段数
-//        SleepData sleepData = LoadDataUtil.newInstance().loadSleepStateListInDayLast(reportDay);
         List<SleepData> sleepDataList = LoadDataUtil.newInstance().loadSleepStateListInDay(reportDay);
-        List<HeartData> heartDataList = LoadDataUtil.newInstance().loadHeartDataListInDay(reportDay);
-        List<BreathData> breathDataList = LoadDataUtil.newInstance().loadBreathDataListInDay(reportDay);
-        List<TurnOverData> turnOverDataList = LoadDataUtil.newInstance().loadTurnOverDataListInDay(reportDay);
 
         //根据睡眠段数绘制报告
         for (int i = 0;i<sleepDataList.size();i++){
+            HeartData heartData = LoadDataUtil.newInstance().loadHeartDataWithTime(sleepDataList.get(i).getTime());
+            BreathData breathData = LoadDataUtil.newInstance().loadBreathDataWithTime(sleepDataList.get(i).getTime());
+            TurnOverData turnOverData = LoadDataUtil.newInstance().loadTurnOverDataWithTime(sleepDataList.get(i).getTime());
             SleepReortInDayFragment sleepReortInDayFragment = SleepReortInDayFragment.newInstance(reportDay,gson.toJson(sleepDataList.get(i)),
-                    gson.toJson(heartDataList.get(i)),gson.toJson(breathDataList.get(i)),gson.toJson(turnOverDataList.get(i)));
+                    gson.toJson(heartData),gson.toJson(breathData),gson.toJson(turnOverData));
             sleepReortInDayFragment.setSleepReportInDayActivity(this);
             views.add(sleepReortInDayFragment);
             View view = new View(this);
@@ -128,7 +118,6 @@ public class SleepReportInDayActivity extends BaseActivity implements ViewPager.
                 .setBackgroundResource(R.drawable.dot_focused);
 
         oldPosition = position;
-        currentItem = position;
     }
 
     @Override

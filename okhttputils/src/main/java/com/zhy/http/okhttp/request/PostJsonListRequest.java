@@ -44,7 +44,7 @@ public class PostJsonListRequest extends OkHttpRequest {
             RequestBody body = FormBody.create(MediaType.parse("application/json"),
                     params.get("data"));
 
-            Log.d("TOKENSZIP******","param = "+params.get("data"));
+//            Log.d("TOKENSZIP******","list param = "+params.get("data"));
             return body;
 
 //            FormBody.Builder builder = new FormBody.Builder();

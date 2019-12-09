@@ -434,7 +434,7 @@ public abstract class BaseGraph extends View  {
     protected void refreshExcels(){
         if(mJcharts == null) {
             if(BuildConfig.DEBUG) {
-                Log.e(TAG, "数据为空 ");
+                Log.w(TAG, "数据为空 ");
             }
             return;
         }
@@ -650,7 +650,6 @@ public abstract class BaseGraph extends View  {
                 invalidate();
                 return false;
             }else {
-                Log.d("SZIP******","触发");
                 //正常滑动距离刷新界面
                 invalidate();
                 return true;
@@ -920,7 +919,7 @@ public abstract class BaseGraph extends View  {
             if (i != size-1){
                 int str = startTime+num*i;
                 if (str>=24*60)
-                    str = str - 24*60;
+                    str = str % (24*60);
                 if (i==0){
                     canvas.drawText(String.format("%02d:%02d",str/60,str%60), mChartArea.left+
                                     ((float) (i)/(float) (size-1))*mCharAreaWidth,

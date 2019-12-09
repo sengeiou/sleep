@@ -1,6 +1,8 @@
 package com.szip.sleepee.Util;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 
@@ -22,6 +24,10 @@ public class LogcatHelper {
     private static String PATH_LOGCAT;
     private LogDumper mLogDumper = null;
     private int mPId;
+
+    private Context mContext;
+
+
 
     /**
      *
@@ -53,7 +59,8 @@ public class LogcatHelper {
     }
 
     private LogcatHelper(Context context) {
-        init(context);
+        this.mContext = context;
+//        init(context);
         mPId = android.os.Process.myPid();
     }
 
@@ -99,8 +106,8 @@ public class LogcatHelper {
 
             // cmds = "logcat *:e *:w | grep \"(" + mPID + ")\"";
             // cmds = "logcat  | grep \"(" + mPID + ")\"";//打印所有日志信息
-            // cmds = "logcat -s way";//打印标签过滤信息
-            cmds = "logcat *:e | grep \"(" + mPID + ")\"";
+//             cmds = "logcat -s AndroidRuntime";//打印标签过滤信息
+            cmds = "logcat *:e | grep \"(" + mPID + ")\" | -s AndroidRuntime";
 
         }
 
@@ -108,12 +115,14 @@ public class LogcatHelper {
             mRunning = false;
         }
 
+        StringBuffer logBuffer = new StringBuffer();
         @Override
         public void run() {
             try {
                 logcatProc = Runtime.getRuntime().exec(cmds);
                 mReader = new BufferedReader(new InputStreamReader(
-                        logcatProc.getInputStream()), 1024);
+                        logcatProc.getInputStream()), 5000);
+
                 String line = null;
                 while (mRunning && (line = mReader.readLine()) != null) {
                     if (!mRunning) {
@@ -122,8 +131,13 @@ public class LogcatHelper {
                     if (line.length() == 0) {
                         continue;
                     }
-                    if (out != null && line.contains(mPID)) {
-                        out.write((line + "\n").getBytes());
+                    if (line.contains(mPID)) {
+//                        if (logBuffer.length()<1000)
+//                            logBuffer.append(line);
+//                        else {
+//
+//                            logBuffer = new StringBuffer();
+//                        }
                     }
                 }
 
@@ -142,14 +156,16 @@ public class LogcatHelper {
                         e.printStackTrace();
                     }
                 }
-                if (out != null) {
-                    try {
-                        out.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    out = null;
-                }
+
+//                try {
+//                    HttpMessgeUtil.getInstance(mContext).postAppCrashLog("sleepee",mContext.getPackageManager().getPackageInfo
+//                            ("com.szip.sleepee", 0).versionName, Build.BRAND+ Build.MODEL,logBuffer.toString());
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                } catch (PackageManager.NameNotFoundException e) {
+//                    e.printStackTrace();
+//                }
+
 
             }
 

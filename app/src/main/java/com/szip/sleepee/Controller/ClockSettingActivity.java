@@ -467,13 +467,14 @@ public class ClockSettingActivity extends BaseActivity implements HttpCallbackWi
                                 }
                                 break;
                                 case 2:{//起床闹钟
-                                    ProgressHudModel.newInstance().show(ClockSettingActivity.this,getString(R.string.waitting)
-                                            ,getString(R.string.httpError),5000);
 
-                                    if (BleService.getInstance().isConnect())
+
+                                    if (BleService.getInstance().isConnect()){
+                                        ProgressHudModel.newInstance().show(ClockSettingActivity.this,getString(R.string.waitting)
+                                                ,getString(R.string.httpError),5000);
                                         BleService.getInstance().write(ProtocolWriter.writeForAddClock(isphone?(byte) 0x0:0x01,(byte)0x1,(byte)0x0,
                                                 (byte)0x0,repeatState,(byte) hour,(byte) minute,intelligentCb.isChecked()?(byte)0x1:0x00,(byte)alarmType));
-                                    else
+                                    } else
                                         Toast.makeText(ClockSettingActivity.this,getString(R.string.blueUnline),Toast.LENGTH_SHORT).show();
                                     break;
                                 }

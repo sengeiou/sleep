@@ -223,10 +223,15 @@ public class SleepFragment extends BaseFragment {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.heartLl:
-                case R.id.breathLl:{
-                    Intent intent = new Intent();
-                    intent.setClass(getActivity(),RealTimeActivity.class);
-                    startActivity(intent);
+                case R.id.breathLl: {
+                    if (BleService.getInstance().isConnect()) {//蓝牙连接着
+                        Intent intent = new Intent();
+                        intent.setClass(getActivity(), RealTimeActivity.class);
+                        startActivity(intent);
+                    }
+                    else {
+                        showToast(getString(R.string.lineError));
+                    }
                 }
                 break;
                 case R.id.sleepRl:

@@ -31,11 +31,11 @@ public class Timer {
 
         @Override
         public final void run() {
-            BluetoothLog.e(String.format("%s: Timer expired!!!", name));
+            BluetoothLog.w(String.format("%s: Timer expired!!!", name));
             try {
                 onTimerCallback();
             } catch (TimeoutException e) {
-                BluetoothLog.e(e);
+                BluetoothLog.w(e);
             }
             mCallback = null;
         }

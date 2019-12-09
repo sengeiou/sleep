@@ -175,18 +175,14 @@ public class RegisterActivity extends BaseActivity implements HttpCallbackWithRe
 
     @Override
     public void onRegist(RegisterBean registerBean) {
-        if (mailR==null){
-            try {
+        try {
+            if (mailR==null){
                 HttpMessgeUtil.getInstance(mContext).postLogin("1",codeR,phoneR,"",passwordR,LOGIN_FLAG);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }else {
-            try {
+            }else {
                 HttpMessgeUtil.getInstance(mContext).postLogin("2","","",mailR,passwordR,LOGIN_FLAG);
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

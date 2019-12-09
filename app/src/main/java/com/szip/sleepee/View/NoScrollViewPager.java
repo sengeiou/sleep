@@ -36,11 +36,16 @@ public class NoScrollViewPager extends ViewPager {
         // return false;//可行,不拦截事件,
         // return true;//不行,孩子无法处理事件
         //return super.onInterceptTouchEvent(ev);//不行,会有细微移动
-        if (isScroll){
-            return super.onInterceptTouchEvent(ev);
-        }else{
-            return false;
+        try {
+            if (isScroll){
+                return super.onInterceptTouchEvent(ev);
+            }else{
+                return false;
+            }
+        } catch (IllegalArgumentException ex) {
+            ex.printStackTrace();
         }
+        return false;
     }
     /**
      * 是否消费事件

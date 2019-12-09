@@ -163,7 +163,7 @@ public abstract class BleRequest implements IBleConnectWorker, IBleRequest, Hand
                 registerGattResponseListener(this);
                 processRequest();
             } catch (Throwable e) {
-                BluetoothLog.e(e);
+                BluetoothLog.w(e);
                 onRequestCompleted(Code.REQUEST_EXCEPTION);
             }
         }

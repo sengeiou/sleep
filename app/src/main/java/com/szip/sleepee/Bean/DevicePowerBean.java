@@ -5,12 +5,11 @@ public class DevicePowerBean {
 
     public DevicePowerBean(byte power, boolean isPower){
         int a = (0|power)&0xff;
-        if (isPower){
-            this.power = String.format("%d",a)+"%,正在充电";
-        }else {
+        if(a == 100 || !isPower){
             this.power = String.format("%d",a)+"%";
+        }else if (isPower){
+            this.power = "";
         }
-
     }
 
     public String getPower() {

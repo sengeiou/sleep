@@ -105,15 +105,6 @@ public class RegisterForPhoneFragment extends BaseFragment implements HttpCallba
                         sendTv.setText(time+"s");
                     }
                     break;
-                case 205:
-                    showToast(getString(R.string.verificationError));
-                    break;
-                case 206:
-                    showToast(getString(R.string.verificationTimeOut));
-                    break;
-                default:
-                    showToast(getString(R.string.error)+msg.what);
-                    break;
             }
         }
     };

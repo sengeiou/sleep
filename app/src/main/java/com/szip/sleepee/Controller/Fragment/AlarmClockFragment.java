@@ -86,7 +86,6 @@ public class AlarmClockFragment extends BaseFragment {
 
     private void initData() {
         list = app.getClockList();
-        Log.d("SZIP******","SIZE = "+list.size());
     }
 
     /**

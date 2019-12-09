@@ -8,7 +8,7 @@
     <string name="password">Password</string>
     <string name="forget">Forget?</string>
     <string name="china">China</string>
-    <string name="remember">remember password</string>
+    <string name="remember">Remember password</string>
     <string name="sign">Sign Up</string>
     <string name="signLine"><u>Sign Up</u></string>
     <string name="login">Login</string>
@@ -177,6 +177,7 @@
     <string name="channel_proximity_warnings_title">Proximity warnings</string>
     <string name="channel_proximity_warnings_description">Shows notifications when a proximity device got out of range.</string>
     <string name="bettery">The battery is under 15%, please note</string>
+    <string name="charging">Charging...</string>
 
     <!--账号管理界面-->
     <string name="mailAcount">Email</string>
@@ -311,6 +312,7 @@
     <string name="confirm">confirm</string>
     <string name="httpError">Time out of request, please check the network</string>
     <string name="blueUnline">Unable to set the alarm for Bluetooth disconnected</string>
+    <string name="blueUnline1">Unable to add the alarm for Bluetooth disconnected</string>
 
     <string name="updata">Upgrade success</string>
     <string name="updataFail">Upgrade failed. Please try again</string>

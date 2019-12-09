@@ -85,7 +85,7 @@ public class SaveDataUtil {
                 .success(new Transaction.Success() {
                     @Override
                     public void onSuccess(Transaction transaction) {
-                        Log.d("SZIP******","睡眠数据保存成功");
+                        //Log.d("SZIP******","睡眠数据保存成功");
                         ((MyApplication)mContext.getApplicationContext()).setDataUpdateState(0);
                     }
                 }).build().execute();
@@ -150,7 +150,7 @@ public class SaveDataUtil {
                 .success(new Transaction.Success() {
                     @Override
                     public void onSuccess(Transaction transaction) {
-                        Log.d("SZIP******","统计睡眠数据保存成功");
+                        //Log.d("SZIP******","统计睡眠数据保存成功");
                         ((MyApplication)mContext.getApplicationContext()).setDataUpdateState(1);
                     }
                 }).build().execute();
@@ -192,7 +192,7 @@ public class SaveDataUtil {
      * 批量保存心率
      * */
     public void saveHeartDataListData(List<HeartData> heartDataList){
-        Log.d("SZIP******","heartDataList.size = "+heartDataList.size());
+        //Log.d("SZIP******","heartDataList.size = "+heartDataList.size());
         FlowManager.getDatabase(AppDatabase.class)
                 .beginTransactionAsync(new ProcessModelTransaction.Builder<>(
                         new ProcessModelTransaction.ProcessModel<HeartData>() {
@@ -218,7 +218,7 @@ public class SaveDataUtil {
                 .success(new Transaction.Success() {
                     @Override
                     public void onSuccess(Transaction transaction) {
-                        Log.d("SZIP******","心率数据保存成功");
+                        //Log.d("SZIP******","心率数据保存成功");
                         ((MyApplication)mContext.getApplicationContext()).setDataUpdateState(2);
                     }
                 }).build().execute();
@@ -283,7 +283,7 @@ public class SaveDataUtil {
                 .success(new Transaction.Success() {
                     @Override
                     public void onSuccess(Transaction transaction) {
-                        Log.d("SZIP******","心率统计数据保存成功");
+                        //Log.d("SZIP******","心率统计数据保存成功");
                         ((MyApplication)mContext.getApplicationContext()).setDataUpdateState(3);
                     }
                 }).build().execute();
@@ -349,7 +349,7 @@ public class SaveDataUtil {
                 .success(new Transaction.Success() {
                     @Override
                     public void onSuccess(Transaction transaction) {
-                        Log.d("SZIP******","呼吸率数据保存成功");
+                        //Log.d("SZIP******","呼吸率数据保存成功");
                         ((MyApplication)mContext.getApplicationContext()).setDataUpdateState(4);
                     }
                 }).build().execute();
@@ -417,7 +417,7 @@ public class SaveDataUtil {
                 .success(new Transaction.Success() {
                     @Override
                     public void onSuccess(Transaction transaction) {
-                        Log.d("SZIP******","呼吸率统计数据保存成功");
+                        //Log.d("SZIP******","呼吸率统计数据保存成功");
                         ((MyApplication)mContext.getApplicationContext()).setDataUpdateState(5);
                     }
                 }).build().execute();
@@ -459,7 +459,7 @@ public class SaveDataUtil {
      * 批量保存翻身数据
      * */
     public void saveTurnOverDataListData(List<TurnOverData> turnOverDataList){
-        Log.d("SZIP******","turnOverDataList.size = "+turnOverDataList.size());
+        //Log.d("SZIP******","turnOverDataList.size = "+turnOverDataList.size());
         FlowManager.getDatabase(AppDatabase.class)
                 .beginTransactionAsync(new ProcessModelTransaction.Builder<>(
                         new ProcessModelTransaction.ProcessModel<TurnOverData>() {
@@ -485,7 +485,7 @@ public class SaveDataUtil {
                 .success(new Transaction.Success() {
                     @Override
                     public void onSuccess(Transaction transaction) {
-                        Log.d("SZIP******","翻身数据保存成功");
+                        //Log.d("SZIP******","翻身数据保存成功");
                         ((MyApplication)mContext.getApplicationContext()).setDataUpdateState(6);
                     }
                 }).build().execute();
@@ -552,7 +552,7 @@ public class SaveDataUtil {
                 .success(new Transaction.Success() {
                     @Override
                     public void onSuccess(Transaction transaction) {
-                        Log.d("SZIP******","翻身次数统计数据保存成功");
+                        //Log.d("SZIP******","翻身次数统计数据保存成功");
                         ((MyApplication)mContext.getApplicationContext()).setDataUpdateState(7);
                     }
                 }).build().execute();

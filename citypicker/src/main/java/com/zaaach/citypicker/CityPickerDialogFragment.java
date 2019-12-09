@@ -189,7 +189,6 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
                 window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
                 window.setStatusBarColor(Color.TRANSPARENT);
                 window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-//                Log.d("SZIP******","状态栏透明");
             } else {
                 window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
                 window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
@@ -210,7 +209,6 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
 
             removeFakeStatusBarViewIfExist(activity);
             removeMarginTopOfContentChild(mContentChild, getStatusBarHeight(activity.getContext()));
-//            Log.d("SZIP******","状态栏透明");
             if (mContentChild != null) {
                 ViewCompat.setFitsSystemWindows(mContentChild, false);
             }
