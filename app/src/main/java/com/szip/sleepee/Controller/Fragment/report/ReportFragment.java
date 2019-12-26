@@ -1,35 +1,23 @@
 package com.szip.sleepee.Controller.Fragment.report;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.SharedPreferences;
+
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.NonNull;
+
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.szip.sleepee.Adapter.MyPagerAdapter;
 import com.szip.sleepee.Controller.Fragment.BaseFragment;
 import com.szip.sleepee.Controller.MainActivity;
-import com.szip.sleepee.Model.ProgressHudModel;
+
 import com.szip.sleepee.MyApplication;
 import com.szip.sleepee.R;
-import com.szip.sleepee.Service.BleService;
 import com.szip.sleepee.View.NoScrollViewPager;
-import com.zhuoting.health.write.ProtocolWriter;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.Date;
+
 
 /**
  * Created by Administrator on 2019/1/23.
@@ -40,13 +28,10 @@ public class ReportFragment extends BaseFragment {
     private String[] tabs =new String[]{"day","week","month"};
     private TabLayout mTab;
     private NoScrollViewPager mPager;
-    private MyApplication app;
-    private KProgressHUD progressHUD;
 
     private MyPagerAdapter myPagerAdapter;
     private ArrayList<Fragment> fragments = new ArrayList<>();
 
-    private MainActivity activity;
     /**
      * 返回一个fragment实例，Activity中调用
      * */
@@ -65,15 +50,10 @@ public class ReportFragment extends BaseFragment {
 
     @Override
     protected void afterOnCreated(Bundle savedInstanceState) {
-        app = (MyApplication) getActivity().getApplicationContext();
         if (mPager == null && mTab == null){
             initView();
             initPager();
         }
-    }
-
-    public void setActivity(MainActivity activity) {
-        this.activity = activity;
     }
 
     /**
@@ -134,6 +114,5 @@ public class ReportFragment extends BaseFragment {
 
             }
         });
-
     }
 }

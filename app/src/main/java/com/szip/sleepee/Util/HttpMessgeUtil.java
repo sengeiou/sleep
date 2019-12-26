@@ -39,10 +39,10 @@ import java.io.IOException;
 import okhttp3.Call;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.szip.sleepee.MyApplication.FILE;
 
 public class HttpMessgeUtil {
 
-    private String FILE = "sleepEE";
     private static HttpMessgeUtil mInstance;
     private String url = "https://cloud.znsdkj.com:8443/sleep/";
 //    private String url = "https://test.znsdkj.com:8443/sleep/";
@@ -294,14 +294,12 @@ public class HttpMessgeUtil {
 
     /**
      * 获取个人信息
-     * @param id         回调标识
      * */
-    private void _getForGetInfo(int id)throws IOException{
+    private void _getForGetInfo()throws IOException{
         String url = this.url+"user/getUserInfo";
         OkHttpUtils
                 .get()
                 .url(url)
-                .id(id)
                 .addHeader("Time-Diff",time)
                 .addHeader("token",token)
                 .addHeader("Accept-Language",language)
@@ -644,8 +642,8 @@ public class HttpMessgeUtil {
         _postForSetUserInfo(name,sex,birthday,height,weight,units,id);
     }
 
-    public void getForGetInfo(int id)throws IOException{
-        _getForGetInfo(id);
+    public void getForGetInfo()throws IOException{
+        _getForGetInfo();
     }
 
     public void postForBindEmail(String email,String verifyCode,int id)throws IOException{
@@ -804,13 +802,10 @@ public class HttpMessgeUtil {
 
         @Override
         public void onResponse(UserInfoBean response, int id) {
-            if (response.getCode() == 200){
+            if (response.getCode() == 200||response.getCode() == 401){
                 if (httpCallbackWithUserInfo!=null)
                     httpCallbackWithUserInfo.onUserInfo(response);
-            }else if (response.getCode() == 401){
-                tokenTimeOut();
             }else {
-                ProgressHudModel.newInstance().diss();
                 MathUitl.showToast(mContext,response.getMessage());
             }
         }
@@ -886,19 +881,12 @@ public class HttpMessgeUtil {
     };
 
     private void tokenTimeOut(){
-        SharedPreferences sharedPreferences ;
         ProgressHudModel.newInstance().diss();
         BleService.getInstance().disConnect();
         BleService.getInstance().setmMac(null);
-        ((MyApplication)(mContext.getApplicationContext())).setUserInfo(null);
         ((MyApplication)(mContext.getApplicationContext())).clearClockList();
         ((MyApplication)(mContext.getApplicationContext())).setReportDate(DateUtil.getStringToDate("today"));
         SaveDataUtil.newInstance(mContext).clearDB();
-        sharedPreferences = mContext.getSharedPreferences(FILE,MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("isLogin",false);
-        editor.putBoolean("isBind",false);
-        editor.commit();
         MathUitl.showToast(mContext,mContext.getString(R.string.tokenTimeout));
         Intent intentmain=new Intent(mContext,LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(intentmain);

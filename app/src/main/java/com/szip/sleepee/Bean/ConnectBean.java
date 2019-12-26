@@ -5,9 +5,9 @@ package com.szip.sleepee.Bean;
  */
 public class ConnectBean {
 
-    public boolean isConnect = false ;
+    public int isConnect;
 
-    public ConnectBean(boolean isConnect){
+    public ConnectBean(int isConnect){
         this.isConnect = isConnect ;
     }
 

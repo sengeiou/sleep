@@ -33,6 +33,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 
+import static com.szip.sleepee.MyApplication.FILE;
 import static com.szip.sleepee.Util.HttpMessgeUtil.SOFT_FLAG;
 import static com.szip.sleepee.Util.HttpMessgeUtil.UNBINDDEVICE_FLAG;
 
@@ -47,7 +48,6 @@ public class MyDeviceActivity extends BaseActivity implements HttpCallbackWithUp
     private TextView macTv;
     private LinearLayout unbindLl;
     private ImageView backIv;
-    private String FILE = "sleepEE";
 
     /**
      * 判断是否可以升级
@@ -75,7 +75,8 @@ public class MyDeviceActivity extends BaseActivity implements HttpCallbackWithUp
                     break;
                 case 100:
                     BleService.getInstance().disConnect();
-                    BleService.getInstance().setmMac(null);
+                    app.getUserInfo().setDeviceCode(null);
+                    app.setUserInfo(app.getUserInfo());
                     SaveDataUtil.newInstance(MyDeviceActivity.this).clearDB();
                     startActivity(new Intent(mContext, FindDeviceActivity.class));
                     setResult(10);
@@ -193,27 +194,6 @@ public class MyDeviceActivity extends BaseActivity implements HttpCallbackWithUp
         }
     }
 
-//    /**
-//     * 判断是否可以更新
-//     * */
-//    private boolean isUpdataAble(String version){
-//        if(version !=null){
-//            int index = version.indexOf('_');
-//            int serverV = 0;
-//            int nativeV;
-//
-//            nativeV = Integer.valueOf(app.getSoftV().substring(0,1))*10+Integer.valueOf(app.getSoftV().substring(2));
-//            if (index>=0){
-//                serverV =Integer.valueOf(version.substring(index+1,index+2))*10+Integer.valueOf(version.substring(index+3));
-//            }
-//            if (nativeV>=serverV)
-//                return false;
-//            else
-//                return true;
-//        }else
-//            return false;
-//    }
-
     /**
      * 更新电量
      * */
@@ -241,10 +221,6 @@ public class MyDeviceActivity extends BaseActivity implements HttpCallbackWithUp
         if (id == UNBINDDEVICE_FLAG){
             app.clearClockList();
             app.setReportDate(DateUtil.getStringToDate("today"));
-            SharedPreferences sharedPreferencesp = getSharedPreferences(FILE,MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferencesp.edit();
-            editor.putBoolean("isBind",false);
-            editor.commit();
             handler.sendEmptyMessage(100);
         }
     }

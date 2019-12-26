@@ -33,6 +33,7 @@ import java.util.ArrayList;
 
 import okhttp3.Call;
 
+import static com.szip.sleepee.MyApplication.FILE;
 import static com.szip.sleepee.Util.HttpMessgeUtil.LOGIN_FLAG;
 import static com.szip.sleepee.Util.HttpMessgeUtil.REGIST_FLAG;
 
@@ -48,7 +49,7 @@ public class RegisterActivity extends BaseActivity implements HttpCallbackWithRe
      * 轻量级文件
      * */
     private SharedPreferences sharedPreferencesp;
-    private String FILE = "sleepEE";
+    ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

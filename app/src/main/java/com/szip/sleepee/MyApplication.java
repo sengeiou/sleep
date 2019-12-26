@@ -13,6 +13,8 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
 import com.inuker.bluetooth.library.BluetoothContext;
@@ -26,11 +28,16 @@ import com.szip.sleepee.Bean.DeviceClockIsUpdataBean;
 import com.szip.sleepee.Bean.HttpBean.AddClockBean;
 import com.szip.sleepee.Bean.HttpBean.BaseApi;
 import com.szip.sleepee.Bean.HttpBean.ClockData;
+import com.szip.sleepee.Bean.HttpBean.ClockDataBean;
+import com.szip.sleepee.Bean.HttpBean.UserInfoBean;
 import com.szip.sleepee.Bean.UpdataReportBean;
 import com.szip.sleepee.Bean.UserInfo;
 import com.szip.sleepee.Broadcat.UtilBroadcat;
 import com.szip.sleepee.DB.LoadDataUtil;
 import com.szip.sleepee.Interface.HttpCallbackWithBase;
+import com.szip.sleepee.Interface.HttpCallbackWithClockData;
+import com.szip.sleepee.Interface.HttpCallbackWithReport;
+import com.szip.sleepee.Interface.HttpCallbackWithUserInfo;
 import com.szip.sleepee.Model.ProgressHudModel;
 import com.szip.sleepee.Service.BleService;
 import com.szip.sleepee.Util.ClientManager;
@@ -51,18 +58,21 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 
 import no.nordicsemi.android.dfu.DfuServiceInitiator;
 import okhttp3.Call;
 
+import static com.szip.sleepee.Util.HttpMessgeUtil.DOWNLOADDATA_FLAG;
+import static com.szip.sleepee.Util.HttpMessgeUtil.GETALARM_FLAG;
 import static com.szip.sleepee.Util.HttpMessgeUtil.UPDOWNDATA_FLAG;
 
 /**
  * Created by Administrator on 2019/1/22.
  */
 
-public class MyApplication extends Application{
+public class MyApplication extends Application implements HttpCallbackWithUserInfo,HttpCallbackWithClockData,HttpCallbackWithReport {
 
 
     /**
@@ -109,7 +119,7 @@ public class MyApplication extends Application{
 
 
     private SharedPreferences sharedPreferences;
-    private String FILE = "sleepEE";
+    public static String FILE = "sleepEE";
     private boolean isGetData = true;
 
     private String hardV;
@@ -118,6 +128,11 @@ public class MyApplication extends Application{
     private boolean isSearch = false;
     private boolean connectting = false;//判断蓝牙是不是正在连接
     private String mMac = "null";
+
+    /**
+     * 启动状态 0：登录状态 1：未登录状态 2：登录过期状态
+     * */
+    private int startState = 0;
 
     public static String fileName = Environment.getExternalStorageDirectory() + "/MecareMsg.txt";
 
@@ -135,6 +150,36 @@ public class MyApplication extends Application{
     public static final String PROXIMITY_WARNINGS_CHANNEL = "proximity_warnings_channel";
     private boolean updownAble = false;
 
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 200:
+                    try {
+                        HttpMessgeUtil.getInstance(getApplicationContext()).getForGetClockList(GETALARM_FLAG);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+
+                case 300:
+                    try {
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Calendar.HOUR_OF_DAY,5);
+                        calendar.set(Calendar.MINUTE,0);
+                        calendar.set(Calendar.SECOND,0);
+                        calendar.set(Calendar.MILLISECOND,0);
+                        HttpMessgeUtil.getInstance(getApplicationContext()).getForDownloadReportData(""+(calendar.getTimeInMillis()/1000-30*24*60*60),
+                                "30",DOWNLOADDATA_FLAG);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+            }
+        }
+    };
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -150,6 +195,8 @@ public class MyApplication extends Application{
          * 把log上传到云端
          * */
         Thread.setDefaultUncaughtExceptionHandler(new TopExceptionHandler(this));
+
+
 
         /**
          * Android8.0之后DFU升级需要获取部分弹框权限
@@ -185,26 +232,38 @@ public class MyApplication extends Application{
         UtilBroadcat broadcat = new UtilBroadcat(getApplicationContext());
         broadcat.onRegister();
 
+        //注册网络回调
+        HttpMessgeUtil.getInstance(this).setHttpCallbackWithUserInfo(this);
+        HttpMessgeUtil.getInstance(this).setHttpCallbackWithClockData(this);
+        HttpMessgeUtil.getInstance(this).setHttpCallbackWithReport(this);
+
         /**
          * 启动后台
          * */
         startService(new Intent(this,BleService.class));
 
+        //取缓存用户信息
+        SharedPreferences  sharedPreferences = getSharedPreferences(FILE,MODE_PRIVATE);
+        this.userInfo = MathUitl.loadInfoData(sharedPreferences);
+        upLoadTime = sharedPreferences.getLong("lastLoadTime",0);
+        //判断登录状态
+        String token = sharedPreferences.getString("token",null);
+        if (token==null){//未登录
+            startState = 1;
+        }else {//已登录
+            startState = 0;
+            HttpMessgeUtil.getInstance(this).setToken(token);
+            try {
+                HttpMessgeUtil.getInstance(this).getForGetInfo();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         this.reportDate = DateUtil.getStringToDate("today");
         this.todayTime = DateUtil.getStringToDate("today");
 
-        /**
-         * 拿去本地缓存的数据
-         * */
-        if (sharedPreferences == null)
-            sharedPreferences = getSharedPreferences(FILE,MODE_PRIVATE);
-        HttpMessgeUtil.getInstance(this).setToken(sharedPreferences.getString("token",null));
-        upLoadTime = sharedPreferences.getLong("lastLoadTime",0);
-
         instance = this;
-
-
 
         registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
             @Override
@@ -221,9 +280,6 @@ public class MyApplication extends Application{
                     //说明从后台回到了前台
                     Log.i(TAG, " 返回到了 前台");
                     MyApplication.isBackground = false;
-                    if (!isFirst)
-                        AutoConnectBle();
-                    isFirst = false;
                 }
             }
 
@@ -261,76 +317,6 @@ public class MyApplication extends Application{
             }
         });
 
-    }
-
-
-    /**
-     * 自动连接蓝牙
-     * */
-    public void AutoConnectBle(){
-        mMac =  BleService.getInstance().getmMac();
-        if (mMac!=null){
-            searchDevice();
-        }
-    }
-
-    /**
-     *搜索设备
-     * */
-    private void searchDevice() {
-        if (!isSearch){
-            SearchRequest request = new SearchRequest.Builder()
-                    .searchBluetoothLeDevice(20000, 1).build();
-            ClientManager.getClient().search(request, mSearchResponse);
-        }
-    }
-
-    /**
-     * 扫描函数回调
-     * */
-    private final SearchResponse mSearchResponse = new SearchResponse() {
-        @Override
-        public void onSearchStarted() {
-            BluetoothLog.w("MainActivity.onSearchStarted");
-            isSearch = true;
-            connectting = false;
-        }
-
-        @Override
-        public void onDeviceFounded(SearchResult device) {
-            if (device.getAddress().equals(mMac)){
-                BleService.getInstance().connect();
-                BleService.getInstance().setmName(device.getName());
-                ClientManager.getClient().stopSearch();
-                connectting = true;
-            }
-
-        }
-
-        @Override
-        public void onSearchStopped() {
-            BluetoothLog.w("MainActivity.onSearchStopped");
-            isSearch = false;
-            EventBus.getDefault().post(new ConnectBean(false));
-        }
-
-        @Override
-        public void onSearchCanceled() {
-            BluetoothLog.w("MainActivity.onSearchCanceled");
-            isSearch = false;
-        }
-    };
-
-    public boolean isSearch() {
-        return isSearch;
-    }
-
-    public boolean isConnectting() {
-        return connectting;
-    }
-
-    public void setConnectting(boolean connectting) {
-        this.connectting = connectting;
     }
 
     public void setVersion(String hardV, String softV) {
@@ -456,7 +442,6 @@ public class MyApplication extends Application{
         EventBus.getDefault().post(new DeviceClockIsUpdataBean());
     }
 
-
     /**
      * 读取到睡眠带的闹钟列表，刷新闹钟列表
      * */
@@ -534,7 +519,9 @@ public class MyApplication extends Application{
         isUpdating = updating;
     }
 
-
+    public int getStartState() {
+        return startState;
+    }
 
     public void setUpdownAble(boolean updownAble) {
         this.updownAble = updownAble;
@@ -597,6 +584,7 @@ public class MyApplication extends Application{
                     }
                 }
                 updownAble = false;
+                BleService.getInstance().write(ProtocolWriter.writeForDeleteData());//同步完成删除底层的数据
             }
         }
     }
@@ -612,4 +600,36 @@ public class MyApplication extends Application{
 
         }
     };
+
+    @Override
+    public void onUserInfo(UserInfoBean userInfoBean) {
+        if (userInfoBean.getCode() == 401){//登录过期
+            startState = 2;
+        }else {//保存用户信息
+            setUserInfo(userInfoBean.getData());
+            handler.sendEmptyMessage(200);//获取信息成功，开始获取闹钟数据
+        }
+    }
+
+    /**
+     * 闹钟网络回调
+     * */
+    @Override
+    public void onClockData(ClockDataBean clockDataBean) {
+        if(clockDataBean.getData().getArray()!=null){
+            setClockList1(clockDataBean.getData().getArray());
+        }
+        handler.sendEmptyMessage(300);//获取闹钟数据成功，开始获取报告数据
+    }
+
+
+    /**
+     * 向服务器获取数据的回调
+     * */
+    @Override
+    public void onReport(boolean isNewData) {
+        HttpMessgeUtil.getInstance(this).setHttpCallbackWithUserInfo(null);
+        HttpMessgeUtil.getInstance(this).setHttpCallbackWithClockData(null);
+        HttpMessgeUtil.getInstance(this).setHttpCallbackWithReport(null);
+    }
 }

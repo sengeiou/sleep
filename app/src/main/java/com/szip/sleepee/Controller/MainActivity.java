@@ -66,12 +66,13 @@ import java.util.Calendar;
 import cn.aigestudio.datepicker.cons.DPMode;
 import cn.aigestudio.datepicker.views.DatePicker;
 
+import static com.szip.sleepee.MyApplication.FILE;
 import static com.szip.sleepee.Util.HttpMessgeUtil.DOWNLOADDATA_FLAG;
 import static com.szip.sleepee.Util.HttpMessgeUtil.GETALARM_FLAG;
 import static com.szip.sleepee.Util.HttpMessgeUtil.GETINFO_FLAG;
 
 
-public class MainActivity extends BaseActivity implements HttpCallbackWithUserInfo,HttpCallbackWithClockData,HttpCallbackWithReport{
+public class MainActivity extends BaseActivity {
 
     private Context mContext;
 
@@ -96,15 +97,11 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
     private ImageView menuIv;
     private ImageView imageOne;
     private ImageView imageTwo;
-    private TextView titleTv;
 
     /**
      * 所在界面
      * */
     private int fragmentPos = 0;
-
-    private SharedPreferences sharedPreferences;
-    private String FILE = "sleepEE";
 
 
     /**
@@ -117,9 +114,6 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
      * */
     private RotateAnimation rotateRight  = new RotateAnimation(0f, 90f, Animation.RELATIVE_TO_SELF,
             0f, Animation.RELATIVE_TO_SELF, 0f);
-
-    private ObjectAnimator anim1;
-    private AnimatorSet lineAnimator = new AnimatorSet();
 
     private MyApplication app;
 
@@ -154,23 +148,6 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
                         e.printStackTrace();
                     }
                     break;
-                case 402:
-                    ProgressHudModel.newInstance().diss();
-                    showToast(getString(R.string.loginError));
-                    if (lineAnimator.isStarted())
-                        lineAnimator.end();
-                    BleService.getInstance().disConnect();
-                    SaveDataUtil.newInstance(MainActivity.this).clearDB();
-                    if (sharedPreferences==null)
-                        sharedPreferences = getSharedPreferences(FILE,MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("isLogin",false);
-                    editor.commit();
-                    Intent intent = new Intent();
-                    intent.setClass(mContext,LoginActivity.class);
-                    startActivity(intent);
-                    finish();
-                    break;
             }
         }
     };
@@ -194,20 +171,18 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
         super.onPause();
         if (EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().unregister(this);
-        HttpMessgeUtil.getInstance(mContext).setHttpCallbackWithReport(null);
-        HttpMessgeUtil.getInstance(mContext).setHttpCallbackWithClockData(null);
-        HttpMessgeUtil.getInstance(mContext).setHttpCallbackWithUserInfo(null);
-        if (lineAnimator.isStarted())
-            lineAnimator.end();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         updataBleStateImage();
-        HttpMessgeUtil.getInstance(mContext).setHttpCallbackWithReport(this);
-        HttpMessgeUtil.getInstance(mContext).setHttpCallbackWithClockData(this);
-        HttpMessgeUtil.getInstance(mContext).setHttpCallbackWithUserInfo(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        BleService.getInstance().stopConnectDevice();
     }
 
     /** 保存MyTouchListener接口的列表 */
@@ -237,14 +212,10 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
         if (fragmentPos!=1){
             if (!EventBus.getDefault().isRegistered(this))
                 EventBus.getDefault().register(this);
-            if (BleService.getInstance().isConnect()){
+            if (BleService.getInstance().getConnectState() == 2){
                 imageOne.setImageResource(R.mipmap.sleep_icon_connect);
-                if (app.isUpdating())
-                    ProgressHudModel.newInstance().show(MainActivity.this,getString(R.string.syncing),null,15000);
-            }else {
+            }else if (BleService.getInstance().getConnectState() == 0){
                 imageOne.setImageResource(R.mipmap.sleep_icon_ununited);
-                if (ClientManager.getClient().isBluetoothOpened()){
-                }
             }
         }
     }
@@ -253,23 +224,11 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
      * 初始化界面
      * */
     private void initView() {
-        if (app.getUserInfo() == null){//没有获取信息的时候获取信息
-            try {
-                ProgressHudModel.newInstance().show(this,getString(R.string.logging),getString(R.string.httpError),8000,
-                        false,onProgressTimeout);
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (app.isConnectting()||app.isSearch()&&!lineAnimator.isStarted())
-                            lineAnimator.start();
-                    }
-                },300);
-                HttpMessgeUtil.getInstance(mContext).getForGetInfo(GETINFO_FLAG);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }else {//已经获取过信息了，直接连接蓝牙
-            connectBle();
+
+        BluetoothAdapter blueadapter = BluetoothAdapter.getDefaultAdapter();
+        if (!blueadapter.isEnabled()) {
+            Intent bleIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivity(bleIntent);
         }
 
         menuIv = findViewById(R.id.menuIv);
@@ -297,7 +256,6 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
                 if (position!=fragmentPos){
                     fragmentPos = position;
                     updateView(position);
-                    updataBleStateImage();
                 }
                 startSector(false);
             }
@@ -308,15 +266,12 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
      * 更新界面
      * */
     private void updateView(int pos) {
-
-        reportFragment.setActivity(this);
-
         switch (pos){
             case 0:
                 ((TextView)findViewById(R.id.titleTv)).setText(getString(R.string.sleep));
                 imageOne.setVisibility(View.VISIBLE);
                 imageTwo.setVisibility(View.GONE);
-                if (BleService.getInstance().isConnect())
+                if (BleService.getInstance().getConnectState() == 2)
                     imageOne.setImageResource(R.mipmap.sleep_icon_connect);
                 else
                     imageOne.setImageResource(R.mipmap.sleep_icon_ununited);
@@ -332,9 +287,6 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
                 imageOne.setImageResource(R.mipmap.report_btn_refresh);
                 imageTwo.setVisibility(View.VISIBLE);
                 imageTwo.setImageResource(R.mipmap.report_btn_calenda);
-                if (lineAnimator.isStarted())
-                    lineAnimator.end();
-
                 fm = getSupportFragmentManager();
                 transaction =  fm.beginTransaction();
                 transaction.replace(R.id.fragment,reportFragment);
@@ -344,7 +296,7 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
                 ((TextView)findViewById(R.id.titleTv)).setText(getString(R.string.alarm));
                 imageOne.setVisibility(View.VISIBLE);
                 imageTwo.setVisibility(View.GONE);
-                if (BleService.getInstance().isConnect())
+                if (BleService.getInstance().getConnectState() == 2)
                     imageOne.setImageResource(R.mipmap.sleep_icon_connect);
                 else
                     imageOne.setImageResource(R.mipmap.sleep_icon_ununited);
@@ -358,7 +310,7 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
                 ((TextView)findViewById(R.id.titleTv)).setText(getString(R.string.me));
                 imageOne.setVisibility(View.VISIBLE);
                 imageTwo.setVisibility(View.GONE);
-                if (BleService.getInstance().isConnect())
+                if (BleService.getInstance().getConnectState() == 2)
                     imageOne.setImageResource(R.mipmap.sleep_icon_connect);
                 else
                     imageOne.setImageResource(R.mipmap.sleep_icon_ununited);
@@ -375,13 +327,6 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
      * 初始化动画
      * */
     private void intiAnimation() {
-        anim1 = ObjectAnimator.ofFloat(imageOne,"alpha",1,0,1);
-        anim1.setInterpolator(new LinearInterpolator());
-        anim1.setRepeatCount(-1);
-
-        lineAnimator.play(anim1);
-        lineAnimator.setDuration(2000);
-
         rotateLeft.setDuration(500);//设置动画持续时间
         rotateLeft.setRepeatCount(0);//设置重复次数
         rotateLeft.setFillAfter(true);//动画执行完后是否停留在执行完的状态
@@ -389,26 +334,6 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
         rotateRight.setDuration(500);//设置动画持续时间
         rotateRight.setRepeatCount(0);//设置重复次数
         rotateRight.setFillAfter(true);//动画执行完后是否停留在执行完的状态
-    }
-
-    /**
-     * 连接蓝牙
-     * */
-    private void connectBle(){
-        if (!BleService.getInstance().isConnect()){
-            if (lineAnimator.isStarted()){
-                showToast(getString(R.string.lining));
-            }else {
-                BluetoothAdapter blueadapter = BluetoothAdapter.getDefaultAdapter();
-                if (blueadapter.isEnabled()){
-                    lineAnimator.start();
-                    app.AutoConnectBle();
-                }else {
-                    Intent bleIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                    startActivity(bleIntent);
-                }
-            }
-        }
     }
 
     /**
@@ -439,17 +364,17 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
 
                 case R.id.imageOne:
                     if (fragmentPos!=1){//如果不是在报告页面，则监听蓝牙断开/连接的按钮
-                        if (BleService.getInstance().isConnect()){
-                            MyAlerDialog.getSingle().showAlerDialog(getString(R.string.tip), getString(R.string.confirmDis),
-                                    getString(R.string.ok), getString(R.string.cancel), true, new MyAlerDialog.AlerDialogOnclickListener() {
-                                        @Override
-                                        public void onDialogTouch(boolean flag) {
-                                            BleService.getInstance().disConnect();
-                                        }
-                                    }, MainActivity.this).show();
-                        }else {
-                            connectBle();
-                        }
+//                        if (BleService.getInstance().isConnect()){
+//                            MyAlerDialog.getSingle().showAlerDialog(getString(R.string.tip), getString(R.string.confirmDis),
+//                                    getString(R.string.ok), getString(R.string.cancel), true, new MyAlerDialog.AlerDialogOnclickListener() {
+//                                        @Override
+//                                        public void onDialogTouch(boolean flag) {
+//                                            BleService.getInstance().disConnect();
+//                                        }
+//                                    }, MainActivity.this).show();
+//                        }else {
+//                            connectBle();
+//                        }
                     }else {
                         //TODO 刷新数据
                         ((MyApplication)getApplicationContext()).setUpdating(true);
@@ -525,63 +450,15 @@ public class MainActivity extends BaseActivity implements HttpCallbackWithUserIn
      * */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onBleConnectStateChange(ConnectBean connectBean){
-        Log.e("eventBus",connectBean.isConnect+"");
-        if( connectBean.isConnect && fragmentPos!=1){
-            if (lineAnimator.isStarted())
-                lineAnimator.end();
+        if (connectBean.isConnect == 2){
             imageOne.setImageResource(R.mipmap.sleep_icon_connect);
-            ProgressHudModel.newInstance().show(MainActivity.this,getString(R.string.syncing),null,15000);
-            /**
-             * 15秒后重置把更新状态置false
-             * */
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    app.setUpdating(false);
-                }
-            },15000);
-
-        }else if (!connectBean.isConnect && fragmentPos!=1){
-            if (lineAnimator.isStarted()){
-                showToast(getString(R.string.lineError));
-                lineAnimator.end();
-            }
+        }else if (connectBean.isConnect == 0){
             imageOne.setImageResource(R.mipmap.sleep_icon_ununited);
+            showToast(getString(R.string.lineError));
+        }else if (connectBean.isConnect == 3){
+            imageOne.setImageResource(R.mipmap.sleep_icon_ununited);
+            showToast(getString(R.string.deviceNoHere));
         }
-    }
-
-
-    /**
-     * 用户信息网络回调
-     * */
-    @Override
-    public void onUserInfo(UserInfoBean userInfoBean) {
-        app.setUserInfo(userInfoBean.getData());
-        BleService.getInstance().setmMac(userInfoBean.getData().getSleepDeviceCode());
-        handler.sendEmptyMessage(200);//获取信息成功，开始获取闹钟数据
-    }
-
-    /**
-     * 闹钟网络回调
-     * */
-    @Override
-    public void onClockData(ClockDataBean clockDataBean) {
-
-        if(clockDataBean.getData().getArray()!=null){
-            app.setClockList1(clockDataBean.getData().getArray());
-        }
-        handler.sendEmptyMessage(300);//获取闹钟数据成功，开始获取报告数据
-
-    }
-
-
-    /**
-     * 向服务器获取数据的回调
-     * */
-    @Override
-    public void onReport(boolean isNewData) {
-        ProgressHudModel.newInstance().diss();
-        connectBle();//获取云端数据成功，开始连接蓝牙
     }
 
     /**

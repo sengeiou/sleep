@@ -7,14 +7,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.IBinder;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 
-import com.inuker.bluetooth.library.BluetoothClient;
 import com.inuker.bluetooth.library.connect.listener.BleConnectStatusListener;
 import com.inuker.bluetooth.library.connect.listener.BluetoothStateListener;
 import com.inuker.bluetooth.library.connect.response.BleConnectResponse;
@@ -23,27 +21,23 @@ import com.inuker.bluetooth.library.connect.response.BleWriteResponse;
 import com.inuker.bluetooth.library.model.BleGattCharacter;
 import com.inuker.bluetooth.library.model.BleGattProfile;
 
+import com.inuker.bluetooth.library.search.SearchRequest;
+import com.inuker.bluetooth.library.search.SearchResult;
+import com.inuker.bluetooth.library.search.response.SearchResponse;
+import com.inuker.bluetooth.library.utils.BluetoothLog;
 import com.szip.sleepee.Bean.ClockBeanForBluetooch;
 import com.szip.sleepee.Bean.ConnectBean;
 import com.szip.sleepee.Bean.DevicePowerBean;
 import com.szip.sleepee.Bean.HealthAdcDataBean;
 import com.szip.sleepee.Bean.HealthBean;
 import com.szip.sleepee.Bean.HttpBean.ClockData;
-import com.szip.sleepee.Bean.UpdataReportBean;
 import com.szip.sleepee.Bean.UserInfoWriteBean;
-import com.szip.sleepee.Controller.MainActivity;
-import com.szip.sleepee.DB.DBModel.SleepData;
-import com.szip.sleepee.DB.SaveDataUtil;
-import com.szip.sleepee.Model.ProgressHudModel;
 import com.szip.sleepee.MyApplication;
 import com.szip.sleepee.R;
 import com.szip.sleepee.Util.ClientManager;
 import com.szip.sleepee.Util.DateUtil;
-import com.szip.sleepee.Util.HttpMessgeUtil;
 import com.szip.sleepee.Util.MathUitl;
 import com.zhuoting.health.Config;
-import com.zhuoting.health.bean.DataWithSleepMBean;
-import com.zhuoting.health.bean.TurnOverListBean;
 import com.zhuoting.health.notify.IDataResponse;
 import com.zhuoting.health.notify.IErrorCommand;
 import com.zhuoting.health.notify.IRequestResponse;
@@ -55,7 +49,6 @@ import com.zhuoting.health.write.ProtocolWriter;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -68,12 +61,20 @@ public class BleService extends Service {
     private String mMac ;
     private String mName;
     public static BleService myBleService ;
-    public boolean isConnected = false;
+
+
+    /**
+     * 蓝牙连接状态 0:未连接 1：正在连接 2：已经连接 3：连接失败
+     * */
+    private int connectState = 0;
+    private boolean firstConnect = true;//第一次连接成功的时候，获取数据，后面再连接成功，则不再获取数据
+
+    private Thread bleConnect;//连接蓝牙的线程
+    private boolean threadRun = true;
+    private boolean deviceIsHere;//设备是否在附近存在
 
     private DownloadManager downloadManager;
     private long mTaskId;
-
-    private ArrayList<ClockData> clockDataList;
 
     public BleService() {
     }
@@ -103,6 +104,7 @@ public class BleService extends Service {
     }
 
     public void setmMac(String mMac){
+        firstConnect = true;//设置mac地址说明已经更换了设备，再次连接成功需要获取数据
         this.mMac = mMac;
     }
 
@@ -134,35 +136,61 @@ public class BleService extends Service {
     };
 
     /**
+     * 开始蓝牙连接线程
+     * */
+    public void startConnectDevice(){
+        threadRun = true;
+        bleConnect = new Thread(new Runnable() {//6秒检查一下连接状态，如果断了就重新连接
+            @Override
+            public void run() {
+                while (threadRun){
+                    if(connectState == 0){
+                        Log.d("LINE******","开始搜索蓝牙设备");
+                        searchDevice();
+                    }
+                    try {
+                        Thread.sleep(6000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        bleConnect.start();
+    }
+
+    public void stopConnectDevice(){
+        threadRun = false;
+    }
+
+    /**
      * 蓝牙连接
      *
      */
     public void connect(){
-        if (!isConnected){
-            //Log.d("SZIP******","连接蓝牙mac="+mMac);
+        if (connectState == 0){
+            Log.d("LINE******","开始连接蓝牙设备mac = "+mMac);
+            connectState = 1;
             ClientManager.getClient().connect(mMac,bleConnectResponse);
             ClientManager.getClient().registerConnectStatusListener(mMac,connectStatusListener);
         }
     }
 
     public void disConnect(){
-        //Log.d("SZIP******","断开连接mac="+mMac);
+        Log.d("LINE******","断开蓝牙设备mac = "+mMac);
+        connectState = 0;
         ClientManager.getClient().disconnect(mMac);
     }
 
-    /**
-     * 连接蓝牙的回调
-     * */
     private BleConnectResponse bleConnectResponse = new BleConnectResponse() {
         @Override
         public void onResponse(int code, BleGattProfile data) {
-            Log.d("connectRes","code = "+code);
+            Log.e("connectRes","code = "+code);
             if( code == 0 ){        // 0 成功
-                isConnected = true;
                 setGattProfile(data);
             }else{
-                ClientManager.getClient().disconnect(mMac);
-                isConnected = false;
+                Log.d("LINE******","连接蓝牙失败");
+                connectState = 0;
             }
         }
     };
@@ -176,10 +204,8 @@ public class BleService extends Service {
         public void onConnectStatusChanged(String mac, int status) {
             Log.d("connectStatus",status+"");
             if( status == 0x10){
-                isConnected = true;
+                connectState = 2;
                 //Log.d("SZIP******","连接");
-                ((MyApplication)(getApplicationContext())).setConnectting(false);//已经连接已经完成
-                EventBus.getDefault().post(new ConnectBean(isConnected));
                 TimerTask timerTask= new TimerTask() {
                     @Override
                     public void run() {
@@ -190,11 +216,9 @@ public class BleService extends Service {
                 timer.schedule(timerTask,500);
             }else{
                 //Log.d("SZIP******","断开");
-                isConnected = false;
-                ((MyApplication)(getApplicationContext())).setConnectting(false);//已经连接已经完成
-                EventBus.getDefault().post(new ConnectBean(isConnected));
-
+                connectState = 2;
             }
+            EventBus.getDefault().post(new ConnectBean(connectState));
         }
     };
 
@@ -522,6 +546,55 @@ public class BleService extends Service {
     }
 
     /**
+     *搜索设备
+     * */
+    private void searchDevice() {
+        SearchRequest request = new SearchRequest.Builder()
+                .searchBluetoothLeDevice(5000, 1).build();
+        ClientManager.getClient().search(request, mSearchResponse);
+    }
+
+    /**
+     * 扫描函数回调
+     * */
+    private final SearchResponse mSearchResponse = new SearchResponse() {
+        @Override
+        public void onSearchStarted() {
+            BluetoothLog.w("MainActivity.onSearchStarted");
+            deviceIsHere = false;
+        }
+
+        @Override
+        public void onDeviceFounded(SearchResult device) {
+            if(device.getAddress().equals(mMac)){
+                Log.d("LINE******","搜索到蓝牙设备");
+                deviceIsHere = true;
+                mName = device.getName();
+                connect();
+                ClientManager.getClient().stopSearch();
+            }
+        }
+
+        @Override
+        public void onSearchStopped() {
+            Log.d("LINE******","停止搜索");
+            if (deviceIsHere == false)
+                EventBus.getDefault().post(new ConnectBean(3));
+        }
+
+        @Override
+        public void onSearchCanceled() {
+
+            Log.d("LINE******","BLE IS Cancel");
+        }
+    };
+
+    public int getConnectState() {
+        return connectState;
+    }
+
+
+    /**
      * 下载固件
      * */
     public void downloadFirmsoft(String versionUrl, String versionName,String path) {
@@ -579,7 +652,7 @@ public class BleService extends Service {
                     break;
                 case DownloadManager.STATUS_SUCCESSFUL:
                     //Log.d("SZIP******",">>>下载完成");
-                    EventBus.getDefault().post(new ConnectBean(true));
+                    EventBus.getDefault().post(new ConnectBean(1));
                     break;
                 case DownloadManager.STATUS_FAILED:
                     //Log.d("SZIP******",">>>下载失败");

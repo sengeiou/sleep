@@ -1,6 +1,7 @@
 package com.szip.sleepee.Util;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.text.TextUtils;
@@ -20,6 +21,7 @@ import com.szip.sleepee.Bean.HealthDataBean;
 import com.szip.sleepee.Bean.HttpBean.ClockData;
 import com.szip.sleepee.Bean.HttpBean.HttpReportBean;
 import com.szip.sleepee.Bean.SleepStateBean;
+import com.szip.sleepee.Bean.UserInfo;
 import com.szip.sleepee.DB.DBModel.BreathData;
 import com.szip.sleepee.DB.DBModel.BreathData_Table;
 import com.szip.sleepee.DB.DBModel.HeartData;
@@ -44,6 +46,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.szip.sleepee.MyApplication.FILE;
 
 /**
  * Created by Administrator on 2019/1/28.
@@ -296,6 +300,33 @@ public class MathUitl {
         }
         radio = (float)sumTime/(float)allSleep;
         return radio;
+    }
+
+    public static void saveInfoData(Context context, UserInfo info){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(FILE,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("birthday",info.getBirthday());
+        editor.putString("userName",info.getUserName());
+        editor.putString("height",info.getHeight());
+        editor.putString("weight",info.getWeight());
+        editor.putInt("sex",info.getSex());
+        editor.putString("deviceCode",info.getDeviceCode());
+        editor.putString("phoneNumber",info.getPhoneNumber());
+        editor.putString("email",info.getEmail());
+        editor.commit();
+    }
+
+    public static UserInfo loadInfoData(SharedPreferences sharedPreferences){
+        UserInfo info = new UserInfo();
+        info.setBirthday(sharedPreferences.getString("birthday",null));
+        info.setUserName(sharedPreferences.getString("userName","sleepee"));
+        info.setHeight(sharedPreferences.getString("height",null));
+        info.setWeight(sharedPreferences.getString("weight",null));
+        info.setDeviceCode(sharedPreferences.getString("deviceCode",null));
+        info.setPhoneNumber(sharedPreferences.getString("phoneNumber",null));
+        info.setEmail(sharedPreferences.getString("email",null));
+        info.setSex(sharedPreferences.getInt("sex",1));
+        return info;
     }
 
     /**

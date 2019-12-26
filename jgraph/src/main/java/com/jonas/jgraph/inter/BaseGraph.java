@@ -915,6 +915,7 @@ public abstract class BaseGraph extends View  {
      * */
     private void drawAbscissaMsg(Canvas canvas,int size){
         int num = data/size;
+        Log.d("SZIP******","X NUM = "+num+" ;data = "+data);
         for (int i = 0;i<size;i++){
             if (i != size-1){
                 int str = startTime+num*i;

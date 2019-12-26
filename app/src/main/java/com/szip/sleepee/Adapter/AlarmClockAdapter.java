@@ -38,12 +38,13 @@ import ch.ielse.view.SwitchView;
 import okhttp3.Call;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.szip.sleepee.MyApplication.FILE;
 
 public class AlarmClockAdapter extends SlideBaseAdapter {
 
     private ArrayList<ClockData> list;
     private int pos;
-    private String FILE = "sleepEE";
+    ;
 
     public void setList(ArrayList<ClockData> list){
         this.list = list;
@@ -288,15 +289,9 @@ public class AlarmClockAdapter extends SlideBaseAdapter {
                 SharedPreferences sharedPreferences ;
                 BleService.getInstance().disConnect();
                 BleService.getInstance().setmMac(null);
-                ((MyApplication)(mContext.getApplicationContext())).setUserInfo(null);
                 ((MyApplication)(mContext.getApplicationContext())).clearClockList();
                 ((MyApplication)(mContext.getApplicationContext())).setReportDate(DateUtil.getStringToDate("today"));
                 SaveDataUtil.newInstance(mContext).clearDB();
-                sharedPreferences = mContext.getSharedPreferences(FILE,MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("isLogin",false);
-                editor.putBoolean("isBind",false);
-                editor.commit();
                 MathUitl.showToast(mContext,mContext.getString(R.string.tokenTimeout));
                 Intent intentmain=new Intent(mContext,LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intentmain);

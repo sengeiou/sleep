@@ -313,6 +313,7 @@
     <string name="httpError">网络应答超时，请检查网络连接状况</string>
     <string name="blueUnline">蓝牙未连接，无法设置该闹钟</string>
     <string name="blueUnline1">蓝牙未连接，无法添加这种类型的闹钟</string>
+    <string name="deviceNoHere">搜索不到设备，请确认设备是否开机</string>
 
     <string name="updata">烧录成功</string>
     <string name="updataFail">烧录失败，请重试</string>

@@ -51,6 +51,7 @@ import java.util.List;
 
 import okhttp3.Call;
 
+import static com.szip.sleepee.MyApplication.FILE;
 import static com.szip.sleepee.Util.HttpMessgeUtil.BINDDEVICE_FLAG;
 import static com.szip.sleepee.Util.HttpMessgeUtil.DOWNLOADDATA_FLAG;
 import static com.szip.sleepee.Util.HttpMessgeUtil.GETALARM_FLAG;
@@ -74,7 +75,7 @@ public class FindDeviceActivity extends BaseActivity implements HttpCallbackWith
     private boolean isSearch = false;
     private MyApplication app;
     private SharedPreferences sharedPreferences;
-    private String FILE = "sleepEE";
+    ;
 
     private Handler handler = new Handler(){
         @Override
@@ -82,14 +83,10 @@ public class FindDeviceActivity extends BaseActivity implements HttpCallbackWith
             super.handleMessage(msg);
             switch (msg.what){
                 case 200:
-                    if (sharedPreferences == null)
-                        sharedPreferences = getSharedPreferences(FILE,MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("isBind",true);
-                    editor.commit();
                     BleService.getInstance().setmMac(mDevices.get(pos).getAddress());
                     BleService.getInstance().setmName(mDevices.get(pos).getName());
-
+                    app.getUserInfo().setDeviceCode(mDevices.get(pos).getAddress());
+                    app.setUserInfo(app.getUserInfo());
                     try {
                         HttpMessgeUtil.getInstance(mContext).getForGetClockList(GETALARM_FLAG);
                     } catch (IOException e) {
@@ -293,6 +290,7 @@ public class FindDeviceActivity extends BaseActivity implements HttpCallbackWith
     @Override
     public void onReport(boolean isNewData) {
         ProgressHudModel.newInstance().diss();
+        BleService.getInstance().startConnectDevice();
         startActivity(new Intent(mContext,MainActivity.class));
         finish();
     }
@@ -353,7 +351,7 @@ public class FindDeviceActivity extends BaseActivity implements HttpCallbackWith
             if (sharedPreferences == null)
                 sharedPreferences = getSharedPreferences(FILE,MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean("isLogin",false);
+            editor.putString("token",null);
             editor.commit();
             startActivity(new Intent(mContext,LoginActivity.class));
             finish();

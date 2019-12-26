@@ -3,17 +3,13 @@ package com.szip.sleepee.Controller;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.kaopiz.kprogresshud.KProgressHUD;
 import com.szip.sleepee.Adapter.MyPagerAdapter;
 import com.szip.sleepee.Bean.HttpBean.ClockDataBean;
 import com.szip.sleepee.Bean.HttpBean.LoginBean;
@@ -28,16 +24,13 @@ import com.szip.sleepee.MyApplication;
 import com.szip.sleepee.R;
 import com.szip.sleepee.Service.BleService;
 import com.szip.sleepee.Util.HttpMessgeUtil;
-import com.szip.sleepee.Util.JsonGenericsSerializator;
 import com.szip.sleepee.Util.StatusBarCompat;
-import com.zhy.http.okhttp.callback.GenericsCallback;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import okhttp3.Call;
-
+import static com.szip.sleepee.MyApplication.FILE;
 import static com.szip.sleepee.Util.HttpMessgeUtil.DOWNLOADDATA_FLAG;
 import static com.szip.sleepee.Util.HttpMessgeUtil.GETALARM_FLAG;
 import static com.szip.sleepee.Util.HttpMessgeUtil.LOGIN_FLAG;
@@ -50,9 +43,6 @@ public class LoginActivity extends BaseActivity implements HttpCallbackWithLogin
     private ViewPager mPager;
 
     private TextView registerTv;
-//    private TextView forgetTv;
-
-    private KProgressHUD progressHUD;
 
     private boolean rememberPassword;
     private String passwordL;
@@ -61,16 +51,11 @@ public class LoginActivity extends BaseActivity implements HttpCallbackWithLogin
      * 轻量级文件
      * */
     private SharedPreferences sharedPreferencesp;
-    private String FILE = "sleepEE";
 
     /**
      * 回调标识
      * */
     private final static int REQUEST_CODE = 10;
-    private final static int RESULT_CODE= 10;
-
-
-    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -196,7 +181,6 @@ public class LoginActivity extends BaseActivity implements HttpCallbackWithLogin
             sharedPreferencesp = getSharedPreferences(FILE,MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferencesp.edit();
         editor.putString("token",loginBean.getData().getToken());
-        editor.putBoolean("isLogin",true);
         editor.putString("phone",loginBean.getData().getUserInfo().getPhoneNumber());
         editor.putString("mail",loginBean.getData().getUserInfo().getEmail());
         ((MyApplication)getApplicationContext()).setUserInfo(loginBean.getData().getUserInfo());
@@ -204,11 +188,10 @@ public class LoginActivity extends BaseActivity implements HttpCallbackWithLogin
             editor.putString("password",passwordL);
         else
             editor.putString("password","");
-        if (loginBean.getData().getUserInfo().getSleepDeviceCode()== null){//如果未绑定手环，跳到绑定页面
+        if (loginBean.getData().getUserInfo().getDeviceCode()== null){//如果未绑定手环，跳到绑定页面
             startActivity(new Intent(mContext, FindDeviceActivity.class));
         }else {//如果已绑定睡眠带，获取闹钟列表
-            BleService.getInstance().setmMac(loginBean.getData().getUserInfo().getSleepDeviceCode());
-            editor.putBoolean("isBind",true);
+            BleService.getInstance().setmMac(loginBean.getData().getUserInfo().getDeviceCode());
             try {
                 HttpMessgeUtil.getInstance(mContext).getForGetClockList(GETALARM_FLAG);
             } catch (IOException e) {
@@ -223,6 +206,7 @@ public class LoginActivity extends BaseActivity implements HttpCallbackWithLogin
      * */
     @Override
     public void onReport(boolean isNewData) {
+        BleService.getInstance().startConnectDevice();
         startActivity(new Intent(mContext,MainActivity.class));
         finish();
     }

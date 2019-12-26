@@ -21,6 +21,8 @@ import com.szip.sleepee.Controller.LoginActivity;
 import com.szip.sleepee.Interface.OnClickForLogin;
 import com.szip.sleepee.R;
 
+import static com.szip.sleepee.MyApplication.FILE;
+
 
 public class LoginForMailFragment extends BaseFragment {
 
@@ -51,7 +53,7 @@ public class LoginForMailFragment extends BaseFragment {
      * 轻量级文件
      * */
     private SharedPreferences sharedPreferencesp;
-    private String FILE = "sleepEE";
+    ;
 
     /**
      *用于确定下一步按键是否可点击

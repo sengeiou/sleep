@@ -136,11 +136,11 @@ public class UserInfo {
         this.updateTime = updateTime;
     }
 
-    public String getSleepDeviceCode() {
+    public String getDeviceCode() {
         return deviceCode;
     }
 
-    public void setSleepDeviceCode(String sleepDeviceCode) {
+    public void setDeviceCode(String sleepDeviceCode) {
         this.deviceCode = sleepDeviceCode;
     }
 

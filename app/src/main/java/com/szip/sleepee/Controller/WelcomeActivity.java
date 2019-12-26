@@ -15,12 +15,15 @@ import com.szip.sleepee.DB.DBModel.SleepData;
 import com.szip.sleepee.DB.LoadDataUtil;
 import com.szip.sleepee.MyApplication;
 import com.szip.sleepee.R;
+import com.szip.sleepee.Service.BleService;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import static com.szip.sleepee.MyApplication.FILE;
 
 public class WelcomeActivity extends BaseActivity implements Runnable{
 
@@ -36,7 +39,6 @@ public class WelcomeActivity extends BaseActivity implements Runnable{
      * 轻量级文件
      * */
     private SharedPreferences sharedPreferencesp;
-    private String FILE = "sleepEE";
 
     private boolean isLogin = true;
     private boolean isBind = true;
@@ -103,41 +105,54 @@ public class WelcomeActivity extends BaseActivity implements Runnable{
                 time = time -1;
             }
             if(isFirst){
-//                Intent guiIntent = new Intent();
-//                guiIntent.setClass(WelcomeActivity.this, GuideActivity.class);
-//                startActivity(guiIntent);
-//                SharedPreferences.Editor editor = sharedPreferencesp.edit();
-//                editor.putBoolean("isFirst",false);
-//                editor.commit();
-//                finish();
-                if(isLogin&&isBind){
-                    Intent guiIntent = new Intent();
-                    guiIntent.setClass(WelcomeActivity.this, MainActivity.class);
-                    startActivity(guiIntent);
-                    finish();
-                }else if (isLogin){
+                if (app.getStartState() == 0){//已登录
+                    if (app.getUserInfo().getDeviceCode()!=null){//已绑定
+                        BleService.getInstance().setmMac(app.getUserInfo().getDeviceCode());
+                        BleService.getInstance().startConnectDevice();
+                        Intent guiIntent = new Intent();
+                        guiIntent.setClass(WelcomeActivity.this, MainActivity.class);
+                        startActivity(guiIntent);
+                        finish();
+                    }else {//未绑定
+                        Intent in = new Intent();
+                        in.setClass(WelcomeActivity.this, FindDeviceActivity.class);
+                        startActivity(in);
+                        finish();
+                    }
+                }else if (app.getStartState() == 1){//未登录
                     Intent in = new Intent();
-                    in.setClass(WelcomeActivity.this, FindDeviceActivity.class);
+                    in.setClass(WelcomeActivity.this, LoginActivity.class);
                     startActivity(in);
                     finish();
-                }else{
+                }else {//登陆过期
+                    showToast(getString(R.string.tokenTimeout));
                     Intent in = new Intent();
                     in.setClass(WelcomeActivity.this, LoginActivity.class);
                     startActivity(in);
                     finish();
                 }
             }else{
-                if(isLogin&&isBind){
-                    Intent guiIntent = new Intent();
-                    guiIntent.setClass(WelcomeActivity.this, MainActivity.class);
-                    startActivity(guiIntent);
-                    finish();
-                }else if (isLogin){
+                if (app.getStartState() == 0){//已登录
+                    if (app.getUserInfo().getDeviceCode()!=null){//已绑定
+                        BleService.getInstance().setmMac(app.getUserInfo().getDeviceCode());
+                        BleService.getInstance().startConnectDevice();
+                        Intent guiIntent = new Intent();
+                        guiIntent.setClass(WelcomeActivity.this, MainActivity.class);
+                        startActivity(guiIntent);
+                        finish();
+                    }else {//未绑定
+                        Intent in = new Intent();
+                        in.setClass(WelcomeActivity.this, FindDeviceActivity.class);
+                        startActivity(in);
+                        finish();
+                    }
+                }else if (app.getStartState() == 1){//未登录
                     Intent in = new Intent();
-                    in.setClass(WelcomeActivity.this, FindDeviceActivity.class);
+                    in.setClass(WelcomeActivity.this, LoginActivity.class);
                     startActivity(in);
                     finish();
-                }else{
+                }else {//登陆过期
+                    showToast(getString(R.string.tokenTimeout));
                     Intent in = new Intent();
                     in.setClass(WelcomeActivity.this, LoginActivity.class);
                     startActivity(in);

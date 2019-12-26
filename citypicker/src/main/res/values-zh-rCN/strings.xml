@@ -8,8 +8,8 @@
     <string name="cp_locating">正在定位…</string>
 
     <string name="app_name">sleepEE</string>
-    <string name="cp_search_hint_text">Put your country</string>
-    <string name="cp_cancel">Cancel</string>
-    <string name="cp_no_result">not find</string>
+    <string name="cp_search_hint_text">输入国家/地区</string>
+    <string name="cp_cancel">取消</string>
+    <string name="cp_no_result">没找到</string>
 
 </resources>

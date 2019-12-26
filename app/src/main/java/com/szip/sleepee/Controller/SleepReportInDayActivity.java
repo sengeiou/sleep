@@ -46,7 +46,6 @@ public class SleepReportInDayActivity extends BaseActivity implements ViewPager.
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_sleep_report_in_day);
-        StatusBarCompat.translucentStatusBar(SleepReportInDayActivity.this,true);
         reportDay = getIntent().getIntExtra("date",0);
 
         initView();
@@ -54,6 +53,7 @@ public class SleepReportInDayActivity extends BaseActivity implements ViewPager.
     }
 
     private void initView() {
+        StatusBarCompat.translucentStatusBar(SleepReportInDayActivity.this,true);
         findViewById(R.id.backIv).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

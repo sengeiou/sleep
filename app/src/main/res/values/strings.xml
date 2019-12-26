@@ -313,6 +313,7 @@
     <string name="httpError">Time out of request, please check the network</string>
     <string name="blueUnline">Unable to set the alarm for Bluetooth disconnected</string>
     <string name="blueUnline1">Unable to add the alarm for Bluetooth disconnected</string>
+    <string name="deviceNoHere">Cannot find the device, please confirm whether the device is started</string>
 
     <string name="updata">Upgrade success</string>
     <string name="updataFail">Upgrade failed. Please try again</string>

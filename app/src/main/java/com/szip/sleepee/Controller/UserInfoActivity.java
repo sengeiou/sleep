@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.szip.sleepee.Bean.HttpBean.UserInfoBean;
+import com.szip.sleepee.Bean.UserInfo;
 import com.szip.sleepee.DB.SaveDataUtil;
 import com.szip.sleepee.Interface.HttpCallbackWithUserInfo;
 import com.szip.sleepee.Model.ProgressHudModel;
@@ -31,9 +32,10 @@ import java.io.IOException;
 
 import okhttp3.Call;
 
+import static com.szip.sleepee.MyApplication.FILE;
 import static com.szip.sleepee.Util.HttpMessgeUtil.GETINFO_FLAG;
 
-public class UserInfoActivity extends BaseActivity implements HttpCallbackWithUserInfo{
+public class UserInfoActivity extends BaseActivity{
 
     private Context mContext;
 
@@ -61,7 +63,6 @@ public class UserInfoActivity extends BaseActivity implements HttpCallbackWithUs
     private MyApplication app;
 
     private SharedPreferences sharedPreferences;
-    private String FILE = "sleepEE";
 
     private Handler handler = new Handler(){
         @Override
@@ -69,16 +70,7 @@ public class UserInfoActivity extends BaseActivity implements HttpCallbackWithUs
             super.handleMessage(msg);
             switch (msg.what){
                 case 200:
-                    UserInfoBean infoBean = (UserInfoBean) msg.obj;
-                    if (infoBean.getData().getEmail()!=null){
-                        mailTv.setText(infoBean.getData().getEmail());
-                    }else
-                        mailTv.setText(getString(R.string.noMail));
-                    if (infoBean.getData().getPhoneNumber()!=null){
-                        phoneTv.setText(infoBean.getData().getPhoneNumber());
-                    }else
-                        phoneTv.setText(getString(R.string.noPhone));
-                    break;
+
             }
         }
     };
@@ -93,18 +85,24 @@ public class UserInfoActivity extends BaseActivity implements HttpCallbackWithUs
         app = (MyApplication) getApplicationContext();
         initView();
         initEvent();
+        initData();
+    }
+
+    private void initData() {
+        UserInfo userInfo = app.getUserInfo();
+        if (userInfo.getEmail()!=null){
+            mailTv.setText(userInfo.getEmail());
+        }else
+            mailTv.setText(getString(R.string.noMail));
+        if (userInfo.getPhoneNumber()!=null){
+            phoneTv.setText(userInfo.getPhoneNumber());
+        }else
+            phoneTv.setText(getString(R.string.noPhone));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        HttpMessgeUtil.getInstance(mContext).setHttpCallbackWithUserInfo(this);
-        ProgressHudModel.newInstance().show(UserInfoActivity.this,getString(R.string.waitting),getString(R.string.httpError),10000);
-        try {
-            HttpMessgeUtil.getInstance(mContext).getForGetInfo(GETINFO_FLAG);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -222,16 +220,13 @@ public class UserInfoActivity extends BaseActivity implements HttpCallbackWithUs
                     break;
                 case R.id.logoutLl:
                     BleService.getInstance().disConnect();
-                    BleService.getInstance().setmMac(null);
-                    app.setUserInfo(null);
                     app.clearClockList();
                     app.setReportDate(DateUtil.getStringToDate("today"));
                     SaveDataUtil.newInstance(UserInfoActivity.this).clearDB();
                     if (sharedPreferences==null)
                         sharedPreferences = getSharedPreferences(FILE,MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("isLogin",false);
-                    editor.putBoolean("isBind",false);
+                    editor.putString("token",null);
                     editor.commit();
                     Intent intent = new Intent();
                     intent.setClass(UserInfoActivity.this,LoginActivity.class);
@@ -243,14 +238,4 @@ public class UserInfoActivity extends BaseActivity implements HttpCallbackWithUs
             }
         }
     };
-
-
-    @Override
-    public void onUserInfo(UserInfoBean userInfoBean) {
-        ProgressHudModel.newInstance().diss();
-        Message msg = new Message();
-        msg.what = 200;
-        msg.obj = userInfoBean;
-        handler.sendMessage(msg);
-    }
 }

@@ -354,7 +354,6 @@
             android:layout_marginRight="30dp"
             android:layout_marginLeft="30dp"
             android:background="@drawable/bg_alarm_corner"
-
             ></com.szip.sleepee.View.SelectTimeView>
 
         <!--<LinearLayout-->

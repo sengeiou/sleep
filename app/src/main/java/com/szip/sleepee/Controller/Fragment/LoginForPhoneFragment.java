@@ -24,6 +24,8 @@ import com.zaaach.citypicker.CityPicker;
 import com.zaaach.citypicker.adapter.OnPickListener;
 import com.zaaach.citypicker.model.City;
 
+import static com.szip.sleepee.MyApplication.FILE;
+
 public class LoginForPhoneFragment extends BaseFragment {
 
 
@@ -63,7 +65,7 @@ public class LoginForPhoneFragment extends BaseFragment {
      * 轻量级文件
      * */
     private SharedPreferences sharedPreferencesp;
-    private String FILE = "sleepEE";
+    ;
 
     /**
      *用于确定下一步按键是否可点击
@@ -235,8 +237,6 @@ public class LoginForPhoneFragment extends BaseFragment {
                     }
                     break;
             }
-//            loginLl.setEnabled((phoneIsEmpty||passwordIsEmpty)?false:true);
-
         }
     };
 

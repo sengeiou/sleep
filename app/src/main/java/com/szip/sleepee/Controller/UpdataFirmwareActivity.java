@@ -261,7 +261,7 @@ public class UpdataFirmwareActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onStartDFU(ConnectBean connectBean){
-        if (connectBean.isConnect){
+        if (connectBean.isConnect == 1){
             BleService.getInstance().disConnect();
             onUploadClicked();
         }
