@@ -7,7 +7,7 @@
     tools:context=".Controller.ClockRunningActivity"
     android:background="@mipmap/launch">
 
-    <com.szip.sleepee.View.PulldownUpdateView
+    <com.szip.smartdream.View.PulldownUpdateView
         android:id="@+id/pullView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -59,6 +59,6 @@
 
 
 
-    </com.szip.sleepee.View.PulldownUpdateView>
+    </com.szip.smartdream.View.PulldownUpdateView>
 
 </android.support.constraint.ConstraintLayout>

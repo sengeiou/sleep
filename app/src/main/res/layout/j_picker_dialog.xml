@@ -50,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.szip.sleepee.View.character.CharacterPickerView
+        <com.szip.smartdream.View.character.CharacterPickerView
             android:id="@+id/j_optionspicker"
             android:background="@color/white"
             android:layout_width="match_parent"

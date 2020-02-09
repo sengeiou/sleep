@@ -915,28 +915,27 @@ public abstract class BaseGraph extends View  {
      * */
     private void drawAbscissaMsg(Canvas canvas,int size){
         int num = data/size;
-        Log.d("SZIP******","X NUM = "+num+" ;data = "+data);
         for (int i = 0;i<size;i++){
             if (i != size-1){
                 int str = startTime+num*i;
-                if (str>=24*60)
-                    str = str % (24*60);
+                if (str>=24*60*60)
+                    str = str % (24*60*60);
                 if (i==0){
-                    canvas.drawText(String.format("%02d:%02d",str/60,str%60), mChartArea.left+
+                    canvas.drawText(String.format("%02d:%02d",str/60/60,str/60%60), mChartArea.left+
                                     ((float) (i)/(float) (size-1))*mCharAreaWidth,
                             mChartArea.bottom+MathHelper.dip2px(mContext, 3)+mAbscissaMsgSize, mAbscissaPaint);
                 }else {
-                    canvas.drawText(String.format("%02d:%02d",str/60,str%60), mChartArea.left+
-                                    ((float) (i)/(float) (size-1))*(mCharAreaWidth-MathHelper.dip2px(mContext,10)*3),
+                    String timeStr = String.format("%02d:%02d",str/60/60,str/60%60);
+                    float textSize = mAbscissaPaint.measureText(timeStr,0,timeStr.length());
+                    canvas.drawText(timeStr, mChartArea.left+
+                                    ((float) (i)/(float) (size-1))*(mCharAreaWidth)-textSize/2,
                             mChartArea.bottom+MathHelper.dip2px(mContext, 3)+mAbscissaMsgSize, mAbscissaPaint);
                 }
             }else
-                canvas.drawText(String.format("%02d:%02d",endTime/60%24,endTime%60), mChartArea.left+
+                canvas.drawText(String.format("%02d:%02d",endTime/60/60%24,endTime/60%60), mChartArea.left+
                                 ((float) (i)/(float)(size-1) )*(mCharAreaWidth-MathHelper.dip2px(mContext,10)*3),
                         mChartArea.bottom+MathHelper.dip2px(mContext, 3)+mAbscissaMsgSize, mAbscissaPaint);
         }
-
-
     }
 
 
@@ -1433,8 +1432,8 @@ public abstract class BaseGraph extends View  {
 
     public void setXvelue(int size,int startTime,int endTime){
         this.size = size;
-        this.data = (endTime>startTime)?(endTime-startTime):(24*60-startTime+endTime);
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.data = (endTime>startTime)?(endTime-startTime)*60:(24*60-startTime+endTime)*60;
+        this.startTime = startTime*60;
+        this.endTime = endTime*60;
     }
 }

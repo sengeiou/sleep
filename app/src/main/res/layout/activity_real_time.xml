@@ -60,14 +60,14 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true">
 
-            <com.szip.sleepee.View.WH_ECGView
+            <com.szip.smartdream.View.WH_ECGView
                 android:id="@+id/heartView"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginRight="40dp"
                 android:layout_marginLeft="40dp" />
 
-            <com.szip.sleepee.View.DrawGradView
+            <com.szip.smartdream.View.DrawGradView
                 android:id="@+id/draw"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
@@ -130,14 +130,14 @@
             android:layout_height="200dp"
             android:layout_centerVertical="true">
 
-            <com.szip.sleepee.View.WH_ECGView
+            <com.szip.smartdream.View.WH_ECGView
                 android:id="@+id/breathView"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginRight="40dp"
                 android:layout_marginLeft="40dp" />
 
-            <com.szip.sleepee.View.DrawGradView
+            <com.szip.smartdream.View.DrawGradView
 
                 android:layout_width="match_parent"
                 android:layout_height="200dp"

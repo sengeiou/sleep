@@ -47,6 +47,7 @@ dependencies {
     implementation "com.github.Raizlabs.DBFlow:dbflow:$dbflow_version"
     //http
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.2.0'
+    implementation 'com.google.code.gson:gson:2.3.1'
     //加载框
     implementation 'com.kaopiz:kprogresshud:1.0.1'
     //固件升级

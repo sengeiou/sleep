@@ -139,59 +139,72 @@ public class DataParser {
                     setDatas(data[i],data[i+1],data[i+2],data[i+3]);
                 }
             }else if (tagStr.equals("52")){//读取睡眠质量数据
-                if (data[3]==0){//未结束
-                    if (data[4] == 0)
-                        dataList = new ArrayList<>();
-                    dataList.add(new ByteData(data));
-                }else {//数据接收结束,传给BleService格式化
-                    if(data.length ==5){
-                        mIDataResponse.onReadSleepData(new byte[0]);
-                    }else {
+                if (data.length==4){//没数据
+                    mIDataResponse.onReadSleepData(new byte[0]);
+                }else {
+                    if (data[3]==0){//未结束
                         if (data[4] == 0)
                             dataList = new ArrayList<>();
                         dataList.add(new ByteData(data));
-                        byte[] datas = DataUtil.ArrayListTobytes(dataList);//把数据拼接成一个大数组，传给Service格式化
-                        if (mIDataResponse!=null){
-                            mIDataResponse.onReadSleepData(datas);
+                    }else {//数据接收结束,传给BleService格式化
+                        if(data.length ==5){
+                            mIDataResponse.onReadSleepData(new byte[0]);
+                        }else {
+                            if (data[4] == 0)
+                                dataList = new ArrayList<>();
+                            dataList.add(new ByteData(data));
+                            byte[] datas = DataUtil.ArrayListTobytes(dataList);//把数据拼接成一个大数组，传给Service格式化
+                            if (mIDataResponse!=null){
+                                mIDataResponse.onReadSleepData(datas);
+                            }
                         }
                     }
                 }
             }else if (tagStr.equals("53")){//读取历史心率呼吸率数据
-                if (data[3]==0){//未结束
-                    if (data[4] == 0)
-                        dataListHealth = new ArrayList<>();
-                    dataListHealth.add(new ByteData(data));
-                }else {//数据接收结束,传给BleService格式化
-                    if(data.length ==5){
-                        mIDataResponse.onReadHealthData(new byte[0]);
-                    }else {
+                if (data.length==4){
+                    mIDataResponse.onReadHealthData(new byte[0]);
+                }else {
+                    if (data[3]==0){//未结束
                         if (data[4] == 0)
                             dataListHealth = new ArrayList<>();
                         dataListHealth.add(new ByteData(data));
-                        byte[] datas = DataUtil.ArrayListTobytes(dataListHealth);//把数据拼接成一个大数组，传给Service格式化
-                        if (mIDataResponse!=null){
-                            mIDataResponse.onReadHealthData(datas);
+                    }else {//数据接收结束,传给BleService格式化
+                        if(data.length ==5){
+                            mIDataResponse.onReadHealthData(new byte[0]);
+                        }else {
+                            if (data[4] == 0)
+                                dataListHealth = new ArrayList<>();
+                            dataListHealth.add(new ByteData(data));
+                            byte[] datas = DataUtil.ArrayListTobytes(dataListHealth);//把数据拼接成一个大数组，传给Service格式化
+                            if (mIDataResponse!=null){
+                                mIDataResponse.onReadHealthData(datas);
+                            }
                         }
                     }
                 }
             }else if (tagStr.equals("54")){//历史翻身数据
-                if (data[3]==0){//未结束
-                    if (data[4] == 0)
-                        dataListTurn = new ArrayList<>();
-                    dataListTurn.add(new ByteData(data));
-                }else {//数据接收结束,传给BleService格式化
-                    if(data.length ==5){
-                        mIDataResponse.onReadTurnOverData(new byte[0]);
-                    }else {
+                if (data.length==4){
+                    mIDataResponse.onReadTurnOverData(new byte[0]);
+                }else {
+                    if (data[3]==0){//未结束
                         if (data[4] == 0)
                             dataListTurn = new ArrayList<>();
                         dataListTurn.add(new ByteData(data));
-                        byte[] datas = DataUtil.ArrayListTobytes(dataListTurn);//把数据拼接成一个大数组，传给Service格式化
-                        if (mIDataResponse!=null){
-                            mIDataResponse.onReadTurnOverData(datas);
+                    }else {//数据接收结束,传给BleService格式化
+                        if(data.length ==5){
+                            mIDataResponse.onReadTurnOverData(new byte[0]);
+                        }else {
+                            if (data[4] == 0)
+                                dataListTurn = new ArrayList<>();
+                            dataListTurn.add(new ByteData(data));
+                            byte[] datas = DataUtil.ArrayListTobytes(dataListTurn);//把数据拼接成一个大数组，传给Service格式化
+                            if (mIDataResponse!=null){
+                                mIDataResponse.onReadTurnOverData(datas);
+                            }
                         }
                     }
                 }
+
             }else if (tagStr.equals("57")){//删除翻身数据
                 if ((data[4]&0xff)==0x01){
                     mIRequestResponse.onDeleteOverTimeData((byte) 1);

@@ -93,6 +93,7 @@
     <string name="averageLight">Light sleep</string>
     <string name="averageAwake">Awake</string>
     <string name="syncing">Data syncing</string>
+    <string name="syncOk">Synchronization is complete</string>
     <string name="synError">Sync failed, please confirm the Bluetooth is connected</string>
     <string name="sleepReport">Your Sleep Report</string>
     <string name="more"><u>get more report</u></string>

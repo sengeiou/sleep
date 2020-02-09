@@ -28,7 +28,7 @@
         android:background="@color/black2"
         android:visibility="gone"/>
 
-    <com.szip.sleepee.View.MenuListView
+    <com.szip.smartdream.View.MenuListView
         android:id="@+id/menuListView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -69,9 +69,9 @@
             android:layout_height="0.5dp"
             android:background="@color/white"/>
 
-    </com.szip.sleepee.View.MenuListView>
+    </com.szip.smartdream.View.MenuListView>
 
-    <com.szip.sleepee.View.DateSelectView
+    <com.szip.smartdream.View.DateSelectView
         android:id="@+id/dateView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
         android:layout_marginTop="25dp">
 
 
-    </com.szip.sleepee.View.DateSelectView>
+    </com.szip.smartdream.View.DateSelectView>
 
 </RelativeLayout>
 

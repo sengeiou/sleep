@@ -1,2 +1,0 @@
-# Referenced at E:\project\AndroidStudioProject\SleepEE\slidelistview_library\build\intermediates\merged_manifests\debugAndroidTest\processDebugAndroidTestManifest\merged\AndroidManifest.xml:9
--keep class android.test.InstrumentationTestRunner { <init>(...); }

@@ -347,14 +347,14 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="100dp">
 
-        <com.szip.sleepee.View.SelectTimeView
+        <com.szip.smartdream.View.SelectTimeView
             android:id="@+id/selectView"
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:layout_marginRight="30dp"
             android:layout_marginLeft="30dp"
             android:background="@drawable/bg_alarm_corner"
-            ></com.szip.sleepee.View.SelectTimeView>
+            ></com.szip.smartdream.View.SelectTimeView>
 
         <!--<LinearLayout-->
         <!--android:layout_width="wrap_content"-->

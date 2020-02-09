@@ -37,7 +37,7 @@
         android:layout_alignParentRight="true"
         android:visibility="gone"/>
 
-    <com.szip.sleepee.View.CircleMenuLayout
+    <com.szip.smartdream.View.CircleMenuLayout
         android:id="@+id/id_menulayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,6 +45,6 @@
         android:visibility="gone"
         >
 
-    </com.szip.sleepee.View.CircleMenuLayout>
+    </com.szip.smartdream.View.CircleMenuLayout>
 
 </RelativeLayout>

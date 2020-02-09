@@ -14,7 +14,7 @@
 
         <include layout="@layout/title1"/>
 
-        <com.szip.sleepee.View.NoScrollViewPager
+        <com.szip.smartdream.View.NoScrollViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

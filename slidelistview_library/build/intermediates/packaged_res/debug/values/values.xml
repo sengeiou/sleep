@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <item name="slide_id_front_view" type="id"/>
+    <item name="slide_id_left_back_view" type="id"/>
+    <item name="slide_id_right_back_view" type="id"/>
     <declare-styleable name="SlideListView">
         <attr format="integer" name="slideAnimationTime"/>
         <attr format="enum" name="slideMode">
@@ -17,7 +20,4 @@
             <enum name="reveal" value="1"/>
         </attr>
     </declare-styleable>
-    <item name="slide_id_front_view" type="id"/>
-    <item name="slide_id_left_back_view" type="id"/>
-    <item name="slide_id_right_back_view" type="id"/>
 </resources>
