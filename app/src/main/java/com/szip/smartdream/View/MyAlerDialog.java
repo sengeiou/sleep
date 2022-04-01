@@ -1,6 +1,7 @@
 package com.szip.smartdream.View;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AlertDialog;
@@ -12,6 +13,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.szip.smartdream.Controller.PrivacyActivity;
 import com.szip.smartdream.R;
 
 
@@ -46,14 +48,21 @@ public class MyAlerDialog {
         TextView tv_message =  window.findViewById(R.id.msgTv);
         tv_message.setText(msg);
 
-        Button cancel = window.findViewById(R.id.btn_cancel);
-        cancel.setText(negative);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-            }
-        });//取消按钮
+        if (negative!=null){
+            Button cancel = window.findViewById(R.id.btn_cancel);
+            cancel.setText(negative);
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alertDialog.dismiss();
+                }
+            });//取消按钮
+
+        }else {
+            window.findViewById(R.id.view).setVisibility(View.GONE);
+            window.findViewById(R.id.btn_cancel).setVisibility(View.GONE);
+        }
+
         Button confirm = window.findViewById(R.id.btn_comfirm);
         confirm.setText(positive);
         confirm.setOnClickListener(new View.OnClickListener() {
@@ -61,8 +70,8 @@ public class MyAlerDialog {
             public void onClick(View v) {
                 if (onclickListener!=null){
                     onclickListener.onDialogTouch(true);
-                    alertDialog.dismiss();
                 }
+                alertDialog.dismiss();
             }
         });//确定按钮
 
@@ -112,6 +121,57 @@ public class MyAlerDialog {
 
         return alertDialog;
 
+    }
+
+    public android.app.AlertDialog showAlerDialogWithPrivacy(String title, String msg, String positive, String negative, boolean cancelable,
+                                                             final AlerDialogOnclickListener onclickListener, final Context context){
+
+        final android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(context)
+                .setCancelable(true)
+                .create();
+        alertDialog.show();
+        Window window = alertDialog.getWindow();
+        window.setContentView(R.layout.dialog_layout_pri);
+        TextView tv_title = window.findViewById(R.id.dialogTitle);
+        tv_title.setText(title);
+        TextView tv_message =  window.findViewById(R.id.msgTv);
+        tv_message.setText(msg);
+        alertDialog.setCancelable(cancelable);
+
+        Button cancel = window.findViewById(R.id.btn_cancel);
+        if (negative!=null)
+            cancel.setText(negative);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onclickListener!=null){
+                    onclickListener.onDialogTouch(false);
+                    alertDialog.dismiss();
+                }
+            }
+        });//取消按钮
+        Button confirm = window.findViewById(R.id.btn_comfirm);
+        if (positive!=null)
+            confirm.setText(positive);
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onclickListener!=null){
+                    onclickListener.onDialogTouch(true);
+                    alertDialog.dismiss();
+                }
+            }
+        });//确定按钮
+        window.findViewById(R.id.privacyTv).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, PrivacyActivity.class));
+            }
+        });
+
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        return alertDialog;
     }
 
 

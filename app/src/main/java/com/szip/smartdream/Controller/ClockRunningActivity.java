@@ -58,21 +58,33 @@ public class ClockRunningActivity extends BaseActivity {
         am=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
         volume = am.getStreamVolume(STREAM_MUSIC);//保存手机原来的音量
         am.setStreamVolume (STREAM_MUSIC, am.getStreamMaxVolume(STREAM_MUSIC), FLAG_PLAY_SOUND);//设置系统音乐最大
-        mediaPlayer = MediaPlayer.create(this, R.raw.dang_ring);
+        if (pos!=-1) {
+            mediaPlayer = MediaPlayer.create(this, R.raw.dang_ring);
+
+        } else{
+            mediaPlayer = MediaPlayer.create(this, R.raw.bugu);
+            ((TextView)findViewById(R.id.tipTv)).setText(getString(R.string.cencelClock1));
+        }
         mediaPlayer.start();
         mediaPlayer.setVolume(1f,1f);
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                if (playTimes!=15){
-                    mediaPlayer.start();
-                    playTimes++;
+                if (pos!=-1){
+                    if (playTimes!=15){
+                        mediaPlayer.start();
+                        playTimes++;
+                    }else {
+                        playTimes = 0;
+                        mediaPlayer.stop();
+                        am.setStreamVolume (STREAM_MUSIC, volume, FLAG_PLAY_SOUND);//播放完毕，设置回之前的音量
+                        finish();
+                    }
                 }else {
-                    playTimes = 0;
                     mediaPlayer.stop();
                     am.setStreamVolume (STREAM_MUSIC, volume, FLAG_PLAY_SOUND);//播放完毕，设置回之前的音量
-                    finish();
                 }
+
 
             }
         });
@@ -120,18 +132,21 @@ public class ClockRunningActivity extends BaseActivity {
         });
 
 
-        ClockData clockData = app.getClockList().get(pos);
-        timeTv = findViewById(R.id.timeTv);
-        timeTv.setText(DateUtil.getTimeNow());
-
         typeTv = findViewById(R.id.typeTv);
-        if (clockData.getType() == 1){
-            typeTv.setText(clockData.getRemark()+" "+getString(R.string.nurseTime));
-        }else if (clockData.getType() == 2){
-            typeTv.setText(getString(R.string.awakeTime));
-        }else {
-            typeTv.setText(getString(R.string.sleepTime));
-        }
+        if (pos!=-1){
+            timeTv = findViewById(R.id.timeTv);
+            timeTv.setText(DateUtil.getTimeNow());
+            ClockData clockData = app.getClockList().get(pos);
+            if (clockData.getType() == 1){
+                typeTv.setText(clockData.getRemark()+" "+getString(R.string.nurseTime));
+            }else if (clockData.getType() == 2){
+                typeTv.setText(getString(R.string.awakeTime));
+            }else {
+                typeTv.setText(getString(R.string.sleepTime));
+            }
+        }else
+            typeTv.setText(getString(R.string.wakeupNow));
+
     }
 
     @Override

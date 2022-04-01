@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 /**
  * Created by Administrator on 2019/12/7.
@@ -42,14 +43,16 @@ public class TopExceptionHandler implements Thread.UncaughtExceptionHandler {
         }
         report += "-------------------------------\n\n";
 
-        try {
-            HttpMessgeUtil.getInstance(mContext.getApplicationContext()).postAppCrashLog("sleepee",mContext.getApplicationContext().
-                    getPackageManager().getPackageInfo("com.szip.sleepee", 0).versionName, Build.BRAND+ Build.MODEL,report);
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        } catch (PackageManager.NameNotFoundException e1) {
-            e1.printStackTrace();
-        }
+        FileUtil.getInstance().writeToDat(Calendar.getInstance().getTimeInMillis()+".txt",report.getBytes());
+
+//        try {
+//            HttpMessgeUtil.getInstance(mContext.getApplicationContext()).postAppCrashLog("sleepee",mContext.getApplicationContext().
+//                    getPackageManager().getPackageInfo("com.szip.sleepee", 0).versionName, Build.BRAND+ Build.MODEL,report);
+//        } catch (IOException e1) {
+//            e1.printStackTrace();
+//        } catch (PackageManager.NameNotFoundException e1) {
+//            e1.printStackTrace();
+//        }
 
 
         defaultUEH.uncaughtException(t, e);

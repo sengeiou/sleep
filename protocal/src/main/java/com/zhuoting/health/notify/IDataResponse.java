@@ -72,4 +72,6 @@ public interface IDataResponse {
     void onChangeClock(byte index,byte flag);
 
     void onCheckClock(byte[] clockData);
+
+    void onWakeup();
 }

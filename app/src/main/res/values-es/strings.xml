@@ -26,9 +26,16 @@
     <!--注册界面-->
     <string name="checkPrivacy">confirm that you have read the terms yet</string>
     <string name="userIsRegister">User already exist.</string>
-    <string name="privacy">I have read and agreed to \n<a href="https://cloud.znsdkj.com:8443/sleep/comm/statement?lang=en-US">the use agreements and privacy policies</a></string>
+    <string name="privacy">I have read and agreed to \"the use agreements and privacy policies\"</string>
+    <string name="privacy1">the use agreements and privacy policies</string>
+    <string name="privacy2">the use agreements and privacy policies</string>
     <string name="confirmPasswordError">Inconsistent password</string>
-
+    <string name="privacyTip">Thank you for trusting and using SleepEE.
+\n\n We will use the User Privacy Agreement to help you understand how we collect, use and store your personal information and the relevant rights you enjoy.
+\n\ N When you use SleepEE app, we will collect your device information, profile picture, nickname, height, weight, exercise data and other information:
+\n\n You can access, modify, delete your personal information or manage your authorization on the relevant page.
+\n\n We use industry leading security technology to protect your personal information.
+\n\n When you click "OK", you agree to the terms of the agreement.</string>
 
     <!--忘记密码界面-->
     <string name="retrieve">Retrieve Password</string>
@@ -132,6 +139,7 @@
     <string name="fri">Fri.</string>
     <string name="sat">Sat.</string>
     <string name="sun">Sun.</string>
+    <string name="cencelClock1">Please swipe up to exit</string>
     <string name="cencelClock">Please swipe up to stop ringing</string>
     <string name="awakeTime">Wake up</string>
     <string name="sleepTime"> Time for bed</string>
@@ -151,6 +159,10 @@
 
     <!--关于我们界面-->
     <string name="protocol">User Services Agreement</string>
+    <string name="delete">Account cancellation</string>
+    <string name="deleteTip">Confirm to cancel your account, the account will be successfully cancelled within three days after the confirmation, the account data will be completely deleted and cannot be restored! Perform this operation with caution.</string>
+    <string name="deleteNow">The current account is awaiting destruction.</string>
+    <string name="deleteSuccess">The request is successful.</string>
     <string name="your_feedback">Your feedback/question</string>
     <string name="tooLong">The input is too long</string>
     <string name="empty">Feedback cannot be empty</string>
@@ -220,7 +232,7 @@
     <string name="writeInfoError">Saved successfully, but the device is not connected, content cannot be synchronized to the device.</string>
     <string name="saveOK">Save Success</string>
     <string name="writeToDev">Sync to device.</string>
-
+    <string name="hi">hi </string>
 
     <!--帮助中心界面-->
     <string name="question">FAQ</string>
@@ -307,7 +319,9 @@
 
     <!--loading相关-->
     <string name="ok">OK</string>
+    <string name="agree">agree</string>
     <string name="cancel">Cancel</string>
+    <string name="disagree">exit</string>
     <string name="lineError">Connection issue</string>
     <string name="tip">Tip</string>
     <string name="confirmDis">Device connected, do you need disconnect it?</string>
@@ -322,4 +336,5 @@
     <string name="updataFail">Upgrade failed. Please try again</string>
 
     <string name="connectAgain">Relinking...</string>
+    <string name="wakeupNow">You left the bed</string>
 </resources>

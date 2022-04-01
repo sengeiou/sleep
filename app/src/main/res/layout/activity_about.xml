@@ -84,6 +84,41 @@
         android:layout_marginRight="@dimen/ListMargin"
         android:layout_below="@+id/protocolLl"/>
 
+
+    <LinearLayout
+        android:id="@+id/deleteLl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/clock_layout_height"
+        android:orientation="horizontal"
+        android:layout_below="@+id/protocolLl">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ListMargin"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:textColor="@color/black1"
+            android:text="@string/delete"/>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/ListMargin"
+            android:layout_gravity="center_vertical|end"
+            android:src="@mipmap/me_arrow_right"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/black1"
+        android:layout_marginLeft="@dimen/ListMargin"
+        android:layout_marginRight="@dimen/ListMargin"
+        android:layout_below="@+id/deleteLl"/>
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

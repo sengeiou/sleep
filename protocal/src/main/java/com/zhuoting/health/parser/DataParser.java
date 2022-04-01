@@ -209,6 +209,10 @@ public class DataParser {
                 if ((data[4]&0xff)==0x01){
                     mIRequestResponse.onDeleteOverTimeData((byte) 1);
                 }
+            }else if (tagStr.equals("60")){
+                if (data[7]==0){//离床
+                    mIDataResponse.onWakeup();
+                }
             }else if (tagStr.equals("80")){
 
             }

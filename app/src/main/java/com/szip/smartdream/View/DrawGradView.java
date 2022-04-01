@@ -47,10 +47,10 @@ public class DrawGradView extends View {
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         if (changed){
             xori = 0;
-            gap_grid = 60.0f;
             width = getWidth();
             height = getHeight();
-            grid_hori = height/(int)gap_grid;
+            grid_hori = 9;
+            gap_grid = height/9;
             grid_ver = width/(int)gap_grid;
             gap_x = gap_grid/dataNum_per_grid;
             Log.e("json","本页面宽： " + width +"  高:" + height);

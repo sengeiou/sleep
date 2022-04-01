@@ -606,40 +606,43 @@ public class ReportDayFragment extends BaseFragment {
         float baseValue;
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                baseValue = 0;
-            } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                if (event.getPointerCount() == 2) {//缩放
-                    scrollAble = false;//缩放的时候图表禁止滑动
-                    myScrollView.setScroll(false);
-                    float x = event.getX(0) - event.getX(1);
-                    float y = event.getY(0) - event.getY(1);
-                    float value = (float) Math.sqrt(x * x + y * y);// 计算两点的距离
-                    if (baseValue == 0) {
-                        baseValue = value;
-                    } else {
-                        if (value - baseValue >= 10 || value - baseValue <= -10) {
-                            inZoom = true;
-                            float scale = value / baseValue;// 当前两点间的距离除以手指落下时两点间的距离就是需要缩放的比例。
-                            mLineChar.addStretchValue(scale);
-                            mLineCharforBreath.addStretchValue(scale);
-                            mLineCharforHeart.addStretchValue(scale);
-                            mLineCharforThird.addStretchValue(scale);
+            if(lines1!=null&&lines1.size()>1){
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    baseValue = 0;
+                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    if (event.getPointerCount() == 2) {//缩放
+                        scrollAble = false;//缩放的时候图表禁止滑动
+                        myScrollView.setScroll(false);
+                        float x = event.getX(0) - event.getX(1);
+                        float y = event.getY(0) - event.getY(1);
+                        float value = (float) Math.sqrt(x * x + y * y);// 计算两点的距离
+                        if (baseValue == 0) {
+                            baseValue = value;
+                        } else {
+                            if (value - baseValue >= 10 || value - baseValue <= -10) {
+                                inZoom = true;
+                                float scale = value / baseValue;// 当前两点间的距离除以手指落下时两点间的距离就是需要缩放的比例。
+                                mLineChar.addStretchValue(scale);
+                                mLineCharforBreath.addStretchValue(scale);
+                                mLineCharforHeart.addStretchValue(scale);
+                                mLineCharforThird.addStretchValue(scale);
+                            }
                         }
                     }
+                }else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    myScrollView.setScroll(true);
+                    if (inZoom){//缩放停止，使能滑动，设置图表当前大小
+                        scrollAble = true;
+                        inZoom = false;
+                        mLineChar.setStretchTimes(true);
+                        mLineCharforBreath.setStretchTimes(true);
+                        mLineCharforHeart.setStretchTimes(true);
+                        mLineCharforThird.setStretchTimes(true);
+                    }
                 }
-            }else if (event.getAction() == MotionEvent.ACTION_UP) {
-                myScrollView.setScroll(true);
-                if (inZoom){//缩放停止，使能滑动，设置图表当前大小
-                    scrollAble = true;//缩放的时候图表禁止滑动
-                    inZoom = false;
-                    mLineChar.setStretchTimes(true);
-                    mLineCharforBreath.setStretchTimes(true);
-                    mLineCharforHeart.setStretchTimes(true);
-                    mLineCharforThird.setStretchTimes(true);
-                }
+                return gestureDetector.onTouchEvent(event);
             }
-            return gestureDetector.onTouchEvent(event);
+            return false;
         }
 
     };

@@ -219,32 +219,7 @@
         android:layout_marginLeft="@dimen/ListMargin"
         android:layout_marginRight="@dimen/ListMargin"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/ListMargin"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal">
 
-        <CheckBox
-            android:id="@+id/checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/check_box_bg"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="5dp"/>
-
-        <TextView
-            android:id="@+id/privacyTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/privacy"
-            android:textColor="@color/black"
-            android:textColorLink="@color/MainColor"
-            android:layout_gravity="center_vertical"/>
-
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/signLl"

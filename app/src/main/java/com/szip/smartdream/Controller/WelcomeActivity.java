@@ -13,6 +13,7 @@ import com.szip.smartdream.MyApplication;
 import com.szip.smartdream.R;
 import com.szip.smartdream.Service.BleService;
 import com.szip.smartdream.Util.MathUitl;
+import com.szip.smartdream.View.MyAlerDialog;
 
 import static com.szip.smartdream.MyApplication.FILE;
 
@@ -23,7 +24,6 @@ public class WelcomeActivity extends BaseActivity implements Runnable{
      * */
     private Thread thread;
     private int time = 3;
-
     private int SleepEECode = 100;
 
     /**
@@ -48,37 +48,53 @@ public class WelcomeActivity extends BaseActivity implements Runnable{
         isFirst = sharedPreferencesp.getBoolean("isFirst",true);
         app.setUserInfo(MathUitl.loadInfoData(sharedPreferencesp));
 
-        /**
-         * 获取权限·
-         * */
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED
-                    || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
-                    || checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
-                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, SleepEECode);
-            }else {
-                initData();
-            }
+
+        if(isFirst){
+            MyAlerDialog.getSingle().showAlerDialogWithPrivacy(getString(R.string.privacy1),getString(R.string.privacyTip),
+                    getString(R.string.agree), getString(R.string.disagree), false, new MyAlerDialog.AlerDialogOnclickListener() {
+                        @Override
+                        public void onDialogTouch(boolean flag) {
+                            if (flag){
+                                sharedPreferencesp.edit().putBoolean("isFirst",false).commit();
+                                /**
+                                 * 获取权限·
+                                 * */
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                                    if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED
+                                            || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
+                                            || checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+                                        requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                                                Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, SleepEECode);
+                                    }
+                                    initData();
+                                }else {
+                                    initData();
+                                }
+                            }else{
+                                finish();
+                            }
+                        }
+                    },this);
         }else {
             initData();
         }
+
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == SleepEECode){
-            int code = grantResults[0];
-            int code1 = grantResults[1];
-            int code2 = grantResults[2];
-            if (code == PackageManager.PERMISSION_GRANTED&&code1 == PackageManager.PERMISSION_GRANTED&&code2 == PackageManager.PERMISSION_GRANTED){
-                initData();
-            }else {
-                WelcomeActivity.this.finish();
-            }
-        }
-    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        if (requestCode == SleepEECode){
+//            int code = grantResults[0];
+//            int code1 = grantResults[1];
+//            int code2 = grantResults[2];
+//            if (code == PackageManager.PERMISSION_GRANTED&&code1 == PackageManager.PERMISSION_GRANTED&&code2 == PackageManager.PERMISSION_GRANTED){
+//                initData();
+//            }else {
+//                WelcomeActivity.this.finish();
+//            }
+//        }
+//    }
 
     private void initData() {
         thread = new Thread(this);
@@ -92,73 +108,43 @@ public class WelcomeActivity extends BaseActivity implements Runnable{
                 Thread.sleep(1000);
                 time = time -1;
             }
-            if(isFirst){
-                if (app.getStartState() == 0){//已登录
-                    if (app.getUserInfo().getDeviceCode()!=null){//已绑定
-                        BleService.getInstance().setmMac(app.getUserInfo().getDeviceCode());
-                        BleService.getInstance().startConnectDevice();
-                        Intent guiIntent = new Intent();
-                        guiIntent.setClass(WelcomeActivity.this, MainActivity.class);
-                        startActivity(guiIntent);
-                        finish();
-                    }else {//未绑定
-                        Intent in = new Intent();
-                        in.setClass(WelcomeActivity.this, FindDeviceActivity.class);
-                        startActivity(in);
-                        finish();
-                    }
-                }else if (app.getStartState() == 1){//未登录
-                    Intent in = new Intent();
-                    in.setClass(WelcomeActivity.this, LoginActivity.class);
-                    startActivity(in);
-                    finish();
-                }else {//登陆过期
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            showToast(getString(R.string.tokenTimeout));
-                        }
-                    });
-                    Intent in = new Intent();
-                    in.setClass(WelcomeActivity.this, LoginActivity.class);
-                    startActivity(in);
-                    finish();
-                }
-            }else{
-                if (app.getStartState() == 0){//已登录
-                    if (app.getUserInfo().getDeviceCode()!=null){//已绑定
-                        BleService.getInstance().setmMac(app.getUserInfo().getDeviceCode());
-                        BleService.getInstance().startConnectDevice();
-                        Intent guiIntent = new Intent();
-                        guiIntent.setClass(WelcomeActivity.this, MainActivity.class);
-                        startActivity(guiIntent);
-                        finish();
-                    }else {//未绑定
-                        Intent in = new Intent();
-                        in.setClass(WelcomeActivity.this, FindDeviceActivity.class);
-                        startActivity(in);
-                        finish();
-                    }
-                }else if (app.getStartState() == 1){//未登录
-                    Intent in = new Intent();
-                    in.setClass(WelcomeActivity.this, LoginActivity.class);
-                    startActivity(in);
-                    finish();
-                }else {//登陆过期
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            showToast(getString(R.string.tokenTimeout));
-                        }
-                    });
-                    Intent in = new Intent();
-                    in.setClass(WelcomeActivity.this, LoginActivity.class);
-                    startActivity(in);
-                    finish();
-                }
-            }
+            init();
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void init(){
+        if (app.getStartState() == 0){//已登录
+            if (app.getUserInfo().getDeviceCode()!=null){//已绑定
+                BleService.getInstance().setmMac(app.getUserInfo().getDeviceCode());
+                BleService.getInstance().startConnectDevice();
+                Intent guiIntent = new Intent();
+                guiIntent.setClass(WelcomeActivity.this, MainActivity.class);
+                startActivity(guiIntent);
+                finish();
+            }else {//未绑定
+                Intent in = new Intent();
+                in.setClass(WelcomeActivity.this, FindDeviceActivity.class);
+                startActivity(in);
+                finish();
+            }
+        }else if (app.getStartState() == 1){//未登录
+            Intent in = new Intent();
+            in.setClass(WelcomeActivity.this, LoginActivity.class);
+            startActivity(in);
+            finish();
+        }else {//登陆过期
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    showToast(getString(R.string.tokenTimeout));
+                }
+            });
+            Intent in = new Intent();
+            in.setClass(WelcomeActivity.this, LoginActivity.class);
+            startActivity(in);
+            finish();
         }
     }
 }

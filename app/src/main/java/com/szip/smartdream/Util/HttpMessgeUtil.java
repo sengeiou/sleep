@@ -607,6 +607,15 @@ public class HttpMessgeUtil {
                 .execute(baseApiGenericsCallback);
     }
 
+    private void _deleteAccount(GenericsCallback<BaseApi> baseApiGenericsCallback) {
+        String url = this.url+"user/unregister";
+        OkHttpUtils
+                .get()
+                .url(url)
+                .addHeader("token",token)
+                .build()
+                .execute(baseApiGenericsCallback);
+    }
 
     /**
      * 提供给用户的方法
@@ -705,6 +714,12 @@ public class HttpMessgeUtil {
     public void postAppCrashLog(String appName,String appVersion,String systemInfo,String stackTrace)throws IOException{
         _postAppCrashLog(appName,appVersion,systemInfo,stackTrace);
     }
+
+    public void deleteAccount(GenericsCallback<BaseApi> baseApiGenericsCallback)throws IOException{
+        _deleteAccount(baseApiGenericsCallback);
+    }
+
+
 
     /**
      * 接口回调

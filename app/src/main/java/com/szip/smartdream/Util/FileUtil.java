@@ -13,13 +13,25 @@ public class FileUtil {
 
     private String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/SleepEE/";
     private File filePath = new File(path);
+    private static FileUtil mInstance;
 
-    private Context mContext;
-    private MyApplication app;
-
-    public FileUtil(Context mContext){
-        this.mContext = mContext;
+    private FileUtil(){
         Init();
+    }
+
+    public static FileUtil getInstance()
+    {
+        if (mInstance == null)
+        {
+            synchronized (FileUtil.class)
+            {
+                if (mInstance == null)
+                {
+                    mInstance = new FileUtil();
+                }
+            }
+        }
+        return mInstance;
     }
 
     private void Init() {
@@ -51,7 +63,6 @@ public class FileUtil {
 
     public static void writeToDat(String fileName, byte[] data){
         try {
-
             FileOutputStream fout = new FileOutputStream(fileName,true);
 
             fout.write(data);

@@ -26,9 +26,16 @@
     <!--注册界面-->
     <string name="checkPrivacy">请确认您已阅读过隐私条款</string>
     <string name="userIsRegister">该用户已经被注册</string>
-    <string name="privacy">已阅读 《<a href="https://cloud.znsdkj.com:8443/sleep/comm/statement">隐私条款</a>》</string>
+    <string name="privacy">已阅读 《用户隐私协议》</string>
+    <string name="privacy1">《用户隐私协议》</string>
+    <string name="privacy2">详情可阅读《<u>用户隐私协议</u>》进行了解</string>
     <string name="confirmPasswordError">两次密码输入不一致</string>
-
+    <string name="privacyTip">感谢您信任并使用SleepEE。
+\n\n我们讲依据《用户隐私协议》来帮助您了解我们在收集、使用、存储您个人信息的情况以及您享有的相关权利。
+\n\n在您使用SleepEE应用程序时，我们将收集您的设备信息、个人资料(头像、昵称、身高、体重、运动数据)等信息:
+\n\n您可以在相关页面访问、修改、删除您的个人信息或者管理您的授权。
+\n\n我们会采用行业领先的安全技术来保护您的个人信息。
+\n\n当您点击"确定"即表示你已经同意该协议的条款。</string>
 
     <!--忘记密码界面-->
     <string name="retrieve">找回密码</string>
@@ -132,6 +139,7 @@
     <string name="fri">五</string>
     <string name="sat">六</string>
     <string name="sun">日</string>
+    <string name="cencelClock1">上划退出</string>
     <string name="cencelClock">上划停止响铃</string>
     <string name="awakeTime">起床啦~</string>
     <string name="sleepTime">睡眠时间到啦~</string>
@@ -141,16 +149,21 @@
     <!--我的界面-->
     <string name="data">Server Data Synced</string>
     <string name="myDevice">我的设备</string>
-    <string name="userInfo">账号信息</string>
-    <string name="personInfo">用户资料</string>
-    <string name="help">帮助</string>
+    <string name="userInfo">账号管理</string>
+    <string name="personInfo">个人信息</string>
+    <string name="help">帮助中心</string>
     <string name="advise">睡眠建议</string>
     <string name="feedback">意见反馈</string>
-    <string name="about">关于我们</string>
+    <string name="about">关于</string>
     <string name="updown">同步中...</string>
+    <string name="hi">你好 </string>
 
     <!--关于我们界面-->
-    <string name="protocol">用户保护协议</string>
+    <string name="protocol">用户隐私协议</string>
+    <string name="delete">注销账号</string>
+    <string name="deleteTip">是否确认注销您的账号，确认后账号将会在三天内注销成功，注销成功后账号数据将被完全删除，不可恢复！请谨慎操作。</string>
+    <string name="deleteSuccess">申请账号注销成功。</string>
+    <string name="deleteNow">当前账号正在等待注销阶段。</string>
     <string name="your_feedback">您的反馈/问题</string>
     <string name="tooLong">您输入的文本太长了</string>
     <string name="empty">意见不能为空</string>
@@ -305,7 +318,9 @@
 
     <!--loading相关-->
     <string name="ok">好的</string>
+    <string name="agree">同意</string>
     <string name="cancel">取消</string>
+    <string name="disagree">暂不使用</string>
     <string name="lineError">连接失败，请检查设备</string>
     <string name="tip">提醒</string>
     <string name="confirmDis">设备连接中，是否确定断开连接?</string>
@@ -320,5 +335,6 @@
     <string name="updataFail">烧录失败，请重试</string>
 
     <string name="connectAgain">正在重连...</string>
+    <string name="wakeupNow">你起床了</string>
 
 </resources>

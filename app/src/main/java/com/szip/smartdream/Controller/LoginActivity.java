@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.szip.smartdream.Adapter.MyPagerAdapter;
@@ -57,6 +58,12 @@ public class LoginActivity extends BaseActivity implements HttpCallbackWithLogin
      * */
     private final static int REQUEST_CODE = 10;
 
+    /**
+     * 隐私条款
+     * */
+    private CheckBox checkBox;
+    private TextView privacyTv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +98,8 @@ public class LoginActivity extends BaseActivity implements HttpCallbackWithLogin
         StatusBarCompat.translucentStatusBar(LoginActivity.this,true);
 
         mTab = findViewById(R.id.tvtablayout);
-//        MathUitl.reflex(mTab);
+        checkBox = findViewById(R.id.checkbox);
+        privacyTv = findViewById(R.id.privacyTv);
         mPager = findViewById(R.id.tvviewpager);
 
         registerTv = findViewById(R.id.registerTv);
@@ -128,6 +136,7 @@ public class LoginActivity extends BaseActivity implements HttpCallbackWithLogin
      * */
     private void initEvent() {
         registerTv.setOnClickListener(onClickListener);
+        privacyTv.setOnClickListener(onClickListener);
 //        forgetTv.setOnClickListener(onClickListener);
     }
 
@@ -144,6 +153,12 @@ public class LoginActivity extends BaseActivity implements HttpCallbackWithLogin
                     startActivityForResult(intent,REQUEST_CODE);
                 }
                 break;
+                case R.id.privacyTv:{
+                    Intent intent = new Intent();
+                    intent.setClass(LoginActivity.this, PrivacyActivity.class);
+                    startActivity(intent);
+                }
+                break;
             }
         }
     };
@@ -154,6 +169,10 @@ public class LoginActivity extends BaseActivity implements HttpCallbackWithLogin
     private OnClickForLogin clickForLogin = new OnClickForLogin() {
         @Override
         public void onLogin(String code,String user, String password,boolean remember) {
+            if (!checkBox.isChecked()){
+                showToast(getString(R.string.checkPrivacy));
+                return;
+            }
             passwordL = password;
             rememberPassword = remember;
             ProgressHudModel.newInstance().show(LoginActivity.this,getString(R.string.logging),getString(R.string.httpError),10000);

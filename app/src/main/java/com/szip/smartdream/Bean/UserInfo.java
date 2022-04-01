@@ -41,7 +41,7 @@ public class UserInfo {
     }
 
     public String getUserName() {
-        return userName;
+        return userName==null?"Sleepee":userName;
     }
 
     public void setUserName(String userName) {

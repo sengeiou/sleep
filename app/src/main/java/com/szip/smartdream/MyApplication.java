@@ -61,7 +61,6 @@ import static com.szip.smartdream.Util.HttpMessgeUtil.UPDOWNDATA_FLAG;
 
 public class MyApplication extends Application implements HttpCallbackWithUserInfo,HttpCallbackWithClockData,HttpCallbackWithReport {
 
-
     /**
      * 总闹钟列表、服务器端的睡眠提醒闹钟列表、手环端的本地闹钟列表
      * */
@@ -172,19 +171,13 @@ public class MyApplication extends Application implements HttpCallbackWithUserIn
 
         instance = this;
         BluetoothContext.set(this);
-        java.io.File file = new File(fileName);
 
         FlowManager.init(this);
-
-
-
 
         /**
          * 把log上传到云端
          * */
         Thread.setDefaultUncaughtExceptionHandler(new TopExceptionHandler(this));
-
-
 
         /**
          * Android8.0之后DFU升级需要获取部分弹框权限
@@ -212,7 +205,6 @@ public class MyApplication extends Application implements HttpCallbackWithUserIn
             notificationManager.createNotificationChannel(fileChannel);
             notificationManager.createNotificationChannel(proximityChannel);
         }
-
 
         /**
          * 注册广播
@@ -284,12 +276,10 @@ public class MyApplication extends Application implements HttpCallbackWithUserIn
 
             @Override
             public void onActivityResumed(Activity activity) {
-
             }
 
             @Override
             public void onActivityPaused(Activity activity) {
-
             }
 
             @Override
@@ -605,10 +595,20 @@ public class MyApplication extends Application implements HttpCallbackWithUserIn
     @Override
     public void onUserInfo(UserInfoBean userInfoBean) {
         if (userInfoBean.getCode() == 401){//登录过期
+            HttpMessgeUtil.getInstance(this).setHttpCallbackWithUserInfo(null);
+            HttpMessgeUtil.getInstance(this).setHttpCallbackWithClockData(null);
+            HttpMessgeUtil.getInstance(this).setHttpCallbackWithReport(null);
             startState = 2;
         }else {//保存用户信息
             setUserInfo(userInfoBean.getData());
-            handler.sendEmptyMessage(200);//获取信息成功，开始获取闹钟数据
+            if(userInfoBean.getData().getDeviceCode()==null){
+                HttpMessgeUtil.getInstance(this).setHttpCallbackWithUserInfo(null);
+                HttpMessgeUtil.getInstance(this).setHttpCallbackWithClockData(null);
+                HttpMessgeUtil.getInstance(this).setHttpCallbackWithReport(null);
+                isRun = false;
+            }else {
+                handler.sendEmptyMessage(200);//获取信息成功，开始获取闹钟数据
+            }
         }
     }
 
@@ -622,7 +622,6 @@ public class MyApplication extends Application implements HttpCallbackWithUserIn
         }
         handler.sendEmptyMessage(300);//获取闹钟数据成功，开始获取报告数据
     }
-
 
     /**
      * 向服务器获取数据的回调

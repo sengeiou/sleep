@@ -36,11 +36,11 @@ public class RegisterForMailFragment extends BaseFragment implements HttpCallbac
 
     private OnClickForRegister onClickForRegister;
 
-    /**
-     * 隐私条款
-     * */
-    private CheckBox checkBox;
-    private TextView privacyTv;
+//    /**
+//     * 隐私条款
+//     * */
+//    private CheckBox checkBox;
+//    private TextView privacyTv;
     /**
      * 邮箱输入框以及相关控件
      * */
@@ -145,9 +145,9 @@ public class RegisterForMailFragment extends BaseFragment implements HttpCallbac
      * 初始化界面
      * */
     private void initView() {
-        checkBox = getView().findViewById(R.id.checkbox);
-        privacyTv = getView().findViewById(R.id.privacyTv);
-        privacyTv.setMovementMethod(LinkMovementMethod.getInstance());
+//        checkBox = getView().findViewById(R.id.checkbox);
+//        privacyTv = getView().findViewById(R.id.privacyTv);
+//        privacyTv.setMovementMethod(LinkMovementMethod.getInstance());
         passwordEt = getView().findViewById(R.id.passwordEt);
         passwordClearIv = getView().findViewById(R.id.passwordClearIv);
         confirmPasswordEt = getView().findViewById(R.id.confirmPasswordEt);
@@ -215,9 +215,11 @@ public class RegisterForMailFragment extends BaseFragment implements HttpCallbac
                         showToast(getString(R.string.inputVerification));
                     }else if (!passwordEt.getText().toString().equals(confirmPasswordEt.getText().toString())){
                         showToast(getString(R.string.confirmPasswordError));
-                    }else if (!checkBox.isChecked()){
-                        showToast(getString(R.string.checkPrivacy));
-                    }else
+                    }
+//                    else if (!checkBox.isChecked()){
+//                        showToast(getString(R.string.checkPrivacy));
+//                    }
+                    else
                         onClickForRegister.onRegisterForMail(mailEt.getText().toString(),passwordEt.getText().toString(),
                                 verificationCodeEt.getText().toString());
                     break;

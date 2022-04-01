@@ -34,8 +34,9 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="350dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center_horizontal">
 
 
         <ImageView
@@ -56,20 +57,21 @@
             android:layout_marginTop="20dp"/>
 
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true">
 
             <com.szip.smartdream.View.WH_ECGView
                 android:id="@+id/heartView"
-                android:layout_width="match_parent"
+                android:layout_width="350dp"
                 android:layout_height="200dp"
                 android:layout_marginRight="40dp"
-                android:layout_marginLeft="40dp" />
+                android:layout_marginLeft="40dp"
+                android:layout_centerVertical="true"/>
 
             <com.szip.smartdream.View.DrawGradView
                 android:id="@+id/draw"
-                android:layout_width="match_parent"
+                android:layout_width="350dp"
                 android:layout_height="200dp"
                 android:layout_marginRight="40dp"
                 android:layout_marginLeft="40dp" />
@@ -105,8 +107,9 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="350dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center_horizontal">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -126,23 +129,22 @@
             android:layout_marginTop="20dp"/>
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_centerVertical="true">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
 
             <com.szip.smartdream.View.WH_ECGView
                 android:id="@+id/breathView"
-                android:layout_width="match_parent"
+                android:layout_width="350dp"
                 android:layout_height="200dp"
                 android:layout_marginRight="40dp"
-                android:layout_marginLeft="40dp" />
+                android:layout_marginLeft="40dp"/>
 
             <com.szip.smartdream.View.DrawGradView
-
-                android:layout_width="match_parent"
+                android:layout_width="350dp"
                 android:layout_height="200dp"
                 android:layout_marginRight="40dp"
-                android:layout_marginLeft="40dp" />
+                android:layout_marginLeft="40dp"/>
 
 
         </RelativeLayout>

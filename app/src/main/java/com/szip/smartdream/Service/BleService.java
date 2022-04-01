@@ -7,9 +7,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.IBinder;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
 
 import com.inuker.bluetooth.library.connect.listener.BleConnectStatusListener;
@@ -31,11 +35,14 @@ import com.szip.smartdream.Bean.HealthAdcDataBean;
 import com.szip.smartdream.Bean.HealthBean;
 import com.szip.smartdream.Bean.HttpBean.ClockData;
 import com.szip.smartdream.Bean.UserInfoWriteBean;
+import com.szip.smartdream.Controller.ClockRunningActivity;
+import com.szip.smartdream.Controller.MyDeviceActivity;
 import com.szip.smartdream.MyApplication;
 import com.szip.smartdream.R;
 import com.szip.smartdream.Util.ClientManager;
 import com.szip.smartdream.Util.DateUtil;
 import com.szip.smartdream.Util.MathUitl;
+import com.szip.smartdream.View.MyAlerDialog;
 import com.zhuoting.health.Config;
 import com.zhuoting.health.notify.IDataResponse;
 import com.zhuoting.health.notify.IErrorCommand;
@@ -55,9 +62,16 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
 
+import static android.media.AudioManager.FLAG_PLAY_SOUND;
+import static android.media.AudioManager.STREAM_MUSIC;
+
 public class BleService extends Service {
+
+    private MediaPlayer mediaPlayer;
+    private int volume = 0;
+
     UUID serviceUUID;
-    private String mMac ;
+    private String mMac = "";
     private String mName;
     public static BleService myBleService ;
 
@@ -439,6 +453,36 @@ public class BleService extends Service {
                 app.setClockList2(clockDataList);
             }
             //Log.d("SZIP******","完成闹钟同步");
+        }
+
+        @Override
+        public void onWakeup() {
+
+            Intent intent1=new Intent(BleService.this, ClockRunningActivity.class);
+            intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent1.putExtra("pos",-1);
+            BleService.this.startActivity(intent1);
+
+//            final AudioManager am = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+//            Log.d("SZIP******","起床啦");
+//            volume  = am.getStreamVolume(STREAM_MUSIC);//保存手机原来的音量
+//            am.setStreamVolume (STREAM_MUSIC, am.getStreamMaxVolume(STREAM_MUSIC), FLAG_PLAY_SOUND);//设置系统音乐最大
+//            if (mediaPlayer==null){
+//                mediaPlayer = MediaPlayer.create(BleService.this, R.raw.bugu);
+//                mediaPlayer.start();
+//                mediaPlayer.setVolume(1f,1f);
+//                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+//                    @Override
+//                    public void onCompletion(MediaPlayer mp) {
+//                        am.setStreamVolume (STREAM_MUSIC, volume, FLAG_PLAY_SOUND);//播放完毕，设置回之前的音量
+//                        mediaPlayer = null;
+//                    }
+//                });
+//            }
+//
+//            AlertDialog alertDialog = MyAlerDialog.getSingle().showAlerDialog(getString(R.string.tip),getString(R.string.wakeupNow),
+//                    getString(R.string.ok),null,true,null, BleService.this);
+//            alertDialog.show();
         }
     };
 

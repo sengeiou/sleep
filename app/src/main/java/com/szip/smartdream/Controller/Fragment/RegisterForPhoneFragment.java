@@ -37,11 +37,11 @@ public class RegisterForPhoneFragment extends BaseFragment implements HttpCallba
     private Context mContext;
     private OnClickForRegister onClickForRegister;
 
-    /**
-     * 隐私条款
-     * */
-    private CheckBox checkBox;
-    private TextView privacyTv;
+//    /**
+//     * 隐私条款
+//     * */
+//    private CheckBox checkBox;
+//    private TextView privacyTv;
     /**
      * 国家选择以及国家代码
      * */
@@ -148,9 +148,9 @@ public class RegisterForPhoneFragment extends BaseFragment implements HttpCallba
      * 初始化界面
      * */
     private void initView() {
-        checkBox = getView().findViewById(R.id.checkbox);
-        privacyTv = getView().findViewById(R.id.privacyTv);
-        privacyTv.setMovementMethod(LinkMovementMethod.getInstance());
+//        checkBox = getView().findViewById(R.id.checkbox);
+//        privacyTv = getView().findViewById(R.id.privacyTv);
+//        privacyTv.setMovementMethod(LinkMovementMethod.getInstance());
         passwordEt = getView().findViewById(R.id.passwordEt);
         passwordClearIv = getView().findViewById(R.id.passwordClearIv);
         confirmPasswordEt = getView().findViewById(R.id.confirmPasswordEt);
@@ -242,9 +242,11 @@ public class RegisterForPhoneFragment extends BaseFragment implements HttpCallba
                         showToast(getString(R.string.inputVerification));
                     }else if (!passwordEt.getText().toString().equals(confirmPasswordEt.getText().toString())){
                         showToast(getString(R.string.confirmPasswordError));
-                    }else if (!checkBox.isChecked()){
-                        showToast(getString(R.string.checkPrivacy));
-                    }else
+                    }
+//                    else if (!checkBox.isChecked()){
+//                        showToast(getString(R.string.checkPrivacy));
+//                    }
+                    else
                         onClickForRegister.onRegisterForPhone(countryTv.getText().toString(),codeTv.getText().toString(),
                             phoneEt.getText().toString(),passwordEt.getText().toString(),verificationCodeEt.getText().toString());
 

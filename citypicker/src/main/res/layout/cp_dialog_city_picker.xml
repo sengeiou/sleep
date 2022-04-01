@@ -5,6 +5,11 @@
     android:orientation="vertical"
     android:background="#ffffff">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="27dp"
+        android:background="#22000000"/>
+
     <include layout="@layout/cp_search_view" />
 
     <RelativeLayout

@@ -2,16 +2,16 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/DatePicker/DatePicker.iml" filepath="$PROJECT_DIR$/DatePicker/DatePicker.iml" />
       <module fileurl="file://$PROJECT_DIR$/SleepEE.iml" filepath="$PROJECT_DIR$/SleepEE.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/citypicker/citypicker.iml" filepath="$PROJECT_DIR$/citypicker/citypicker.iml" />
-      <module fileurl="file://$PROJECT_DIR$/jgraph/jgraph.iml" filepath="$PROJECT_DIR$/jgraph/jgraph.iml" />
-      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
-      <module fileurl="file://$PROJECT_DIR$/okhttputils/okhttputils.iml" filepath="$PROJECT_DIR$/okhttputils/okhttputils.iml" />
-      <module fileurl="file://$PROJECT_DIR$/oldninedroid_library/oldninedroid_library.iml" filepath="$PROJECT_DIR$/oldninedroid_library/oldninedroid_library.iml" />
-      <module fileurl="file://$PROJECT_DIR$/protocal/protocal.iml" filepath="$PROJECT_DIR$/protocal/protocal.iml" />
-      <module fileurl="file://$PROJECT_DIR$/slidelistview_library/slidelistview_library.iml" filepath="$PROJECT_DIR$/slidelistview_library/slidelistview_library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DatePicker/SleepEE.DatePicker.iml" filepath="$PROJECT_DIR$/.idea/modules/DatePicker/SleepEE.DatePicker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SleepEE.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SleepEE.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/citypicker/SleepEE.citypicker.iml" filepath="$PROJECT_DIR$/.idea/modules/citypicker/SleepEE.citypicker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jgraph/SleepEE.jgraph.iml" filepath="$PROJECT_DIR$/.idea/modules/jgraph/SleepEE.jgraph.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/SleepEE.library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/SleepEE.library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/okhttputils/SleepEE.okhttputils.iml" filepath="$PROJECT_DIR$/.idea/modules/okhttputils/SleepEE.okhttputils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/oldninedroid_library/SleepEE.oldninedroid_library.iml" filepath="$PROJECT_DIR$/.idea/modules/oldninedroid_library/SleepEE.oldninedroid_library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/protocal/SleepEE.protocal.iml" filepath="$PROJECT_DIR$/.idea/modules/protocal/SleepEE.protocal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/slidelistview_library/SleepEE.slidelistview_library.iml" filepath="$PROJECT_DIR$/.idea/modules/slidelistview_library/SleepEE.slidelistview_library.iml" />
     </modules>
   </component>
 </project>

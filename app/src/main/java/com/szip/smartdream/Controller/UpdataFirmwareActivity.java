@@ -53,7 +53,7 @@ public class UpdataFirmwareActivity extends BaseActivity {
         url = intent.getStringExtra("url");
         version = intent.getStringExtra("version");
         current = intent.getStringExtra("current");
-        fileUtil = new FileUtil(UpdataFirmwareActivity.this);
+        fileUtil =  FileUtil.getInstance();
         DfuServiceListenerHelper.registerProgressListener(this, mDfuProgressListener);
         initView();
     }
