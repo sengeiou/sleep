@@ -6,8 +6,8 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="15"
-8-->E:\project\AndroidStudioProject\SleepEE\slidelistview_library\src\main\AndroidManifest.xml
+8-->F:\Android\sleep\slidelistview_library\src\main\AndroidManifest.xml
 9        android:targetSdkVersion="27" />
-9-->E:\project\AndroidStudioProject\SleepEE\slidelistview_library\src\main\AndroidManifest.xml
+9-->F:\Android\sleep\slidelistview_library\src\main\AndroidManifest.xml
 10
 11</manifest>

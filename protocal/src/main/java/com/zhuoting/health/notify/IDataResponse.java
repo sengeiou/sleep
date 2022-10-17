@@ -73,5 +73,8 @@ public interface IDataResponse {
 
     void onCheckClock(byte[] clockData);
 
+
+    void onAlarm(byte type,int heartData, int breathData);
+
     void onWakeup();
 }

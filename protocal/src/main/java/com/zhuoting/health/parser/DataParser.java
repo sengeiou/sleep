@@ -120,6 +120,8 @@ public class DataParser {
                         mIDataResponse.onCheckClock(clocks);
                     }
                 }
+            }else if (tagStr.equals("0A")){//发送心率呼吸预警
+                mIDataResponse.onAlarm(data[3],data[4],data[5]);
             }else if (tagStr.equals("08")){//用户参数
                 if (data[3] == 0x01){
                     mIRequestResponse.onSetUserInfo(data[4]);

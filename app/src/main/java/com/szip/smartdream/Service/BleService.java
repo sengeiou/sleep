@@ -456,6 +456,12 @@ public class BleService extends Service {
         }
 
         @Override
+        public void onAlarm(byte type, int heartData, int breathData) {
+            MyApplication app = (MyApplication) getApplicationContext();
+            app.setAlarm(type,heartData,breathData);
+        }
+
+        @Override
         public void onWakeup() {
 
             Intent intent1=new Intent(BleService.this, ClockRunningActivity.class);

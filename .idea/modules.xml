@@ -2,16 +2,16 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SleepEE.iml" filepath="$PROJECT_DIR$/SleepEE.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DatePicker/SleepEE.DatePicker.iml" filepath="$PROJECT_DIR$/.idea/modules/DatePicker/SleepEE.DatePicker.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SleepEE.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SleepEE.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/citypicker/SleepEE.citypicker.iml" filepath="$PROJECT_DIR$/.idea/modules/citypicker/SleepEE.citypicker.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jgraph/SleepEE.jgraph.iml" filepath="$PROJECT_DIR$/.idea/modules/jgraph/SleepEE.jgraph.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/SleepEE.library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/SleepEE.library.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/okhttputils/SleepEE.okhttputils.iml" filepath="$PROJECT_DIR$/.idea/modules/okhttputils/SleepEE.okhttputils.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/oldninedroid_library/SleepEE.oldninedroid_library.iml" filepath="$PROJECT_DIR$/.idea/modules/oldninedroid_library/SleepEE.oldninedroid_library.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/protocal/SleepEE.protocal.iml" filepath="$PROJECT_DIR$/.idea/modules/protocal/SleepEE.protocal.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/slidelistview_library/SleepEE.slidelistview_library.iml" filepath="$PROJECT_DIR$/.idea/modules/slidelistview_library/SleepEE.slidelistview_library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sleep.iml" filepath="$PROJECT_DIR$/.idea/modules/sleep.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DatePicker/sleep.DatePicker.iml" filepath="$PROJECT_DIR$/.idea/modules/DatePicker/sleep.DatePicker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/sleep.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/sleep.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/citypicker/sleep.citypicker.iml" filepath="$PROJECT_DIR$/.idea/modules/citypicker/sleep.citypicker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jgraph/sleep.jgraph.iml" filepath="$PROJECT_DIR$/.idea/modules/jgraph/sleep.jgraph.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/sleep.library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/sleep.library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/okhttputils/sleep.okhttputils.iml" filepath="$PROJECT_DIR$/.idea/modules/okhttputils/sleep.okhttputils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/oldninedroid_library/sleep.oldninedroid_library.iml" filepath="$PROJECT_DIR$/.idea/modules/oldninedroid_library/sleep.oldninedroid_library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/protocal/sleep.protocal.iml" filepath="$PROJECT_DIR$/.idea/modules/protocal/sleep.protocal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/slidelistview_library/sleep.slidelistview_library.iml" filepath="$PROJECT_DIR$/.idea/modules/slidelistview_library/sleep.slidelistview_library.iml" />
     </modules>
   </component>
 </project>

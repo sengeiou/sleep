@@ -4,8 +4,8 @@
 4
 5    <uses-sdk
 6        android:minSdkVersion="15"
-6-->E:\project\AndroidStudioProject\SleepEE\oldninedroid_library\src\main\AndroidManifest.xml
+6-->F:\Android\sleep\oldninedroid_library\src\main\AndroidManifest.xml
 7        android:targetSdkVersion="27" />
-7-->E:\project\AndroidStudioProject\SleepEE\oldninedroid_library\src\main\AndroidManifest.xml
+7-->F:\Android\sleep\oldninedroid_library\src\main\AndroidManifest.xml
 8
 9</manifest>

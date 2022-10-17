@@ -8,6 +8,8 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -51,6 +53,8 @@ import java.util.Collections;
 import no.nordicsemi.android.dfu.DfuServiceInitiator;
 import okhttp3.Call;
 
+import static android.media.AudioManager.FLAG_PLAY_SOUND;
+import static android.media.AudioManager.STREAM_MUSIC;
 import static com.szip.smartdream.Util.HttpMessgeUtil.DOWNLOADDATA_FLAG;
 import static com.szip.smartdream.Util.HttpMessgeUtil.GETALARM_FLAG;
 import static com.szip.smartdream.Util.HttpMessgeUtil.UPDOWNDATA_FLAG;
@@ -133,6 +137,8 @@ public class MyApplication extends Application implements HttpCallbackWithUserIn
     public static final String FILE_SAVED_CHANNEL = "file_saved_channel";
     public static final String PROXIMITY_WARNINGS_CHANNEL = "proximity_warnings_channel";
     private boolean updownAble = false;
+
+    private boolean isAlarm = false;
 
     private Handler handler = new Handler(){
         @Override
@@ -507,6 +513,28 @@ public class MyApplication extends Application implements HttpCallbackWithUserIn
          * 表更新状态，为true的时候表示当前数据正在同步
          * */
         isUpdating = updating;
+    }
+
+    private MediaPlayer mediaPlayer;
+    private int volume = 0;
+
+    public void setAlarm(byte type, int heartData, int breathData){
+        isAlarm = true;
+        final AudioManager am = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        volume  = am.getStreamVolume(STREAM_MUSIC);//保存手机原来的音量
+        am.setStreamVolume (STREAM_MUSIC, am.getStreamMaxVolume(STREAM_MUSIC), FLAG_PLAY_SOUND);//设置系统音乐最大
+        if (mediaPlayer==null){
+            mediaPlayer = MediaPlayer.create(this, R.raw.dang_ring);
+            mediaPlayer.start();
+            mediaPlayer.setVolume(1f,1f);
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    am.setStreamVolume (STREAM_MUSIC, volume, FLAG_PLAY_SOUND);//播放完毕，设置回之前的音量
+                    mediaPlayer = null;
+                }
+            });
+        }
     }
 
     public int getStartState() {
